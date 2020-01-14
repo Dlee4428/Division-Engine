@@ -142,6 +142,7 @@
     <ClCompile Include="Engine\Game\Game1.cpp" />
     <ClCompile Include="Engine\Graphic\MaterialHandler.cpp" />
     <ClCompile Include="Engine\Graphic\ShaderHandler.cpp" />
+    <ClCompile Include="Engine\Graphic\SkyboxHandler.cpp" />
     <ClCompile Include="Engine\Graphic\TextureHandler.cpp" />
     <ClCompile Include="Engine\Math\CollisionDetection.cpp" />
     <ClCompile Include="Engine\Math\CollisionHandler.cpp" />
@@ -171,6 +172,7 @@
     <ClInclude Include="Engine\Game\Game1.h" />
     <ClInclude Include="Engine\Graphic\MaterialHandler.h" />
     <ClInclude Include="Engine\Graphic\ShaderHandler.h" />
+    <ClInclude Include="Engine\Graphic\SkyboxHandler.h" />
     <ClInclude Include="Engine\Graphic\TextureHandler.h" />
     <ClInclude Include="Engine\Math\BoundingBox.h" />
     <ClInclude Include="Engine\Math\CollisionDetection.h" />

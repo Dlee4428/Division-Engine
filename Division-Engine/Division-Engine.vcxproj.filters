@@ -90,6 +90,9 @@
     <ClCompile Include="Engine\Core\OctTree.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Graphic\SkyboxHandler.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DivisionPCH.h">
@@ -174,6 +177,9 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Core\OctTree.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphic\SkyboxHandler.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

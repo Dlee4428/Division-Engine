@@ -17,7 +17,7 @@ TextureHandler* TextureHandler::GetInstance() {
 	return textureInstance.get();
 }
 
-void TextureHandler::CreateTexture(const std::string& textureName_, const std::string& textureFileName_) {
+void TextureHandler::CreateTexture2D(const std::string& textureName_, const std::string& textureFileName_) {
 	Texture* t = new Texture();
 	SDL_Surface* surface = nullptr;
 	surface = IMG_Load(textureFileName_.c_str());

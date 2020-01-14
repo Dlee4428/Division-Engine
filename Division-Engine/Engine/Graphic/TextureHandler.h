@@ -21,7 +21,7 @@ public:
 	TextureHandler& operator=(TextureHandler&&) = delete;
 
 	static TextureHandler* GetInstance();
-	void CreateTexture(const std::string& textureName_, const std::string& textureFileName_);
+	void CreateTexture2D(const std::string& textureName_, const std::string& textureFileName_);
 	static const GLuint GetTexture(const std::string& textureName_);
 	static const Texture* GetTextureData(const std::string& textureName_);
 	void OnDestroy();

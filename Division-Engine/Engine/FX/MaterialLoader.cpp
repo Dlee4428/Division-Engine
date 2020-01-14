@@ -72,7 +72,7 @@ GLuint MaterialLoader::LoadTexture(std::string fileName_)
 {
 	GLuint currentTexture = TextureHandler::GetInstance()->GetTexture(fileName_);
 	if (currentTexture == 0) {
-		TextureHandler::GetInstance()->CreateTexture(fileName_, "./Resources/Textures/" + fileName_ + ".jpg");
+		TextureHandler::GetInstance()->CreateTexture2D(fileName_, "./Resources/Textures/" + fileName_ + ".jpg");
 		currentTexture = TextureHandler::GetInstance()->GetTexture(fileName_);
 	}
 	return currentTexture;
