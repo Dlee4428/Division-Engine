@@ -32,15 +32,47 @@ void TextureHandler::CreateTexture2D(const std::string& textureName_, const std:
 	glBindTexture(GL_TEXTURE_2D, t->textureID);
 	int mode = surface->format->BytesPerPixel == 4 ? GL_RGBA : GL_RGB; // need to be boolean before ? mark
 	glTexImage2D(GL_TEXTURE_2D, 0, mode, surface->w, surface->h, 0, mode, GL_UNSIGNED_BYTE, surface->pixels);
+	textures[textureName_] = t;
+	SDL_FreeSurface(surface);
+	surface = nullptr;
+
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glGenerateMipmap(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, 0);
-	textures[textureName_] = t;
-	SDL_FreeSurface(surface);
-	surface = nullptr;
+}
+
+void TextureHandler::CreateTextureCubeMap(const std::vector<std::string>& textureFileName_)
+{
+	Texture* t = new Texture();
+	SDL_Surface* surface = nullptr;
+
+	glGenTextures(1, &t->textureID);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, t->textureID);
+
+	for (int i = 0; i < textureFileName_.size(); i++) {
+		surface = IMG_Load(textureFileName_[i].c_str());
+		if (!surface) {
+			Debug::Error("Cannot Load Surface", "TextureHandler.cpp", __LINE__);
+			return;
+		}
+		t->width = surface->w;
+		t->height = surface->h;
+
+		int mode = surface->format->BytesPerPixel == 4 ? GL_RGBA : GL_RGB; // need to be boolean before ? mark
+		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, mode, surface->w, surface->h, 0, mode, GL_UNSIGNED_BYTE, surface->pixels);
+		textures[textureFileName_[i]] = t;
+		SDL_FreeSurface(surface);
+		surface = nullptr;
+	}
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 }
 
 const GLuint TextureHandler::GetTexture(const std::string& textureName_)

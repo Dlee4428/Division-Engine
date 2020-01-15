@@ -19,9 +19,7 @@ ShaderHandler* ShaderHandler::GetInstance() {
 	return shaderInstance.get();
 }
 
-
-void ShaderHandler::CreateProgram(const std::string& shaderName_,
-	const std::string& vertexShaderFileName_,
+void ShaderHandler::CreateProgram(const std::string& shaderName_, const std::string& vertexShaderFileName_,
 	const std::string& fragmentShaderFileName_) {
 	std::string vertexShaderCode = ReadShader(vertexShaderFileName_);
 	std::string fragmentShaderCode = ReadShader(fragmentShaderFileName_);

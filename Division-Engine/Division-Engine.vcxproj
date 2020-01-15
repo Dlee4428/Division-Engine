@@ -142,7 +142,6 @@
     <ClCompile Include="Engine\Game\Game1.cpp" />
     <ClCompile Include="Engine\Graphic\MaterialHandler.cpp" />
     <ClCompile Include="Engine\Graphic\ShaderHandler.cpp" />
-    <ClCompile Include="Engine\Graphic\SkyboxHandler.cpp" />
     <ClCompile Include="Engine\Graphic\TextureHandler.cpp" />
     <ClCompile Include="Engine\Math\CollisionDetection.cpp" />
     <ClCompile Include="Engine\Math\CollisionHandler.cpp" />
@@ -150,6 +149,8 @@
     <ClCompile Include="Engine\Rendering\3D\LoadObjModel.cpp" />
     <ClCompile Include="Engine\Rendering\3D\Mesh.cpp" />
     <ClCompile Include="Engine\Rendering\3D\Model.cpp" />
+    <ClCompile Include="Engine\Rendering\3D\SkyBox.cpp" />
+    <ClCompile Include="Engine\Rendering\AssetManager.cpp" />
     <ClCompile Include="Engine\Rendering\SceneGraph.cpp" />
     <ClCompile Include="Engine\Scene\GameScene.cpp" />
     <ClCompile Include="Engine\Scene\StartScene.cpp" />
@@ -172,7 +173,6 @@
     <ClInclude Include="Engine\Game\Game1.h" />
     <ClInclude Include="Engine\Graphic\MaterialHandler.h" />
     <ClInclude Include="Engine\Graphic\ShaderHandler.h" />
-    <ClInclude Include="Engine\Graphic\SkyboxHandler.h" />
     <ClInclude Include="Engine\Graphic\TextureHandler.h" />
     <ClInclude Include="Engine\Math\BoundingBox.h" />
     <ClInclude Include="Engine\Math\CollisionDetection.h" />
@@ -182,6 +182,9 @@
     <ClInclude Include="Engine\Rendering\3D\LoadObjModel.h" />
     <ClInclude Include="Engine\Rendering\3D\Mesh.h" />
     <ClInclude Include="Engine\Rendering\3D\Model.h" />
+    <ClInclude Include="Engine\Rendering\3D\SkyBox.h" />
+    <ClInclude Include="Engine\Rendering\Asset.h" />
+    <ClInclude Include="Engine\Rendering\AssetManager.h" />
     <ClInclude Include="Engine\Rendering\SceneGraph.h" />
     <ClInclude Include="Engine\Scene\GameScene.h" />
     <ClInclude Include="Engine\Scene\Scene.h" />

@@ -18,6 +18,6 @@ public:
 
 	static void LoadMaterial(std::string file_);
 private:
-	static GLuint LoadTexture(std::string fileName_);
+	static GLuint LoadTexture2D(std::string fileName_);
 };
 #endif // !MATERIALLOADER_H

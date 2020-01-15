@@ -1,12 +1,11 @@
-#version 450 core
+#version 450
 
-out vec4 FragColor;
+in vec3 texCoords;
+out vec4 fragColor;
 
-in vec3 texture_pos;
-
-uniform samplerCube u_texture;
+uniform samplerCube skybox;
 
 void main()
-{    
-    FragColor = texture(u_texture, texture_pos);
+{
+	fragColor = texture(skybox, texCoords);
 }

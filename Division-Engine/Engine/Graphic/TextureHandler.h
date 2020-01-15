@@ -22,6 +22,7 @@ public:
 
 	static TextureHandler* GetInstance();
 	void CreateTexture2D(const std::string& textureName_, const std::string& textureFileName_);
+	void CreateTextureCubeMap(const std::vector<std::string>& textureFileName_);
 	static const GLuint GetTexture(const std::string& textureName_);
 	static const Texture* GetTextureData(const std::string& textureName_);
 	void OnDestroy();

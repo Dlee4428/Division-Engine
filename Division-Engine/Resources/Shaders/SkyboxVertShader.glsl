@@ -1,14 +1,14 @@
-#version 450 core
+#version 450
+layout (location = 0) in vec4 vVertex;
 
-layout (location = 0) in vec3 pos;
+out vec3 texCoords;
 
-out vec3 texture_pos;
-
-uniform mat4 u_projection;
-uniform mat4 u_view;
+uniform mat4 proj;
+uniform mat4 view;
+uniform mat4 model;
 
 void main()
 {
-    texture_pos = vec3(-pos.x, pos.y, pos.z);
-    gl_Position = u_projection * u_view * vec4(pos, 1.0);
+    texCoords = vec3(vVertex) * vec3(-1.0, 1.0, 1.0);
+    gl_Position = proj * view * model * vVertex;
 }  

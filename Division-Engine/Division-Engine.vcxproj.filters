@@ -90,7 +90,10 @@
     <ClCompile Include="Engine\Core\OctTree.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Graphic\SkyboxHandler.cpp">
+    <ClCompile Include="Engine\Rendering\3D\SkyBox.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\AssetManager.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -179,7 +182,13 @@
     <ClInclude Include="Engine\Core\OctTree.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Graphic\SkyboxHandler.h">
+    <ClInclude Include="Engine\Rendering\3D\SkyBox.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\AssetManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Asset.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

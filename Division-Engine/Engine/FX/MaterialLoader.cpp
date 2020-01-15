@@ -21,7 +21,7 @@ void MaterialLoader::LoadMaterial(std::string file_)
 				m = Material();
 			}
 			matName = line.substr(7);
-			m.diffuseMap = LoadTexture(line.substr(7));
+			m.diffuseMap = LoadTexture2D(line.substr(7));
 		}
 		if (line.substr(0, 4) == "\tNs ") { // Shiness
 			float shininess, s;
@@ -68,7 +68,7 @@ void MaterialLoader::LoadMaterial(std::string file_)
 	}
 }
 
-GLuint MaterialLoader::LoadTexture(std::string fileName_)
+GLuint MaterialLoader::LoadTexture2D(std::string fileName_)
 {
 	GLuint currentTexture = TextureHandler::GetInstance()->GetTexture(fileName_);
 	if (currentTexture == 0) {
@@ -77,3 +77,4 @@ GLuint MaterialLoader::LoadTexture(std::string fileName_)
 	}
 	return currentTexture;
 }
+

@@ -3,11 +3,13 @@
 
 #include "../../../DivisionPCH.h"
 #include "LoadObjModel.h"
+#include "../../Graphic/TextureHandler.h"
 
 class Model
 {
 public:
 	Model(const std::string& objpath_, const std::string& matPath_, GLuint shaderProgram_);
+	Model(const std::string& objpath_, GLuint shaderProgram_);
 	~Model();
 	void AddMesh(Mesh* mesh_);
 	void Render(Camera* camera_);
@@ -25,6 +27,8 @@ private:
 
 	glm::mat4 GetTransform(glm::vec3 position_, float angle_, glm::vec3 rotation_, glm::vec3 scale_) const;
 	void LoadModel();
+	void LoadSkyBox(const std::vector<std::string>& fileName_);
+	
 	LoadObjModel* obj;
 	BoundingBox boundingBox;
 };

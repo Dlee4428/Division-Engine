@@ -31,6 +31,11 @@ bool CoreEngine::OnCreate(std::string name_, int width_, int height_) {
 		"./Resources/Shaders/VertexShader.glsl",
 		"./Resources/Shaders/FragmentShader.glsl");
 
+	// SkyBox Shader
+	ShaderHandler::GetInstance()->CreateProgram("SkyboxShader",
+		"./Resources/Shaders/SkyboxVertShader.glsl",
+		"./Resources/Shaders/SkyboxFragShader.glsl");
+
 	if (gameInterface) {
 		if (!gameInterface->OnCreate()) {
 			// Debug Line
@@ -140,9 +145,9 @@ void CoreEngine::NotifyMouseReleased(int x_, int y_, int buttonType_)
 
 void CoreEngine::NotifyMouseMove(int x_, int y_)
 {
-	if (camera) {
+	/*if (camera) {
 		camera->ProcessMouseMovement(MouseEventListener::GetMouseOffset().x, MouseEventListener::GetMouseOffset().y);
-	}
+	}*/
 }
 
 void CoreEngine::NotifyMouseScroll(int y_)

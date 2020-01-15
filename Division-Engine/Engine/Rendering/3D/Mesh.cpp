@@ -13,6 +13,7 @@ Mesh::~Mesh() {
 
 void Mesh::Render(Camera* camera_, std::vector<glm::mat4>& instances_) {
 	glUniform1i(diffuseMapLoc, 0);
+	glBindVertexArray(VAO);
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, subMesh.material.diffuseMap);
 	glEnable(GL_DEPTH_TEST);
@@ -48,7 +49,6 @@ void Mesh::Render(Camera* camera_, std::vector<glm::mat4>& instances_) {
 		subMesh.material.specular.y,
 		subMesh.material.specular.z);
 
-	glBindVertexArray(VAO);
 	for (int i = 0; i < instances_.size(); i++) {
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(instances_[i]));
 		glDrawArrays(GL_TRIANGLES, 0, subMesh.vertexList.size());
@@ -58,6 +58,7 @@ void Mesh::Render(Camera* camera_, std::vector<glm::mat4>& instances_) {
 	glBindVertexArray(0);
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
+
 void Mesh::OnDestroy() {
 	glDeleteVertexArrays(1, &VAO); // & address the non pointer
 	glDeleteBuffers(1, &VBO);

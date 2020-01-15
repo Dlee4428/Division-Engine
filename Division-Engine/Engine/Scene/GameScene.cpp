@@ -17,17 +17,27 @@ bool GameScene::OnCreate() {
 
 	scenePtr.push_back(new SceneGraph());
 	scenePtr.push_back(new SceneGraph());
+	scenePtr.push_back(new SceneGraph());
 
 	modelPtr.push_back(new Model("Resources/Models/Dice.obj", "Resources/Materials/Dice.mtl", ShaderHandler::GetInstance()->GetShader("BasicShader")));
 	scenePtr[0]->GetInstance()->AddModel(modelPtr[0]);
 	modelPtr.push_back(new Model("Resources/Models/Apple.obj", "Resources/Materials/Apple.mtl", ShaderHandler::GetInstance()->GetShader("BasicShader")));
 	scenePtr[1]->GetInstance()->AddModel(modelPtr[1]);
+	modelPtr.push_back(new Model("Resources/Models/Cube.obj", ShaderHandler::GetInstance()->GetShader("SkyboxShader")));
+	scenePtr[2]->GetInstance()->AddModel(modelPtr[2]);
 
+	// Registry
 	scenePtr[0]->GetInstance()->AddGameObject(new GameObject(modelPtr[0]), "Dice");
 	scenePtr[1]->GetInstance()->AddGameObject(new GameObject(modelPtr[1]), "Apple");
+	scenePtr[2]->GetInstance()->AddGameObject(new GameObject(modelPtr[2]), "Skybox");
 
+	// Positions
 	scenePtr[0]->GetInstance()->GetGameObject("Dice")->SetPosition(glm::vec3(3.0f, 0.0f, 0.0f));
 	scenePtr[1]->GetInstance()->GetGameObject("Apple")->SetPosition(glm::vec3(0.0f, 3.0f, -10.0f));
+	scenePtr[2]->GetInstance()->GetGameObject("Skybox")->SetPosition(glm::vec3(0.0f, 0.0f, 0.0f));
+
+	// Scale
+	scenePtr[2]->GetInstance()->GetGameObject("Skybox")->SetScale(glm::vec3(1.5f, 1.5f, 1.5f));
 
 	return true;
 }

@@ -8,6 +8,16 @@ modelInstances(std::vector<glm::mat4>()), obj(nullptr) {
 	this->LoadModel();
 }
 
+Model::Model(const std::string& objpath_, GLuint shaderProgram_) : subMeshes(std::vector<Mesh*>()), shaderProgram(0),
+modelInstances(std::vector<glm::mat4>()), obj(nullptr) {
+	shaderProgram = shaderProgram_;
+	obj = new LoadObjModel();
+	obj->LoadModel(objpath_);
+	this->LoadModel();
+
+	/// Maybe work around here to get skybox such as Model(objpath_, Skybox* skybox, GLuint shaderProgram_)
+}
+
 Model::~Model() {
 	OnDestroy();
 }
@@ -62,4 +72,9 @@ void Model::LoadModel()
 	boundingBox = obj->GetBoundingBox();
 	delete obj;
 	obj = nullptr;
+}
+
+void Model::LoadSkyBox(const std::vector<std::string>& fileName_)
+{
+
 }
