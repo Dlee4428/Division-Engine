@@ -1,0 +1,58 @@
+#include "Camera.h"
+
+Camera::Camera(){
+	createProjection(45.0f, (16.0f / 9.0f), 0.5f, 100.0f);
+	createView(glm::vec3(0.0, 0.0, 10.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f)); // By doing pos z to 1 makes FPS view
+}
+
+Camera::~Camera() {}
+
+bool Camera::OnCreate() {
+	skybox = new SkyBox();
+	skybox->OnCreate();
+
+	return true;
+}
+
+// fovy = field of view y
+void Camera::OnDestroy() {
+	if (skybox) delete skybox, skybox = nullptr;
+	skybox->OnDestroy();
+}
+
+void Camera::createProjection(float fovy_, float aspect_, float near_, float far_) {
+	//projection = MMath::perspective(fovy_, aspect_, near_, far_);
+	projection = glm::perspective(fovy_, aspect_, near_, far_);
+
+}
+
+void Camera::createView(glm::vec3 pos_, glm::vec3 at_, glm::vec3 up_) {
+	pos = pos_;
+	at = at_;
+	up = up_;
+
+	view = glm::lookAt(pos_, at_, up_);
+}
+
+void Camera::HandleEvents(const SDL_Event& sdlEvent)
+{
+}
+
+void Camera::Update(const float deltaTime_)
+{
+	skybox->Update(deltaTime_);
+}
+
+void Camera::Render()
+{
+	if (skybox != nullptr) {
+		glDepthMask(GL_FALSE);
+		glUseProgram(skybox->getShader()->getProgram());
+		glUniformMatrix4fv(skybox->getShader()->getUniformID("projectionMatrix"), 1, GL_FALSE, glm::value_ptr(projection));
+		skybox->Render();
+		glDepthMask(GL_TRUE);
+	}
+}
+
+
+
