@@ -29,12 +29,12 @@ public:
 	// SkyBox OnCreate()
 	std::vector<std::string> faces
 	{
-		"Resources/Textures/CubeMap/posx.jpg",
-		"Resources/Textures/CubeMap/negx.jpg",
-		"Resources/Textures/CubeMap/posy.jpg",
-		"Resources/Textures/CubeMap/negy.jpg",
-		"Resources/Textures/CubeMap/posz.jpg",
-		"Resources/Textures/CubeMap/negz.jpg"
+		"./Resources/Textures/DaySky/posx.jpg",
+		"./Resources/Textures/DaySky/negx.jpg",
+		"./Resources/Textures/DaySky/posy.jpg",
+		"./Resources/Textures/DaySky/negy.jpg",
+		"./Resources/Textures/DaySky/posz.jpg",
+		"./Resources/Textures/DaySky/negz.jpg"
 	};
 };
 #endif // SKYBOX_H

@@ -18,7 +18,7 @@ bool SkyBox::OnCreate()
 		return false;
 	}
 	meshPtr = new Mesh(GL_TRIANGLES, ObjLoader::vertices, ObjLoader::normals, ObjLoader::uvCoords);
-	shaderPtr = new Shader("./Resources/Shaders/skyBoxVert.glsl", "Resources/Shaders/skyBoxFrag.glsl");
+	shaderPtr = new Shader("./Resources/Shaders/skyBoxVert.glsl", "./Resources/Shaders/skyBoxFrag.glsl");
 	skyboxPtr = new SkyBox();
 
 	if (meshPtr == nullptr || shaderPtr == nullptr || skyboxPtr == nullptr) {
@@ -49,7 +49,7 @@ void SkyBox::OnDestroy()
 void SkyBox::Update(const float deltaTime_) {
 	static glm::mat4 skyModel;
 	static float rot;
-	rot += 0.005f;
+	rot += 0.0002f;
 
 	skyObject->Update(deltaTime_);
 	skyObject->setModelMatrix(glm::rotate(skyModel, rot, glm::vec3(0.0f, 1.0f, 0.0f))
@@ -66,7 +66,7 @@ void SkyBox::Render() const
 // loads a cubemap texture from 6 individual texture faces
 // order:
 // +X (right)
-// -X (left)
+// -X (left
 // +Y (top)
 // -Y (bottom)
 // +Z (front) 
