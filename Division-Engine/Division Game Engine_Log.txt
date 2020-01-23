@@ -1,2 +1,3 @@
 [INFO]: Starting the GameSceneManager in file: C:\Users\Dong Hyeong Lee\Documents\GitHub\Division-Engine\Division-Engine\Main.cpp on line: 10
 [INFO]: OpenGL version: 4.6.0 NVIDIA 441.20 in file: C:\Users\Dong Hyeong Lee\Documents\GitHub\Division-Engine\Division-Engine\Engine\Core\Window.cpp on line: 41
+[INFO]: Deleting the GameSceneManager in file: C:\Users\Dong Hyeong Lee\Documents\GitHub\Division-Engine\Division-Engine\Engine\Core\GameSceneManager.cpp on line: 28

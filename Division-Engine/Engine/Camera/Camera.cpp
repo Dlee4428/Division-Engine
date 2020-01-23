@@ -1,8 +1,10 @@
 #include "Camera.h"
 
 Camera::Camera(){
-	createProjection(45.0f, (16.0f / 9.0f), 0.5f, 100.0f);
-	createView(glm::vec3(0.0, 0.0, 10.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f)); // By doing pos z to 1 makes FPS view
+	// Orignal
+	//createProjection(45.0f, (16.0f / 9.0f), 0.5f, 100.0f);
+	createProjection(45.0f, 2.0f, 0.5f, 100.0f);
+	createView(glm::vec3(0.0, 0.0f, 10.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, -1.0f)); // By doing pos z to 1 makes FPS view
 }
 
 Camera::~Camera() {}
