@@ -139,6 +139,9 @@
     <ClCompile Include="Engine\Graphic\Skybox.cpp" />
     <ClCompile Include="Engine\Graphic\Terrain.cpp" />
     <ClCompile Include="Engine\Math\Noise.cpp" />
+    <ClCompile Include="Engine\Rendering\3D\Material.cpp" />
+    <ClCompile Include="Engine\Rendering\3D\Mesh.cpp" />
+    <ClCompile Include="Engine\Rendering\3D\Transform.cpp" />
     <ClCompile Include="Engine\Rendering\SceneObject.cpp" />
     <ClCompile Include="Engine\Scene\Scene0.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -156,6 +159,9 @@
     <ClInclude Include="Engine\Graphic\Skybox.h" />
     <ClInclude Include="Engine\Graphic\Terrain.h" />
     <ClInclude Include="Engine\Math\Noise.h" />
+    <ClInclude Include="Engine\Rendering\3D\Material.h" />
+    <ClInclude Include="Engine\Rendering\3D\Mesh.h" />
+    <ClInclude Include="Engine\Rendering\3D\Transform.h" />
     <ClInclude Include="Engine\Rendering\SceneObject.h" />
     <ClInclude Include="Engine\Scene\Scene.h" />
     <ClInclude Include="Engine\Scene\Scene0.h" />

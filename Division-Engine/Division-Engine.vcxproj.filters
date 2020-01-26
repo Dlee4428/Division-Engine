@@ -60,6 +60,15 @@
     <ClCompile Include="Engine\Rendering\SceneObject.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Rendering\3D\Mesh.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\3D\Material.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\3D\Transform.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Camera\Camera.h">
@@ -105,6 +114,15 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Rendering\SceneObject.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\3D\Mesh.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\3D\Material.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\3D\Transform.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

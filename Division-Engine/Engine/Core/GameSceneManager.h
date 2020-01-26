@@ -22,8 +22,8 @@ public:
 	virtual void Render();
 	
 	void HandleEvents();
-	void AddCamera(Camera* camera);
-	void AddSceneObject(SceneObject* sceneObject);
+	void AddCamera(Camera* camera_);
+	void AddSceneObject(SceneObject* sceneObject_);
 
 
 	inline Camera& GetCamera(int id_) const { return *camera[id_]; }
@@ -44,6 +44,5 @@ private:
 
 	Scene* BuildScene(SCENE_NUMBER scene_);
 };
-
 
 #endif // !GAMESCENEMANAGER_H
