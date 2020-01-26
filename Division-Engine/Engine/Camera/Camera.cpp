@@ -10,16 +10,13 @@ Camera::Camera(){
 Camera::~Camera() {}
 
 bool Camera::OnCreate() {
-	skybox = new SkyBox();
-	skybox->OnCreate();
 
 	return true;
 }
 
 // fovy = field of view y
 void Camera::OnDestroy() {
-	if (skybox) delete skybox, skybox = nullptr;
-	skybox->OnDestroy();
+
 }
 
 void Camera::createProjection(float fovy_, float aspect_, float near_, float far_) {
@@ -42,18 +39,12 @@ void Camera::HandleEvents(const SDL_Event& sdlEvent)
 
 void Camera::Update(const float deltaTime_)
 {
-	skybox->Update(deltaTime_);
+
 }
 
 void Camera::Render()
 {
-	if (skybox != nullptr) {
-		glDepthMask(GL_FALSE);
-		glUseProgram(skybox->getShader()->getProgram());
-		glUniformMatrix4fv(skybox->getShader()->getUniformID("projectionMatrix"), 1, GL_FALSE, glm::value_ptr(projection));
-		skybox->Render();
-		glDepthMask(GL_TRUE);
-	}
+
 }
 
 

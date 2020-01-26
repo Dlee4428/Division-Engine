@@ -30,25 +30,7 @@
     <ClCompile Include="Engine\Core\Window.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Graphic\Shader.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Graphic\SkyBox.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Graphic\Texture.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Math\Noise.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Rendering\3D\GameObject.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Rendering\3D\Mesh.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Rendering\3D\ObjLoader.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Scene\Scene0.cpp">
@@ -64,6 +46,18 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Camera\TerrainCamera.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\FX\Light.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\FX\DirectionLight.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphic\Skybox.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\SceneObject.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -83,25 +77,7 @@
     <ClInclude Include="Engine\Core\Window.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Graphic\Shader.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Graphic\SkyBox.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Graphic\Texture.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Math\Noise.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Rendering\3D\GameObject.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Rendering\3D\Mesh.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Rendering\3D\ObjLoader.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Scene\Scene.h">
@@ -117,6 +93,18 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Camera\TerrainCamera.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\FX\Light.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\FX\DirectionLight.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphic\Skybox.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\SceneObject.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

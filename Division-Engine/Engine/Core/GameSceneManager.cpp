@@ -41,6 +41,11 @@ bool GameSceneManager::Init(std::string name_, int width_, int height_) {
 		Debug::FatalError("Failed to initialize Timer object", __FILE__, __LINE__);
 		return false;
 	}
+
+	// SceneObject Init
+	for (SceneObject* obj : sceneObjects) {
+		
+	}
 	
 	currentScene = BuildScene(SCENE0);
 	if (currentScene == nullptr) {
@@ -58,10 +63,15 @@ void GameSceneManager::Run() {
 		timer->UpdateFrameTicks();
 		HandleEvents();
 		currentScene->Update(timer->GetDeltaTime());
-		currentScene->Render();
+		Render();
 		SDL_GL_SwapWindow(window->GetWindow());
 		SDL_Delay(timer->GetSleepTime(fps));
 	}
+}
+
+void GameSceneManager::Render()
+{
+	currentScene->Render();
 }
 
 void GameSceneManager::HandleEvents() {

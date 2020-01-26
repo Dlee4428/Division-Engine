@@ -134,14 +134,12 @@
     <ClCompile Include="Engine\Core\GameSceneManager.cpp" />
     <ClCompile Include="Engine\Core\Timer.cpp" />
     <ClCompile Include="Engine\Core\Window.cpp" />
-    <ClCompile Include="Engine\Graphic\Shader.cpp" />
-    <ClCompile Include="Engine\Graphic\SkyBox.cpp" />
+    <ClCompile Include="Engine\FX\DirectionLight.cpp" />
+    <ClCompile Include="Engine\FX\Light.cpp" />
+    <ClCompile Include="Engine\Graphic\Skybox.cpp" />
     <ClCompile Include="Engine\Graphic\Terrain.cpp" />
-    <ClCompile Include="Engine\Graphic\Texture.cpp" />
     <ClCompile Include="Engine\Math\Noise.cpp" />
-    <ClCompile Include="Engine\Rendering\3D\GameObject.cpp" />
-    <ClCompile Include="Engine\Rendering\3D\Mesh.cpp" />
-    <ClCompile Include="Engine\Rendering\3D\ObjLoader.cpp" />
+    <ClCompile Include="Engine\Rendering\SceneObject.cpp" />
     <ClCompile Include="Engine\Scene\Scene0.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
@@ -153,14 +151,12 @@
     <ClInclude Include="Engine\Core\GameSceneManager.h" />
     <ClInclude Include="Engine\Core\Timer.h" />
     <ClInclude Include="Engine\Core\Window.h" />
-    <ClInclude Include="Engine\Graphic\Shader.h" />
-    <ClInclude Include="Engine\Graphic\SkyBox.h" />
+    <ClInclude Include="Engine\FX\DirectionLight.h" />
+    <ClInclude Include="Engine\FX\Light.h" />
+    <ClInclude Include="Engine\Graphic\Skybox.h" />
     <ClInclude Include="Engine\Graphic\Terrain.h" />
-    <ClInclude Include="Engine\Graphic\Texture.h" />
     <ClInclude Include="Engine\Math\Noise.h" />
-    <ClInclude Include="Engine\Rendering\3D\GameObject.h" />
-    <ClInclude Include="Engine\Rendering\3D\Mesh.h" />
-    <ClInclude Include="Engine\Rendering\3D\ObjLoader.h" />
+    <ClInclude Include="Engine\Rendering\SceneObject.h" />
     <ClInclude Include="Engine\Scene\Scene.h" />
     <ClInclude Include="Engine\Scene\Scene0.h" />
   </ItemGroup>

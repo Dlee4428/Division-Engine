@@ -1,13 +1,13 @@
 #version 450 core
-layout (location = 0) in vec4 vVertex;
+layout (location = 0) in vec3 aPos;
 
 out vec3 texCoords;
 
 uniform mat4 projectionMatrix;
-uniform mat4 modelMatrix;
+uniform mat4 viewMatrix;
 
 void main()
 {
-    texCoords = vec3(vVertex) * vec3(-1.0, 1.0, 1.0);
-    gl_Position = projectionMatrix * modelMatrix * vVertex;
+    texCoords = aPos * vec3(-1.0, 1.0, 1.0);
+    gl_Position = projectionMatrix * viewMatrix * vec4(aPos, 1.0);
 }  

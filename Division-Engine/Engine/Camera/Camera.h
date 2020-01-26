@@ -1,14 +1,11 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
-
 #include "../../DivisionPCH.h"
-#include "../Graphic/SkyBox.h"
 
 union SDL_Event;
 class Camera {
 private:
-	SkyBox* skybox;
 	glm::mat3 model;
 	glm::mat4 projection;
 	glm::mat4 view, rotation, translation;

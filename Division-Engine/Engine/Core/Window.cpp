@@ -84,6 +84,7 @@ void Window::SetAttributes(int major_, int minor_) {
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, minor_);
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 32);
+	SDL_GL_SetAttribute(SDL_GL_FRAMEBUFFER_SRGB_CAPABLE, 1);
 	SDL_GL_SetSwapInterval(1);
 	glewExperimental = GL_TRUE;
 	return;
