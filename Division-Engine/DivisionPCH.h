@@ -4,12 +4,18 @@
 // Class pre-compiled header
 
 // OpenGL
-#include <glew.h>
+#include <GL/glew.h>
 
-// SDL
-#include <SDL.h>
-#include <SDL_image.h>
-#include <SDL_opengl.h>
+// GLFW
+#include <GLFW/glfw3.h>
+
+// Assimp
+#include <assimp/scene.h>
+#include <assimp/Importer.hpp>
+#include <assimp/postprocess.h> 
+
+// DevIL
+#include <IL/il.h>
 
 // STL
 #include <memory>

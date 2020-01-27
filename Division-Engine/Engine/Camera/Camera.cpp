@@ -1,50 +1,39 @@
 #include "Camera.h"
 
-Camera::Camera(){
-	// Orignal
-	//createProjection(45.0f, (16.0f / 9.0f), 0.5f, 100.0f);
-	createProjection(45.0f, 2.0f, 0.5f, 100.0f);
-	createView(glm::vec3(0.0, 0.0f, 10.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, -1.0f)); // By doing pos z to 1 makes FPS view
+Camera::Camera() : dirtyFlag(false), projectionMatrixDirtyFlag(false) {
+	frustum.SetProjectionData(0.1f, 100.0f, 45.0f, 1.0f);
+	frustum.SetCameraData(transform.GetPosition(), -transform.GetLocalZVector(), transform.GetLocalYVector());
 }
 
-Camera::~Camera() {}
-
-bool Camera::OnCreate() {
-
-	return true;
-}
-
-// fovy = field of view y
-void Camera::OnDestroy() {
+Camera::~Camera() {
 
 }
 
-void Camera::createProjection(float fovy_, float aspect_, float near_, float far_) {
-	//projection = MMath::perspective(fovy_, aspect_, near_, far_);
-	projection = glm::perspective(fovy_, aspect_, near_, far_);
-
-}
-
-void Camera::createView(glm::vec3 pos_, glm::vec3 at_, glm::vec3 up_) {
-	pos = pos_;
-	at = at_;
-	up = up_;
-
-	view = glm::lookAt(pos_, at_, up_);
-}
-
-void Camera::HandleEvents(const SDL_Event& sdlEvent)
+const glm::mat4& Camera::GetViewMatrix()
 {
+	return transform.GetInverseTransformationMatrix();
 }
 
-void Camera::Update(const float deltaTime_)
+const glm::mat4& Camera::GetProjectionMatrix()
 {
-
+	if (projectionMatrixDirtyFlag) {
+		projectionMatrix = glm::perspective(glm::radians(frustum.fovy), frustum.aspectRatio, frustum.near, frustum.far);
+		projectionMatrixDirtyFlag = false;
+	}
+	return projectionMatrix;
 }
 
-void Camera::Render()
+void Camera::SetProjectionMatrix(float fovy_, float aspectRatio_, float near_, float far_)
 {
+	frustum.SetProjectionData(near_, far_, fovy_, aspectRatio_);
+	projectionMatrixDirtyFlag = true;
+	dirtyFlag = true;
+}
 
+void Camera::WindowResizeCallback(const int width_, const int height_)
+{
+	SetProjectionMatrix(frustum.fovy, (float)width_ / (float)height_, frustum.near, frustum.far);
+	glViewport(0, 0, width_, height_);
 }
 
 

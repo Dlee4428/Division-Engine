@@ -29,15 +29,15 @@ public:
 	inline const glm::vec3& GetRotation() { return rotation; }
 	inline const glm::vec3& GetScale() const { return scale; }
 
-	// Float operator
+	// Setters
 	void SetLocalXVector(float x_, float y_, float z_);
 	void SetLocalYVector(float x_, float y_, float z_);
 	void SetLocalZVector(float x_, float y_, float z_);
 
-	// glm::vec3 operator
-	const glm::vec3& SetLocalXVector();
-	const glm::vec3& SetLocalYVector();
-	const glm::vec3& SetLocalZVector();
+	// Getters
+	const glm::vec3& GetLocalXVector();
+	const glm::vec3& GetLocalYVector();
+	const glm::vec3& GetLocalZVector();
 
 	const glm::mat4& GetTransformationMatrix();
 	const glm::mat4& GetInverseTransformationMatrix();

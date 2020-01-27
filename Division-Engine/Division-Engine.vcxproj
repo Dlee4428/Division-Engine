@@ -129,11 +129,8 @@
   <ItemGroup>
     <ClCompile Include="DivisionPCH.cpp" />
     <ClCompile Include="Engine\Camera\Camera.cpp" />
-    <ClCompile Include="Engine\Camera\TerrainCamera.cpp" />
+    <ClCompile Include="Engine\Core\CoreEngine.cpp" />
     <ClCompile Include="Engine\Core\Debug\Debug.cpp" />
-    <ClCompile Include="Engine\Core\GameSceneManager.cpp" />
-    <ClCompile Include="Engine\Core\Timer.cpp" />
-    <ClCompile Include="Engine\Core\Window.cpp" />
     <ClCompile Include="Engine\FX\DirectionLight.cpp" />
     <ClCompile Include="Engine\FX\Light.cpp" />
     <ClCompile Include="Engine\Graphic\Skybox.cpp" />
@@ -143,17 +140,14 @@
     <ClCompile Include="Engine\Rendering\3D\Mesh.cpp" />
     <ClCompile Include="Engine\Rendering\3D\Transform.cpp" />
     <ClCompile Include="Engine\Rendering\SceneObject.cpp" />
-    <ClCompile Include="Engine\Scene\Scene0.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DivisionPCH.h" />
     <ClInclude Include="Engine\Camera\Camera.h" />
-    <ClInclude Include="Engine\Camera\TerrainCamera.h" />
+    <ClInclude Include="Engine\Core\CoreEngine.h" />
     <ClInclude Include="Engine\Core\Debug\Debug.h" />
-    <ClInclude Include="Engine\Core\GameSceneManager.h" />
-    <ClInclude Include="Engine\Core\Timer.h" />
-    <ClInclude Include="Engine\Core\Window.h" />
+    <ClInclude Include="Engine\Core\Event\EventHandler.h" />
     <ClInclude Include="Engine\FX\DirectionLight.h" />
     <ClInclude Include="Engine\FX\Light.h" />
     <ClInclude Include="Engine\Graphic\Skybox.h" />
@@ -163,8 +157,6 @@
     <ClInclude Include="Engine\Rendering\3D\Mesh.h" />
     <ClInclude Include="Engine\Rendering\3D\Transform.h" />
     <ClInclude Include="Engine\Rendering\SceneObject.h" />
-    <ClInclude Include="Engine\Scene\Scene.h" />
-    <ClInclude Include="Engine\Scene\Scene0.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

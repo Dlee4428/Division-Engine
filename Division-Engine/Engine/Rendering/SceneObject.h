@@ -2,20 +2,21 @@
 #define SCENEOBJECT_H
 
 #include "../../DivisionPCH.h"
+#include "../Core/Event/EventHandler.h"
 #include "3D/Material.h"
 #include "3D/Mesh.h"
 #include "3D/Transform.h"
 
-class GameSceneManager;
+class CoreEngine;
 
-class SceneObject {
+class SceneObject : public EventHandler {
 public:
 	SceneObject();
 	virtual ~SceneObject();
 
 	inline void SetMesh(Mesh* mesh_) { this->mesh = mesh_; }
 	inline void SetMaterial(Material* material_) { this->material = material_; }
-	inline void SetGameSceneManager(GameSceneManager* gsm_) { gameSceneManager = gsm_; }
+	inline void SetCoreEngine(CoreEngine* core_) { coreEngine = core_; }
 
 	virtual void OnCreate();
 	virtual void Render(int passIDref_ = 0);
@@ -30,7 +31,7 @@ public:
 protected:
 	virtual void BindMaterial();
 
-	GameSceneManager* gameSceneManager;
+	CoreEngine* coreEngine;
 	Material* material;
 	Mesh* mesh;
 

@@ -2,29 +2,31 @@
 #define CAMERA_H
 
 #include "../../DivisionPCH.h"
+#include "Frustum.h"
+#include "../Rendering/SceneObject.h"
 
-union SDL_Event;
-class Camera {
-private:
-	glm::mat3 model;
-	glm::mat4 projection;
-	glm::mat4 view, rotation, translation;
-	glm::vec3 pos, at, up;
+// Encapsulating Projection and View matrices.			
+// Also maintains a Frustum to perform culling against. 
+class Camera : public SceneObject {
 public:
-	inline glm::mat4 getProjectionMatrix() const { return projection; }
-	inline glm::mat4 getViewMatrix() const { return view; }
-	inline glm::mat3 getModelMatrix() const { return model; }
-	inline glm::vec3 getPosition() const { return pos; }
-
-	bool OnCreate();
-	void OnDestroy();
-	void createProjection(float fovy_, float aspectRatio_, float near_, float far_);
-	void createView(glm::vec3 pos_, glm::vec3 at_, glm::vec3 up_);
-	void HandleEvents(const SDL_Event& sdlEvent);
-	void Update(const float deltaTime_);
-	void Render();
 	Camera();
 	~Camera();
+
+	//FOVY in degrees
+	void SetProjectionMatrix(float fovy_, float aspectRatio_, float near_, float far_);
+	virtual void WindowResizeCallback(const int width_, const int height_);
+
+	const glm::mat4& GetViewMatrix();
+	const glm::mat4& GetProjectionMatrix();
+	inline Frustum& GetFrustum() { return frustum; }
+
+	inline bool ChangedSinceLastCall() { bool temp = dirtyFlag; dirtyFlag = false; return temp; }
+
+protected:
+	glm::mat4 projectionMatrix;
+	bool projectionMatrixDirtyFlag;
+	bool dirtyFlag;
+	Frustum frustum;
 };
 
 #endif

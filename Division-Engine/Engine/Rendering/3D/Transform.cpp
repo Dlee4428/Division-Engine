@@ -172,21 +172,21 @@ void Transform::SetLocalZVector(float x_, float y_, float z_) {
 	normalMatrixDirtyFlag = true;
 }
 
-const glm::vec3& Transform::SetLocalXVector() { 
+const glm::vec3& Transform::GetLocalXVector() { 
 	tempVector.x = localAxis[0].x; 
 	tempVector.y = localAxis[0].y; 
 	tempVector.z = localAxis[0].z; 
 	return tempVector; 
 }
 
-const glm::vec3& Transform::SetLocalYVector() { 
+const glm::vec3& Transform::GetLocalYVector() { 
 	tempVector2.x = localAxis[1].x; 
 	tempVector2.y = localAxis[1].y; 
 	tempVector2.z = localAxis[1].z; 
 	return tempVector2; 
 }
 
-const glm::vec3& Transform::SetLocalZVector() { 
+const glm::vec3& Transform::GetLocalZVector() { 
 	tempVector3.x = localAxis[2].x; 
 	tempVector3.y = localAxis[2].y; 
 	tempVector3.z = localAxis[2].z; 
