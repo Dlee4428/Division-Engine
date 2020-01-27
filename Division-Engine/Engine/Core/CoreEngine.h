@@ -16,13 +16,13 @@ public:
 	// Init by OnCreate(), Update(), Render() finally OnDesroy() to clear memory
 	virtual void OnCreate();
 	virtual void OnDestroy();
-	virtual void Update(const float deltaTime_);
+	virtual void Update(const double deltaTime_);
 	virtual void Render();
 
 	// glfw Callback functions using EventHandler Interface
 	virtual void WindowResizeCallback(const int width_, const int height_);
 	virtual void KeyCallback(const int key_, const int scanCode_, const int action_, const int mods_);
-	virtual void CursorPositionCallback(const float xpos_, const float ypos_);
+	virtual void CursorPositionCallback(const double xpos_, const double ypos_);
 	virtual void mouseButtonCallback(const int button_, const int action_, const int mods_);
 
 	// Create context samples to determine fxaa, SRGB Framebuffer enable status
@@ -53,8 +53,8 @@ protected:
 
 	int windowWidth, windowHeight;
 	int activeCamera;
-	float lastFrameTime;
-	float lastFPSShowTime;
+	double lastFrameTime;
+	double lastFPSShowTime;
 
 	bool isCursorEnabled;
 	bool vsyncEnabled;

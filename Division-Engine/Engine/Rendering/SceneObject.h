@@ -20,7 +20,7 @@ public:
 
 	virtual void OnCreate();
 	virtual void Render(int passIDref_ = 0);
-	virtual void Update(float deltaTime_);
+	virtual void Update(double deltaTime_);
 
 	inline Transform& GetTransform() { return transform; }
 	inline Material& GetMaterial() { return *material; }

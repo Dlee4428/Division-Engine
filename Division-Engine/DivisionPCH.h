@@ -1,6 +1,8 @@
 #ifndef DIVISIONPCH_H
 #define DIVISIONPCH_H
 
+#pragma warning (disable:4819)
+
 // Class pre-compiled header
 
 // OpenGL
@@ -34,10 +36,6 @@
 #include <cstring>
 #include <string>
 #include <ctime>
-
-#define _CRTDBG_MAP_ALLOC  
-#include <stdlib.h>  
-#include <crtdbg.h>
 
 // Math
 #include <glm/glm.hpp>

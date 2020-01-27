@@ -10,7 +10,7 @@ SceneObject::~SceneObject() {
 void SceneObject::OnCreate() {
 }
 
-void SceneObject::Update(float deltaTime_) {
+void SceneObject::Update(double deltaTime_) {
 }
 
 void SceneObject::Render(int passIDref_) {

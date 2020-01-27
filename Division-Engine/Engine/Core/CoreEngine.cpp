@@ -108,7 +108,7 @@ bool CoreEngine::CreateGLContext(int samples_, bool srgbFrameBuffer_)
 void CoreEngine::CreateTimerLoop()
 {
 	// Timer Loop for GLFW
-	float deltaTime = 0, actualTime = 0;
+	double deltaTime = 0, actualTime = 0;
 	lastFrameTime = glfwGetTime();
 	lastFPSShowTime = 0;
 
@@ -119,9 +119,9 @@ void CoreEngine::CreateTimerLoop()
 		deltaTime = actualTime - lastFrameTime;
 		lastFrameTime = actualTime;
 
-		if (actualTime - lastFPSShowTime > 1.0f) {
+		if (actualTime - lastFPSShowTime > 1.0) {
 			title.str("");
-			title << windowTitle << " [FPS: " << (1.0f / deltaTime) << "] [Frame Time: " << deltaTime << "]";
+			title << windowTitle << " [FPS: " << (1.0 / deltaTime) << "] [Frame Time: " << deltaTime << "]";
 			glfwSetWindowTitle(window, title.str().c_str());
 			lastFPSShowTime = actualTime;
 		}
@@ -176,7 +176,7 @@ void CoreEngine::Render()
 	}
 }
 
-void CoreEngine::Update(const float deltaTime_)
+void CoreEngine::Update(const double deltaTime_)
 {
 	cameras[activeCamera]->Update(deltaTime_);
 	for (auto object : sceneObjects) {
@@ -222,7 +222,7 @@ void CoreEngine::KeyCallback(const int key_, const int scanCode_, const int acti
 }
 
 // EventHandler GLFW CursorPosition Callback
-void CoreEngine::CursorPositionCallback(const float xpos_, const float ypos_)
+void CoreEngine::CursorPositionCallback(const double xpos_, const double ypos_)
 {
 	cameras[activeCamera]->CursorPositionCallback(xpos_, ypos_);
 	for (auto et : eventHandler) {
