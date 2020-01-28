@@ -143,7 +143,11 @@
     <ClCompile Include="Engine\Rendering\3D\Material.cpp" />
     <ClCompile Include="Engine\Rendering\3D\Mesh.cpp" />
     <ClCompile Include="Engine\Rendering\3D\Transform.cpp" />
+    <ClCompile Include="Engine\Rendering\Buffers\GlewBuffer.cpp" />
+    <ClCompile Include="Engine\Rendering\Buffers\GlewObject.cpp" />
+    <ClCompile Include="Engine\Rendering\Buffers\IBO.cpp" />
     <ClCompile Include="Engine\Rendering\SceneObject.cpp" />
+    <ClCompile Include="Engine\Scene\Scene.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -164,7 +168,11 @@
     <ClInclude Include="Engine\Rendering\3D\Material.h" />
     <ClInclude Include="Engine\Rendering\3D\Mesh.h" />
     <ClInclude Include="Engine\Rendering\3D\Transform.h" />
+    <ClInclude Include="Engine\Rendering\Buffers\GlewBuffer.h" />
+    <ClInclude Include="Engine\Rendering\Buffers\GlewObject.h" />
+    <ClInclude Include="Engine\Rendering\Buffers\IBO.h" />
     <ClInclude Include="Engine\Rendering\SceneObject.h" />
+    <ClInclude Include="Engine\Scene\Scene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
