@@ -29,7 +29,7 @@ void IBO::Bind() const
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, name);
 }
 
-void IBO::ProceedToGPU(bool afterGPU_)
+void IBO::LoadGPU(bool afterGPU_)
 {
 	// Using sizeof to find out number of elements in a indices array
 	sizeInBytes = indicesNumber * sizeof(unsigned int);

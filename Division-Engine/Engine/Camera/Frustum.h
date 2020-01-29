@@ -17,6 +17,7 @@ enum PlaneData {
 	BOTTOM
 };
 
+// For setting Frustum Culling using plane.
 class Frustum {
 public:
 	Frustum();

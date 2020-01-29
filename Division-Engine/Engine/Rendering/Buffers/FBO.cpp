@@ -30,7 +30,7 @@ void FBO::BindDefaultFramebuffer() const
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void FBO::ProceedToGPU(bool afterGPU_)
+void FBO::LoadGPU(bool afterGPU_)
 {
 	GLenum* drawBuffers = new GLenum[colorAtachmentCount];
 	for (int i = 0; i < colorAtachmentCount; ++i) {

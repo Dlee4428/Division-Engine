@@ -18,7 +18,8 @@ public:
 	void SetPosition(float x_, float y_, float z_, SpaceType space_);
 	void SetPosition(const glm::vec3& pos_, SpaceType space_);
 
-	void SetRotation(float x_, float y_, float z_, SpaceType space_, SpaceType pivot_); //space -> space of the angle values, pivot -> rotation pivot point (WORLD or LOCAL origins)
+	// Param: (Space) Space of the angle values, (pivot) rotation pivot point (WORLD or LOCAL origins)
+	void SetRotation(float x_, float y_, float z_, SpaceType space_, SpaceType pivot_);
 	void SetScale(float x_, float y_, float z_, SpaceType space_);
 
 	void TranslateObj(float x_, float y_, float z_, SpaceType space_);

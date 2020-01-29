@@ -6,7 +6,6 @@ int main() {
 	if (scene.CreateGLContext(2, true)) {
 		scene.OnCreate();
 		scene.CreateTimerLoop();
-		Debug::Info("Division Engine Running Hot!", __FILE__, __LINE__);
 		return 1;
 	}
 	else {

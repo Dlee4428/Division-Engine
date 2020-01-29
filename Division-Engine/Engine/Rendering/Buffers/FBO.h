@@ -17,7 +17,7 @@ public:
 
 	virtual void Bind() const;
 	void BindDefaultFramebuffer() const;
-	virtual void ProceedToGPU(bool afterGPU_ = false);
+	virtual void LoadGPU(bool afterGPU_ = false);
 
 	void AttachTextureToColorBuffer(int colorAttachmentNumber_, const Texture& texture_);
 	void AttachTextureToDepthBuffer(const Texture& texture_);
