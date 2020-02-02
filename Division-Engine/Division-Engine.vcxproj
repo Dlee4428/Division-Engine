@@ -150,6 +150,8 @@
     <ClCompile Include="Engine\Rendering\Buffers\VAO.cpp" />
     <ClCompile Include="Engine\Rendering\Buffers\VBO.cpp" />
     <ClCompile Include="Engine\Rendering\SceneObject.cpp" />
+    <ClCompile Include="Engine\Rendering\Shader\Shader.cpp" />
+    <ClCompile Include="Engine\Rendering\Shader\ShaderProgram.cpp" />
     <ClCompile Include="Engine\Rendering\Texture\Texture.cpp" />
     <ClCompile Include="Engine\Scene\Scene.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -179,6 +181,8 @@
     <ClInclude Include="Engine\Rendering\Buffers\VAO.h" />
     <ClInclude Include="Engine\Rendering\Buffers\VBO.h" />
     <ClInclude Include="Engine\Rendering\SceneObject.h" />
+    <ClInclude Include="Engine\Rendering\Shader\Shader.h" />
+    <ClInclude Include="Engine\Rendering\Shader\ShaderProgram.h" />
     <ClInclude Include="Engine\Rendering\Texture\Texture.h" />
     <ClInclude Include="Engine\Scene\Scene.h" />
   </ItemGroup>
