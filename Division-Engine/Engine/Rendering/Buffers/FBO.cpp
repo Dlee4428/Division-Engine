@@ -40,23 +40,23 @@ void FBO::LoadGPU(bool afterGPU_)
 	delete[] drawBuffers;
 }
 
-void FBO::AttachTextureToColorBuffer(int colorAttachmentNumber_, const Texture& texture_)
+void FBO::AttachTextureToColorBuffer(int colorAttachmentNumber_, const TextureHandler& texture_)
 {
 	glNamedFramebufferTexture(name, GL_COLOR_ATTACHMENT0 + colorAttachmentNumber_, texture_.GetName(), 0);
 	colorAtachmentCount++;
 }
 
-void FBO::AttachTextureToDepthBuffer(const Texture& texture_)
+void FBO::AttachTextureToDepthBuffer(const TextureHandler& texture_)
 {
 	glNamedFramebufferTexture(name, GL_DEPTH_ATTACHMENT, texture_.GetName(), 0);
 }
 
-void FBO::AttachTextureToStencilBuffer(const Texture& texture_)
+void FBO::AttachTextureToStencilBuffer(const TextureHandler& texture_)
 {
 	glNamedFramebufferTexture(name, GL_STENCIL_ATTACHMENT, texture_.GetName(), 0);
 }
 
-void FBO::AttachTextureToDepthAndStencilBuffer(const Texture& texture_)
+void FBO::AttachTextureToDepthAndStencilBuffer(const TextureHandler& texture_)
 {
 	glNamedFramebufferTexture(name, GL_DEPTH_STENCIL_ATTACHMENT, texture_.GetName(), 0);
 }

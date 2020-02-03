@@ -2,7 +2,7 @@
 #define FBO_H
 
 #include "GlewObject.h"
-#include "../Texture/Texture.h"
+#include "../Texture/TextureHandler.h"
 
 // Frame Buffer Object
 // Brief explanation of FBO
@@ -19,10 +19,10 @@ public:
 	void BindDefaultFramebuffer() const;
 	virtual void LoadGPU(bool afterGPU_ = false);
 
-	void AttachTextureToColorBuffer(int colorAttachmentNumber_, const Texture& texture_);
-	void AttachTextureToDepthBuffer(const Texture& texture_);
-	void AttachTextureToStencilBuffer(const Texture& texture_);
-	void AttachTextureToDepthAndStencilBuffer(const Texture& texture_);
+	void AttachTextureToColorBuffer(int colorAttachmentNumber_, const TextureHandler&texture_);
+	void AttachTextureToDepthBuffer(const TextureHandler& texture_);
+	void AttachTextureToStencilBuffer(const TextureHandler& texture_);
+	void AttachTextureToDepthAndStencilBuffer(const TextureHandler& texture_);
 
 private:
 	int colorAtachmentCount;

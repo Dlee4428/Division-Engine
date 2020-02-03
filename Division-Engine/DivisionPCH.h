@@ -36,6 +36,7 @@
 #include <cstring>
 #include <string>
 #include <ctime>
+#include <cstdint>
 
 // Math
 #include <glm/glm.hpp>

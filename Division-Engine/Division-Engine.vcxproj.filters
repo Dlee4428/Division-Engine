@@ -48,9 +48,6 @@
     <ClCompile Include="Engine\Rendering\3D\Mesh.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Rendering\3D\Material.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Rendering\3D\Transform.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -81,9 +78,6 @@
     <ClCompile Include="Engine\Rendering\Buffers\FBO.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Rendering\Texture\Texture.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Rendering\Buffers\VBO.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -94,6 +88,12 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Rendering\Shader\Shader.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Texture\TextureHandler.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\3D\MaterialHandler.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -126,9 +126,6 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Rendering\3D\Mesh.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Rendering\3D\Material.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Rendering\3D\Transform.h">
@@ -167,9 +164,6 @@
     <ClInclude Include="Engine\Rendering\Buffers\FBO.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Rendering\Texture\Texture.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Rendering\Buffers\VAO.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -180,6 +174,12 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Rendering\Shader\Shader.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Texture\TextureHandler.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\3D\MaterialHandler.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

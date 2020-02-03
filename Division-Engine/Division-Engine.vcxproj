@@ -78,6 +78,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -140,7 +141,7 @@
     <ClCompile Include="Engine\Graphic\Terrain.cpp" />
     <ClCompile Include="Engine\Math\Noise.cpp" />
     <ClCompile Include="Engine\Math\Plane.cpp" />
-    <ClCompile Include="Engine\Rendering\3D\Material.cpp" />
+    <ClCompile Include="Engine\Rendering\3D\MaterialHandler.cpp" />
     <ClCompile Include="Engine\Rendering\3D\Mesh.cpp" />
     <ClCompile Include="Engine\Rendering\3D\Transform.cpp" />
     <ClCompile Include="Engine\Rendering\Buffers\FBO.cpp" />
@@ -152,7 +153,7 @@
     <ClCompile Include="Engine\Rendering\SceneObject.cpp" />
     <ClCompile Include="Engine\Rendering\Shader\Shader.cpp" />
     <ClCompile Include="Engine\Rendering\Shader\ShaderProgram.cpp" />
-    <ClCompile Include="Engine\Rendering\Texture\Texture.cpp" />
+    <ClCompile Include="Engine\Rendering\Texture\TextureHandler.cpp" />
     <ClCompile Include="Engine\Scene\Scene.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
@@ -171,7 +172,7 @@
     <ClInclude Include="Engine\Graphic\Terrain.h" />
     <ClInclude Include="Engine\Math\Noise.h" />
     <ClInclude Include="Engine\Math\Plane.h" />
-    <ClInclude Include="Engine\Rendering\3D\Material.h" />
+    <ClInclude Include="Engine\Rendering\3D\MaterialHandler.h" />
     <ClInclude Include="Engine\Rendering\3D\Mesh.h" />
     <ClInclude Include="Engine\Rendering\3D\Transform.h" />
     <ClInclude Include="Engine\Rendering\Buffers\FBO.h" />
@@ -183,7 +184,7 @@
     <ClInclude Include="Engine\Rendering\SceneObject.h" />
     <ClInclude Include="Engine\Rendering\Shader\Shader.h" />
     <ClInclude Include="Engine\Rendering\Shader\ShaderProgram.h" />
-    <ClInclude Include="Engine\Rendering\Texture\Texture.h" />
+    <ClInclude Include="Engine\Rendering\Texture\TextureHandler.h" />
     <ClInclude Include="Engine\Scene\Scene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

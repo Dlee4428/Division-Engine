@@ -1,5 +1,5 @@
 #ifndef GLEWBUFFER_H
-#define GLEWBUFFER
+#define GLEWBUFFER_H
 
 #include "GlewObject.h"
 
