@@ -19,7 +19,7 @@ public:
 
 	bool enableShadowMapping;
 private:
-	int terrainID, skyboxID, sunLightID;
+	int terrain, skybox, sunlight;
 //	FBO* depthFBO;
 
 	void InitFBO();

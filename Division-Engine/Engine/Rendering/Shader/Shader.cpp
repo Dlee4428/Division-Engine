@@ -1,5 +1,4 @@
 #include "Shader.h"
-#include "../../Core/Debug/Debug.h"
 
 Shader::Shader(const std::string& shaderPath_)
 {

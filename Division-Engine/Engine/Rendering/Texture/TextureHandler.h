@@ -6,6 +6,7 @@
 #include "../Buffers/GlewObject.h"
 
 // Determines Types of Image formats
+// Setups for DevIl image opensource
 struct ImageFormatType {
 	GLenum sizedFormat, baseFormat, type;
 	uint32_t numberChannels, bytesPerChannel;
@@ -22,6 +23,8 @@ struct ImageFormatType {
 	ImageFormatType(GLenum sizedFormat_, GLenum baseFormat_, GLenum type_, uint32_t numberChannels_, uint32_t bytesPerChannel_) :
 		sizedFormat(sizedFormat_), baseFormat(baseFormat_), type(type_), numberChannels(numberChannels_), bytesPerChannel(bytesPerChannel_) {
 	}
+
+	ImageFormatType() {}
 };
 
 // Image Data holder
@@ -64,7 +67,7 @@ public:
 		const ImageFormatType& imageFormat_ = ImageFormatType::IMAGE_FORMAT_SRGB8);
 
 	// For Texel Parameter width, height, and Image format Depth
-	void InitFromImageData(uint32_t width_, uint32_t height_, const uint8_t* imageData, 
+	void InitFromImageData(uint32_t width_, uint32_t height_, const uint8_t* imageData_, 
 		const ImageFormatType& imageFormat_ = ImageFormatType::IMAGE_FORMAT_SRGB8);
 
 	// For Mipmap Level settings

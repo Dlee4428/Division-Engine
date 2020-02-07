@@ -5,7 +5,6 @@
 #include "Event/EventHandler.h"
 #include "../Camera/Camera.h"
 #include "../Rendering/SceneObject.h"
-#include "Debug/Debug.h"
 
 class CoreEngine : public EventHandler {
 public:
