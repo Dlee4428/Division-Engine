@@ -2,28 +2,30 @@
 
 class MaterialHandler;
 class Mesh;
-class Texture2D;
-class Texture2DArray;
 class ShaderProgram;
 class Shader;
-class TextureCube;
+class Tex2D;
+class Tex2DArray;
+class TexCubemap;
 
 // GLOBAL TEMPLATE FOR ENTITY MANAGER
+// GETTER ENTITIES
 template MaterialHandler* EntityManager::GetEntity<MaterialHandler>(const std::string& name_);
 template Mesh* EntityManager::GetEntity<Mesh>(const std::string& name_);
-template Texture2D* EntityManager::GetEntity<Texture2D>(const std::string& name_);
-template TextureCube* EntityManager::GetEntity<TextureCube>(const std::string& name_);
 template ShaderProgram* EntityManager::GetEntity<ShaderProgram>(const std::string& name_);
+template Shader* EntityManager::GetEntity<Shader>(const std::string& name_);
+template Tex2D* EntityManager::GetEntity<Tex2D>(const std::string& name_);
+template Tex2DArray* EntityManager::GetEntity<Tex2DArray>(const std::string& name_);
+template TexCubemap* EntityManager::GetEntity<TexCubemap>(const std::string& name_);
 
+// ADD TO REGISTRY
 template void EntityManager::AddEntity<MaterialHandler>(const std::string& name_, MaterialHandler* entity_);
 template void EntityManager::AddEntity<Mesh>(const std::string& name_, Mesh* entity_);
-template void EntityManager::AddEntity<Texture2D>(const std::string& name_, Texture2D* entity_);
-template void EntityManager::AddEntity<TextureCube>(const std::string& name_, TextureCube* entity_);
 template void EntityManager::AddEntity<ShaderProgram>(const std::string& name_, ShaderProgram* entity_);
 template void EntityManager::AddEntity<Shader>(const std::string& name_, Shader* asset);
-template void EntityManager::AddEntity<TextureCube>(const std::string& name_, TextureCube* entity_);
-template void EntityManager::AddEntity<Texture2DArray>(const std::string& name_, Texture2DArray* entity_);
-
+template void EntityManager::AddEntity<Tex2D>(const std::string& name_, Tex2D* entity_);
+template void EntityManager::AddEntity<Tex2DArray>(const std::string& name_, Tex2DArray* entity_);
+template void EntityManager::AddEntity<TexCubemap>(const std::string& name_, TexCubemap* entity_);
 
 EntityManager::EntityManager() {
 }
