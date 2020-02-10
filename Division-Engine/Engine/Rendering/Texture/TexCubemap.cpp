@@ -21,7 +21,7 @@ void TexCubemap::InitFromImageFile(const std::string& imagePath_, const ImageFor
 	// It's much like std::filesystem to find path and extension
 	// But this is dynamic way to do it
 	for (int i = 0; i < 6; ++i) {
-		std::string newPath = "";
+		std::string imagePath = "";
 		std::string filePath = imagePath_.substr(0, imagePath_.length() - 4);
 		std::string ext = imagePath_.substr(imagePath_.length() - 3, 3);
 
@@ -39,8 +39,8 @@ void TexCubemap::InitFromImageFile(const std::string& imagePath_, const ImageFor
 		}
 		// Append is to extends the string by appending additional characters 
 		// at the end of its current value
-		newPath.append(filePath).append(std::to_string(str)).append(".").append(ext);
-		images.push_back(LoadFileType(newPath, imageFormat_));
+		imagePath.append(filePath).append(std::to_string(str)).append(".").append(ext);
+		images.push_back(LoadFileType(imagePath, imageFormat_));
 	}
 
 	LoadGPU();

@@ -153,6 +153,9 @@
     <ClCompile Include="Engine\Rendering\SceneObject.cpp" />
     <ClCompile Include="Engine\Rendering\Shader\Shader.cpp" />
     <ClCompile Include="Engine\Rendering\Shader\ShaderProgram.cpp" />
+    <ClCompile Include="Engine\Rendering\Texture\Tex2D.cpp" />
+    <ClCompile Include="Engine\Rendering\Texture\Tex2DArray.cpp" />
+    <ClCompile Include="Engine\Rendering\Texture\TexCubemap.cpp" />
     <ClCompile Include="Engine\Rendering\Texture\TextureHandler.cpp" />
     <ClCompile Include="Engine\Scene\Scene.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -184,6 +187,9 @@
     <ClInclude Include="Engine\Rendering\SceneObject.h" />
     <ClInclude Include="Engine\Rendering\Shader\Shader.h" />
     <ClInclude Include="Engine\Rendering\Shader\ShaderProgram.h" />
+    <ClInclude Include="Engine\Rendering\Texture\Tex2D.h" />
+    <ClInclude Include="Engine\Rendering\Texture\Tex2DArray.h" />
+    <ClInclude Include="Engine\Rendering\Texture\TexCubemap.h" />
     <ClInclude Include="Engine\Rendering\Texture\TextureHandler.h" />
     <ClInclude Include="Engine\Scene\Scene.h" />
   </ItemGroup>
