@@ -1,13 +1,13 @@
-#ifndef VAO_H
-#define VAO_H
+#ifndef VERTEXARRAYOBJECT_H
+#define VERTEXARRAYOBJECT_H
 
 #include "GlewObject.h"
 
 // VERTEX ARRAY OBJECT FOR MESH
-class VAO : public GlewObject {
+class VertexArrayObject : public GlewObject {
 public:
-	VAO();
-	~VAO();
+	VertexArrayObject();
+	~VertexArrayObject();
 
 	virtual void OnCreate();
 	virtual void OnDestroy();
@@ -22,4 +22,4 @@ public:
 
 };
 
-#endif // !VAO_H
+#endif // !VERTEXARRAYOBJECT_H

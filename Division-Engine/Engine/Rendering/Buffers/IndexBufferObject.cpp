@@ -1,15 +1,15 @@
-#include "IBO.h"
+#include "IndexBufferObject.h"
 
-IBO::IBO(unsigned int indicesCount_) :indicesNumber(indicesCount_), actualPointer(0) {
+IndexBufferObject::IndexBufferObject(unsigned int indicesCount_) :indicesNumber(indicesCount_), actualPointer(0) {
 	// IBO own pointer to reference indicesCount_ array
 	this->indices = new unsigned int[indicesCount_];
 }
 
-IBO::~IBO() {
+IndexBufferObject::~IndexBufferObject() {
 	DeleteLocalData();
 }
 
-void IBO::SetIndices(GLuint* indices_) {
+void IndexBufferObject::SetIndices(GLuint* indices_) {
 	// Copy block of memory 
 	// Copies the value of num bytes from the location pointed to by source directly
 	// to by destination.
@@ -17,19 +17,19 @@ void IBO::SetIndices(GLuint* indices_) {
 	memcpy(this->indices, indices_, indicesNumber * sizeof(unsigned int));
 }
 
-void IBO::AddIndex(GLuint index_)
+void IndexBufferObject::AddIndex(GLuint index_)
 {
 	// Adds Index
 	// Param actualPointer = unsigned int
 	indices[actualPointer++] = index_;
 }
 
-void IBO::Bind() const
+void IndexBufferObject::Bind() const
 {
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, name);
 }
 
-void IBO::LoadGPU(bool afterGPU_)
+void IndexBufferObject::LoadGPU(bool afterGPU_)
 {
 	// Using sizeof to find out number of elements in a indices array
 	sizeInBytes = indicesNumber * sizeof(unsigned int);
@@ -40,7 +40,7 @@ void IBO::LoadGPU(bool afterGPU_)
 	}
 }
 
-void IBO::DeleteLocalData() {
+void IndexBufferObject::DeleteLocalData() {
 	if (this->indices != 0) {
 		delete[] this->indices;
 		this->indices = 0;

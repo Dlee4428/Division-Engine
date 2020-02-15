@@ -78,7 +78,7 @@ bool CoreEngine::CreateGLContext(int samples_, bool srgbFrameBuffer_)
 	}
 	else if (res == GL_SRGB) {
 		std::cout << "sRGB Default Framebuffer.\n";
-		glEnable(GL_FRAMEBUFFER_SRGB); // enable auto Linear RGB to sRGB conversion when writing to sRGB framebuffers
+		glEnable(GL_FRAMEBUFFER_SRGB); // Enable auto Linear RGB to sRGB conversion when writing to sRGB framebuffers
 	}
 
 	glGetIntegerv(GL_SAMPLES, &res);

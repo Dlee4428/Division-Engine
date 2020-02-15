@@ -1,27 +1,27 @@
-#include "VAO.h"
+#include "VertexArrayObject.h"
 
 
-VAO::VAO() {
+VertexArrayObject::VertexArrayObject() {
 	OnCreate();
 }
 
-VAO::~VAO() {
+VertexArrayObject::~VertexArrayObject() {
 	OnDestroy();
 }
 
-void VAO::OnCreate() {
+void VertexArrayObject::OnCreate() {
 	glCreateVertexArrays(1, &name);
 }
 
-void VAO::OnDestroy() {
+void VertexArrayObject::OnDestroy() {
 	glDeleteVertexArrays(1, &name);
 }
 
-void VAO::Bind() const {
+void VertexArrayObject::Bind() const {
 	glBindVertexArray(name);
 }
 
-void VAO::EnableVertexAttribute(GLuint indexAttribute_, GLuint vbo_, 
+void VertexArrayObject::EnableVertexAttribute(GLuint indexAttribute_, GLuint vbo_,
 	GLintptr vboOffset_, GLsizei vboStride_) {
 	// Associate vertex attributes to buffer bindings
 	// glVertexAttribBinding()
@@ -36,7 +36,7 @@ void VAO::EnableVertexAttribute(GLuint indexAttribute_, GLuint vbo_,
 	glEnableVertexArrayAttrib(name, indexAttribute_);
 }
 
-void VAO::SetVertexAttribute(GLuint indexAttribute_, GLint size_, 
+void VertexArrayObject::SetVertexAttribute(GLuint indexAttribute_, GLint size_,
 	GLenum type_, GLboolean normalized_, GLuint relativeOffset_) {
 	// Specify the format of the attributes 
 	// PRE 4.5 = glVertexAttribFormat()

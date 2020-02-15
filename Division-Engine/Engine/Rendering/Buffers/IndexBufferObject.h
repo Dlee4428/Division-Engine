@@ -1,13 +1,13 @@
-#ifndef IBO_H
-#define IBO_H
+#ifndef INDEXBUFFEROBJECT_H
+#define INDEXBUFFEROBJECT_H
 
 #include "GlewBuffer.h"
 
 // Index Buffer Object Class using GlewBuffer
-class IBO : public GlewBuffer {
+class IndexBufferObject : public GlewBuffer {
 public:
-	IBO(unsigned int indicesCount_);
-	~IBO();
+	IndexBufferObject(unsigned int indicesCount_);
+	~IndexBufferObject();
 
 	void SetIndices(GLuint* indices_);
 	void AddIndex(GLuint index_);
@@ -27,4 +27,4 @@ private:
 };
 
 
-#endif // !IBO_H
+#endif // !IndexBufferObject_H

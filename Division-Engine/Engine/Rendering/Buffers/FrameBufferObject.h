@@ -1,5 +1,5 @@
-#ifndef FBO_H
-#define FBO_H
+#ifndef FRAMEBUFFEROBJECT_H
+#define FRAMEBUFFEROBJECT_H
 
 #include "GlewObject.h"
 #include "../Texture/TextureHandler.h"
@@ -7,10 +7,10 @@
 // Frame Buffer Object
 // Brief explanation of FBO
 // http://www.songho.ca/opengl/gl_fbo.html
-class FBO : public GlewObject {
+class FrameBufferObject : public GlewObject {
 public:
-	FBO();
-	~FBO();
+	FrameBufferObject();
+	~FrameBufferObject();
 
 	virtual void OnCreate();
 	virtual void OnDestroy();
@@ -27,4 +27,4 @@ public:
 private:
 	int colorAtachmentCount;
 };
-#endif // !FBO_H
+#endif // !FRAMEBUFFEROBJECT_H

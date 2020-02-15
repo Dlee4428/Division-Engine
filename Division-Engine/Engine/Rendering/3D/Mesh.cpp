@@ -65,8 +65,8 @@ void Mesh::InitAssimpScene(const aiScene* scene_)
 		unsigned int nVertices = mesh->mNumVertices;
 		unsigned int nIndices = mesh->mNumFaces * mesh->mFaces->mNumIndices;
 
-		IBO* ibo = new IBO(nIndices);
-		VBO* vbo = new VBO(nVertices);
+		IndexBufferObject* ibo = new IndexBufferObject(nIndices);
+		VertexBufferObject* vbo = new VertexBufferObject(nVertices);
 
 		// VBO Attributes set up here
 		vbo->SetAttributeData(0, (void*)mesh->mVertices);
@@ -114,10 +114,10 @@ void Mesh::InitAssimpScene(const aiScene* scene_)
 void Mesh::InitFromRawData(const int verticesNum_, const int indicesNum_)
 {
 	// Push back data from all vectors
-	vboVector.push_back(new VBO(verticesNum_));
+	vboVector.push_back(new VertexBufferObject(verticesNum_));
 
 	if (indicesNum_ > 0) {
-		iboVector.push_back(new IBO(indicesNum_));
+		iboVector.push_back(new IndexBufferObject(indicesNum_));
 	}
 }
 

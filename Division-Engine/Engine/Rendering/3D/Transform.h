@@ -45,24 +45,26 @@ public:
 	const glm::mat3& GetNormalMatrix();
 
 private:
-	//In world coordinates parameter
-	glm::vec3 position;
-	glm::vec3 rotation;
-	glm::vec3 scale;
-	glm::mat4 localAxis; //representing rotation only, mat4 for convenience
+	// OpenGL World coords param
+	glm::vec3 position;  // Position Object
+	glm::vec3 rotation;  // Rotation Object
+	glm::vec3 scale;	 // Scale Object
+	glm::mat4 localAxis; // For Rotation purposes but to mat4
 
-	glm::mat4 transformationMatrix; //local to world
-	glm::mat4 inverseTransformationMatrix; //world to local
-	glm::mat3 normalMatrix;
+	glm::mat4 transformationMatrix;			// Local to world transformation matrix
+	glm::mat4 inverseTransformationMatrix;  // World to local transformation matrix
+	glm::mat3 normalMatrix;					// For Normal Matrix
 
-	//for returns
+	// For returns
 	glm::vec3 tempVector;
 	glm::vec3 tempVector2;
 	glm::vec3 tempVector3;
 
-	bool inverseTransformationMatrixDirtyFlag;
-	bool transformationMatrixDirtyFlag;
-	bool normalMatrixDirtyFlag;
+	// Dirty Flag design pattern
+	// Soruce - https://gameprogrammingpatterns.com/dirty-flag.html
+	bool invTransMatrixDirty;
+	bool transMatrixDirty;
+	bool normalMatrixDirty;
 };
 
 #endif // !TRANSFORM_H

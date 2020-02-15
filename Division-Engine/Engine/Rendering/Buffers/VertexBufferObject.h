@@ -1,9 +1,9 @@
-#ifndef VBO_H
-#define VBO_H
+#ifndef VERTEXBUFFEROBJECT_H
+#define VERTEXBUFFEROBJECT_H
 
 #include "../../../DivisionPCH.h"
 #include "GlewBuffer.h"
-#include "VAO.h"
+#include "VertexArrayObject.h"
 
 struct VertexAttribute {
 	unsigned int elementNum;
@@ -17,10 +17,10 @@ struct VBOAttributeDescription {
 };
 
 // VERTEX BUFFER OBJECT
-class VBO : public GlewBuffer {
+class VertexBufferObject : public GlewBuffer {
 public:
-	VBO(unsigned int verticesNumber_);
-	~VBO();
+	VertexBufferObject(unsigned int verticesNumber_);
+	~VertexBufferObject();
 
 	// Adding Attribute for VBO
 	int AddAttribute(unsigned int elementNum_, unsigned int elementByteSize_, 
@@ -36,7 +36,7 @@ public:
 	virtual void Bind() const;
 	virtual void LoadGPU(bool afterGPU_ = true);
 
-	inline const VAO& GetVAO() const { return vao; }
+	inline const VertexArrayObject& GetVAO() const { return vao; }
 	inline unsigned int GetVerticesNumber() const { return verticesNumber; }
 
 private:
@@ -48,10 +48,10 @@ private:
 
 	unsigned int verticesNumber;
 
-	VAO vao; // VAO supports VBO's content
+	VertexArrayObject vao; // VAO supports VBO's content
 
 	void AddAtributeToVAO(int attributeId_);
 	void DeleteLocalData();
 };
 
-#endif // !VBO_H
+#endif // !VERTEXBUFFEROBJECT_H

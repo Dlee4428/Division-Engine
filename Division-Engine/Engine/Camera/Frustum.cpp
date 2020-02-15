@@ -1,6 +1,6 @@
 #include "Frustum.h"
 
-Frustum::Frustum() : aspectRatio(0), far(0), fovy(0), near(0), planesDirtyFlag(true) {
+Frustum::Frustum() : aspectRatio(0), far(0), fovy(0), near(0), planesDirty(true) {
 }
 
 Frustum::~Frustum() {
@@ -19,7 +19,7 @@ void Frustum::SetProjectionData(const float near_, const float far_, const float
 	farDimensions.y = tg * far * 2.0f;
 	farDimensions.x = farDimensions.y * aspectRatio_;
 
-	planesDirtyFlag = true;
+	planesDirty = true;
 }
 void Frustum::SetCameraData(const glm::vec3& position_, const glm::vec3& view_, const glm::vec3& up_) {
 	SetCameraPosition(position_);
@@ -28,14 +28,14 @@ void Frustum::SetCameraData(const glm::vec3& position_, const glm::vec3& view_, 
 
 void Frustum::SetCameraPosition(const glm::vec3& position_) {
 	this->position = position_;
-	planesDirtyFlag = true;
+	planesDirty = true;
 }
 
 void Frustum::SetCameraOrientation(const glm::vec3& view_, const glm::vec3& up_, const glm::vec3& right_) {
 	this->view = view_;
 	this->up = up_;
 	this->right = right_;
-	planesDirtyFlag = true;
+	planesDirty = true;
 }
 
 void Frustum::UpdatePlanes() {
@@ -65,11 +65,11 @@ void Frustum::UpdatePlanes() {
 	normal = glm::cross(a, right);
 	planes[BOTTOM].Modify(normal, position);
 
-	planesDirtyFlag = false;
+	planesDirty = false;
 }
 
 const float* Frustum::GetPackedPlaneData() {
-	if (planesDirtyFlag)
+	if (planesDirty)
 		UpdatePlanes();
 
 	for (int i = 0; i < 6; ++i) {

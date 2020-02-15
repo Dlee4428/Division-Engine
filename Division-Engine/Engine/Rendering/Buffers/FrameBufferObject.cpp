@@ -1,36 +1,36 @@
-#include "FBO.h"
+#include "FrameBufferObject.h"
 
-FBO::FBO() : colorAtachmentCount(0)
+FrameBufferObject::FrameBufferObject() : colorAtachmentCount(0)
 {
 	OnCreate();
 }
 
-FBO::~FBO()
+FrameBufferObject::~FrameBufferObject()
 {
 	OnDestroy();
 }
 
-void FBO::OnCreate()
+void FrameBufferObject::OnCreate()
 {
 	glCreateFramebuffers(1, &name);
 }
 
-void FBO::OnDestroy()
+void FrameBufferObject::OnDestroy()
 {
 	glDeleteFramebuffers(1, &name);
 }
 
-void FBO::Bind() const
+void FrameBufferObject::Bind() const
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, name);
 }
 
-void FBO::BindDefaultFramebuffer() const
+void FrameBufferObject::BindDefaultFramebuffer() const
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void FBO::LoadGPU(bool afterGPU_)
+void FrameBufferObject::LoadGPU(bool afterGPU_)
 {
 	GLenum* drawBuffers = new GLenum[colorAtachmentCount];
 	for (int i = 0; i < colorAtachmentCount; ++i) {
@@ -40,23 +40,23 @@ void FBO::LoadGPU(bool afterGPU_)
 	delete[] drawBuffers;
 }
 
-void FBO::AttachTextureToColorBuffer(int colorAttachmentNumber_, const TextureHandler& texture_)
+void FrameBufferObject::AttachTextureToColorBuffer(int colorAttachmentNumber_, const TextureHandler& texture_)
 {
 	glNamedFramebufferTexture(name, GL_COLOR_ATTACHMENT0 + colorAttachmentNumber_, texture_.GetName(), 0);
 	colorAtachmentCount++;
 }
 
-void FBO::AttachTextureToDepthBuffer(const TextureHandler& texture_)
+void FrameBufferObject::AttachTextureToDepthBuffer(const TextureHandler& texture_)
 {
 	glNamedFramebufferTexture(name, GL_DEPTH_ATTACHMENT, texture_.GetName(), 0);
 }
 
-void FBO::AttachTextureToStencilBuffer(const TextureHandler& texture_)
+void FrameBufferObject::AttachTextureToStencilBuffer(const TextureHandler& texture_)
 {
 	glNamedFramebufferTexture(name, GL_STENCIL_ATTACHMENT, texture_.GetName(), 0);
 }
 
-void FBO::AttachTextureToDepthAndStencilBuffer(const TextureHandler& texture_)
+void FrameBufferObject::AttachTextureToDepthAndStencilBuffer(const TextureHandler& texture_)
 {
 	glNamedFramebufferTexture(name, GL_DEPTH_STENCIL_ATTACHMENT, texture_.GetName(), 0);
 }

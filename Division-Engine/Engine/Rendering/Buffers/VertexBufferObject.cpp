@@ -1,22 +1,22 @@
-#include "VBO.h"
+#include "VertexBufferObject.h"
 
-VBO::VBO(unsigned int verticesNumber_) : verticesNumber(verticesNumber_)
+VertexBufferObject::VertexBufferObject(unsigned int verticesNumber_) : verticesNumber(verticesNumber_)
 {
 	// Position of the Attribute is 0 by default
 	AddAttribute(3, sizeof(float)); 
 }
 
-VBO::~VBO()
+VertexBufferObject::~VertexBufferObject()
 {
 	DeleteLocalData();
 }
 
-void VBO::Bind() const
+void VertexBufferObject::Bind() const
 {
 	glBindBuffer(GL_ARRAY_BUFFER, name);
 }
 
-void VBO::LoadGPU(bool afterGPU_)
+void VertexBufferObject::LoadGPU(bool afterGPU_)
 {
 	for (VertexAttribute desc : descriptionData.attributes) {
 		// Grabbing sizeInBytes from glewBuffer.h
@@ -45,7 +45,7 @@ void VBO::LoadGPU(bool afterGPU_)
 }
 
 // Add All attribute from AddAtributeToVAO()
-int VBO::AddAttribute(unsigned int elementNum_, unsigned int elementByteSize_, GLenum type_, GLboolean normalized_)
+int VertexBufferObject::AddAttribute(unsigned int elementNum_, unsigned int elementByteSize_, GLenum type_, GLboolean normalized_)
 {
 	// Grab data from Vertex Attribute Struct
 	VertexAttribute desc;
@@ -67,7 +67,7 @@ int VBO::AddAttribute(unsigned int elementNum_, unsigned int elementByteSize_, G
 }
 
 // Add attribute to VAO single data proceed to AddAtribute()
-void VBO::AddAtributeToVAO(int attributeId_)
+void VertexBufferObject::AddAtributeToVAO(int attributeId_)
 {
 	int offset = 0;
 	for (int i = 0; i < attributeId_; ++i) {
@@ -84,7 +84,7 @@ void VBO::AddAtributeToVAO(int attributeId_)
 	vao.SetVertexAttribute(attributeId_, desc.elementNum, desc.type, desc.normalized, 0);
 }
 
-void VBO::SetAttributeData(int attributeId_, const void* data_)
+void VertexBufferObject::SetAttributeData(int attributeId_, const void* data_)
 {
 	// Reference from VertexAttribute struct
 	VertexAttribute& desc = descriptionData.attributes[attributeId_];
@@ -97,7 +97,7 @@ void VBO::SetAttributeData(int attributeId_, const void* data_)
 		verticesNumber * desc.elementNum * desc.elementByteSize);
 }
 
-void VBO::SetVertexAttributeData(int attributeId_, int vertexIndex_, const void* data_)
+void VertexBufferObject::SetVertexAttributeData(int attributeId_, int vertexIndex_, const void* data_)
 {
 	VertexAttribute& desc = descriptionData.attributes[attributeId_];
 	uint8_t* offset = attributeData[attributeId_]
@@ -106,7 +106,7 @@ void VBO::SetVertexAttributeData(int attributeId_, int vertexIndex_, const void*
 	memcpy(offset, data_, desc.elementByteSize * desc.elementNum);
 }
 
-void VBO::DeleteLocalData()
+void VertexBufferObject::DeleteLocalData()
 {
 	for (unsigned int i = 0; i < descriptionData.attributes.size(); ++i) {
 		if (attributeData[i] != 0) {

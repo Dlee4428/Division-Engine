@@ -1,42 +1,42 @@
 #include "Transform.h"
 
 Transform::Transform() : position(0.0f), scale(1.0f), localAxis(1.0f) {
-	transformationMatrixDirtyFlag = true;
-	normalMatrixDirtyFlag = true;
-	inverseTransformationMatrixDirtyFlag = true;
+	transMatrixDirty = true;
+	invTransMatrixDirty = true;
+	normalMatrixDirty = true;
 }
 
 Transform::~Transform() {
 }
 
 const glm::mat4& Transform::GetTransformationMatrix() {
-	if (transformationMatrixDirtyFlag) {
+	if (transMatrixDirty) {
 		transformationMatrix = glm::mat4(1.0f);
 		transformationMatrix = glm::translate(transformationMatrix, position);
 		transformationMatrix *= localAxis;
 		transformationMatrix = glm::scale(transformationMatrix, scale);
 
-		transformationMatrixDirtyFlag = false;
+		transMatrixDirty = false;
 	}
 
 	return transformationMatrix;
 }
 
 const glm::mat4& Transform::GetInverseTransformationMatrix() {
-	if (inverseTransformationMatrixDirtyFlag) {
+	if (invTransMatrixDirty) {
 		inverseTransformationMatrix = glm::mat4(1.0f);
 		inverseTransformationMatrix = glm::scale(inverseTransformationMatrix, 1.0f / scale);
 		inverseTransformationMatrix *= glm::transpose(localAxis);
 		inverseTransformationMatrix = glm::translate(inverseTransformationMatrix, -position);
-		inverseTransformationMatrixDirtyFlag = false;
+		invTransMatrixDirty = false;
 	}
 
 	return inverseTransformationMatrix;
 }
 
 const glm::mat3& Transform::GetNormalMatrix() {
-	if (normalMatrixDirtyFlag) {
-		//uniform scaling -> normal matrix = transformation matrix
+	if (invTransMatrixDirty) {
+		// Uniform scaling -> normal matrix = transformation matrix
 		if (scale.x == scale.y && scale.x == scale.z) {
 			normalMatrix[0][0] = localAxis[0][0];
 			normalMatrix[0][1] = localAxis[0][1];
@@ -50,7 +50,7 @@ const glm::mat3& Transform::GetNormalMatrix() {
 			normalMatrix[2][1] = localAxis[2][1];
 			normalMatrix[2][2] = localAxis[2][2];
 		}
-		//else compute transposed inverse of the transformation matrix
+		// else compute transposed inverse of the transformation matrix
 		else {
 			const glm::mat4& inverse = GetInverseTransformationMatrix();
 
@@ -66,7 +66,7 @@ const glm::mat3& Transform::GetNormalMatrix() {
 			normalMatrix[2][1] = inverse[1][2];
 			normalMatrix[2][2] = inverse[2][2];
 		}
-		normalMatrixDirtyFlag = false;
+		normalMatrixDirty = false;
 	}
 
 	return normalMatrix;
@@ -84,8 +84,8 @@ void Transform::SetPosition(float x_, float y_, float z_, SpaceType space_) {
 		position.y = pos.y;
 		position.z = pos.z;
 	}
-	transformationMatrixDirtyFlag = true;
-	inverseTransformationMatrixDirtyFlag = true;
+	transMatrixDirty = true;
+	invTransMatrixDirty = true;
 }
 
 void Transform::SetPosition(const glm::vec3& pos_, SpaceType space_) {
@@ -117,29 +117,19 @@ void Transform::SetRotation(float x_, float y_, float z_, SpaceType space_, Spac
 		position.z = m[3].z;
 	}
 
-	transformationMatrixDirtyFlag = true;
-	inverseTransformationMatrixDirtyFlag = true;
-	normalMatrixDirtyFlag = true;
+	transMatrixDirty = true;
+	transMatrixDirty = true;
+	normalMatrixDirty = true;
 }
 
 void Transform::SetScale(float x_, float y_, float z_, SpaceType space_) {
-	/*if (space == WORLD) {
-		//TODO
-	}
-	else if (space == LOCAL) {
-		scale.x = x;
-		scale.y = y;
-		scale.z = z;
-	}*/
-
 	scale.x = x_;
 	scale.y = y_;
 	scale.z = z_;
 
-
-	transformationMatrixDirtyFlag = true;
-	inverseTransformationMatrixDirtyFlag = true;
-	normalMatrixDirtyFlag = true;
+	transMatrixDirty = true;
+	invTransMatrixDirty = true;
+	normalMatrixDirty = true;
 }
 
 void Transform::SetLocalXVector(float x_, float y_, float z_) {
@@ -147,9 +137,9 @@ void Transform::SetLocalXVector(float x_, float y_, float z_) {
 	localAxis[0].y = y_; 
 	localAxis[0].z = z_;
 	
-	transformationMatrixDirtyFlag = true;
-	inverseTransformationMatrixDirtyFlag = true;
-	normalMatrixDirtyFlag = true;
+	transMatrixDirty = true;
+	invTransMatrixDirty = true;
+	normalMatrixDirty = true;
 }
 
 void Transform::SetLocalYVector(float x_, float y_, float z_) {
@@ -157,9 +147,9 @@ void Transform::SetLocalYVector(float x_, float y_, float z_) {
 	localAxis[1].y = y_; 
 	localAxis[1].z = z_;
 	
-	transformationMatrixDirtyFlag = true;
-	inverseTransformationMatrixDirtyFlag = true;
-	normalMatrixDirtyFlag = true;
+	transMatrixDirty = true;
+	invTransMatrixDirty = true;
+	normalMatrixDirty = true;
 }
 
 void Transform::SetLocalZVector(float x_, float y_, float z_) {
@@ -167,9 +157,9 @@ void Transform::SetLocalZVector(float x_, float y_, float z_) {
 	localAxis[2].y = y_; 
 	localAxis[2].z = z_;
 	
-	transformationMatrixDirtyFlag = true;
-	inverseTransformationMatrixDirtyFlag = true;
-	normalMatrixDirtyFlag = true;
+	transMatrixDirty = true;
+	invTransMatrixDirty = true;
+	normalMatrixDirty = true;
 }
 
 const glm::vec3& Transform::GetLocalXVector() { 
@@ -205,8 +195,8 @@ void Transform::TranslateObj(float x_, float y_, float z_, SpaceType space_) {
 		position.y = p.y;
 		position.z = p.z;
 	}
-	transformationMatrixDirtyFlag = true;
-	inverseTransformationMatrixDirtyFlag = true;
+	transMatrixDirty = true;
+	invTransMatrixDirty = true;
 }
 
 void Transform::RotateObj(float x_, float y_, float z_, SpaceType space_, SpaceType pivot_) {
@@ -236,9 +226,9 @@ void Transform::RotateObj(float x_, float y_, float z_, SpaceType space_, SpaceT
 		position.z = m[3].z;
 	}
 
-	transformationMatrixDirtyFlag = true;
-	inverseTransformationMatrixDirtyFlag = true;
-	normalMatrixDirtyFlag = true;
+	transMatrixDirty = true;
+	invTransMatrixDirty = true;
+	normalMatrixDirty = true;
 }
 
 void Transform::ScaleObj(float x_, float y_, float z_, SpaceType space_) {
@@ -250,7 +240,7 @@ void Transform::ScaleObj(float x_, float y_, float z_, SpaceType space_) {
 		scale.y += y_;
 		scale.z += z_;
 	}
-	transformationMatrixDirtyFlag = true;
-	inverseTransformationMatrixDirtyFlag = true;
-	normalMatrixDirtyFlag = true;
+	transMatrixDirty = true;
+	invTransMatrixDirty = true;
+	normalMatrixDirty = true;
 }

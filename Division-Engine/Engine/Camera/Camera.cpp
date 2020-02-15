@@ -1,6 +1,6 @@
 #include "Camera.h"
 
-Camera::Camera() : dirtyFlag(false), projectionMatrixDirtyFlag(false) {
+Camera::Camera() : dirty(false), projectionMatrixDirty(false) {
 	frustum.SetProjectionData(0.1f, 100.0f, 45.0f, 1.0f);
 	frustum.SetCameraData(transform.GetPosition(), -transform.GetLocalZVector(), transform.GetLocalYVector());
 }
@@ -16,9 +16,9 @@ const glm::mat4& Camera::GetViewMatrix()
 
 const glm::mat4& Camera::GetProjectionMatrix()
 {
-	if (projectionMatrixDirtyFlag) {
+	if (projectionMatrixDirty) {
 		projectionMatrix = glm::perspective(glm::radians(frustum.fovy), frustum.aspectRatio, frustum.near, frustum.far);
-		projectionMatrixDirtyFlag = false;
+		projectionMatrixDirty = false;
 	}
 	return projectionMatrix;
 }
@@ -26,8 +26,8 @@ const glm::mat4& Camera::GetProjectionMatrix()
 void Camera::SetProjectionMatrix(float fovy_, float aspectRatio_, float near_, float far_)
 {
 	frustum.SetProjectionData(near_, far_, fovy_, aspectRatio_);
-	projectionMatrixDirtyFlag = true;
-	dirtyFlag = true;
+	projectionMatrixDirty = true;
+	dirty = true;
 }
 
 void Camera::WindowResizeCallback(const int width_, const int height_)

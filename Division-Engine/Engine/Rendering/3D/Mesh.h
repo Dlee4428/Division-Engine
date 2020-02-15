@@ -3,8 +3,8 @@
 
 #include "../../../DivisionPCH.h"
 #include "../../Core/Entity/Entity.h"
-#include "../Buffers/IBO.h"
-#include "../Buffers/VBO.h"
+#include "../Buffers/IndexBufferObject.h"
+#include "../Buffers/VertexBufferObject.h"
 
 
 // Implementing Assimp for Mesh
@@ -43,8 +43,8 @@ private:
 	void InitAssimpScene(const aiScene* scene_);
 
 	// Purpose for SubMeshes
-	std::vector<IBO*> iboVector;
-	std::vector<VBO*> vboVector;
+	std::vector<IndexBufferObject*> iboVector;
+	std::vector<VertexBufferObject*> vboVector;
 
 	// For Rendering Instance purposes
 	int instanceCount;

@@ -29,8 +29,8 @@ public:
 	void SetCameraPosition(const glm::vec3& position_);
 	void SetCameraOrientation(const glm::vec3& view_, const glm::vec3& up_, const glm::vec3& right_);
 
-	inline const Plane* GetPlanes() { if (planesDirtyFlag) UpdatePlanes();  return planes; }
-	const float* GetPackedPlaneData(); //useful to send to shaders
+	inline const Plane* GetPlanes() { if (planesDirty) UpdatePlanes();  return planes; }
+	const float* GetPackedPlaneData(); // Use for send data to shader
 
 	float fovy; //degrees
 	float aspectRatio;
@@ -45,11 +45,10 @@ private:
 	glm::vec3 up;
 	glm::vec3 right;
 
-	float packedPlaneData[24]; //6 times N.x, N.y, N.z and D
-
-	//near, far, left, right, up, down
-	Plane planes[PLANE_COUNT];
-	bool planesDirtyFlag;
+	float packedPlaneData[24]; // 6 times N.x, N.y, N.z and D
+	
+	Plane planes[PLANE_COUNT]; // Near, Far, Left, Right, Up, Down in order
+	bool planesDirty;
 	void UpdatePlanes();
 };
 

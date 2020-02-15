@@ -20,12 +20,12 @@ public:
 	const glm::mat4& GetProjectionMatrix();
 	inline Frustum& GetFrustum() { return frustum; }
 
-	inline bool ChangedSinceLastCall() { bool temp = dirtyFlag; dirtyFlag = false; return temp; }
+	inline bool ChangedSinceLastCall() { bool temp = dirty; dirty = false; return temp; }
 
 protected:
 	glm::mat4 projectionMatrix;
-	bool projectionMatrixDirtyFlag;
-	bool dirtyFlag;
+	bool projectionMatrixDirty;
+	bool dirty;
 	Frustum frustum;
 };
 
