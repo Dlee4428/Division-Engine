@@ -2,6 +2,7 @@
 #define SCENE_H
 
 #include "../Core/CoreEngine.h"
+#include "../Rendering/Buffers/FrameBufferObject.h"
 
 class Scene : public CoreEngine {
 public:
@@ -9,6 +10,7 @@ public:
 	~Scene();
 
 	virtual void OnCreate();
+	virtual void OnDestroy();
 	virtual void Render();
 	virtual void Update(const double deltaTime_);
 
@@ -19,8 +21,8 @@ public:
 
 	bool enableShadowMapping;
 private:
-	int terrain, skybox, sunlight;
-//	FBO* depthFBO;
+	int terrainID, skyboxID, sunlightID;
+	FrameBufferObject* depthFBO;
 
 	void InitFBO();
 };

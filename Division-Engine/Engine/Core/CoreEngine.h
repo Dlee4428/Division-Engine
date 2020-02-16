@@ -5,6 +5,7 @@
 #include "Event/EventHandler.h"
 #include "../Camera/Camera.h"
 #include "../Rendering/SceneObject.h"
+#include "../Graphic/Skybox.h"
 
 class CoreEngine : public EventHandler {
 public:
@@ -33,7 +34,7 @@ public:
 	inline int GetWindowWidth() const { return windowWidth; }
 	inline int GetWindowHeight() const { return windowHeight; }
 	inline Camera& GetCamera(int id_) const { return *cameras[id_]; }
-	inline void GetActiveCamera(int id_) { activeCamera = id_; }
+	inline void SetActiveCamera(int id_) { activeCamera = id_; }
 	inline Camera& GetActiveCamera() const { return *cameras[activeCamera]; }
 
 	// Add Object into CoreEngine

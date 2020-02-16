@@ -132,6 +132,7 @@
     <ClCompile Include="DivisionPCH.cpp" />
     <ClCompile Include="Engine\Camera\Camera.cpp" />
     <ClCompile Include="Engine\Camera\Frustum.cpp" />
+    <ClCompile Include="Engine\Camera\ViewCamera.cpp" />
     <ClCompile Include="Engine\Core\CoreEngine.cpp" />
     <ClCompile Include="Engine\Core\Debug\Debug.cpp" />
     <ClCompile Include="Engine\Core\Entity\EntityManager.cpp" />
@@ -164,6 +165,7 @@
     <ClInclude Include="DivisionPCH.h" />
     <ClInclude Include="Engine\Camera\Camera.h" />
     <ClInclude Include="Engine\Camera\Frustum.h" />
+    <ClInclude Include="Engine\Camera\ViewCamera.h" />
     <ClInclude Include="Engine\Core\CoreEngine.h" />
     <ClInclude Include="Engine\Core\Debug\Debug.h" />
     <ClInclude Include="Engine\Core\Entity\Entity.h" />
