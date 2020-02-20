@@ -108,6 +108,9 @@
     <ClCompile Include="Engine\Camera\ViewCamera.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Camera\TerrainCamera.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Camera\Camera.h">
@@ -204,6 +207,9 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Camera\ViewCamera.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Camera\TerrainCamera.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

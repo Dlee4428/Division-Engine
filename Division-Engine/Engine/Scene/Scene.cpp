@@ -1,5 +1,6 @@
 #include "Scene.h"
 #include "../Camera/ViewCamera.h"
+#include "../Camera/TerrainCamera.h"
 #include "../Core/Entity/EntityManager.h"
 #include "../Graphic/Skybox.h"
 #include "../Rendering/Texture/TexCubemap.h"
@@ -25,12 +26,13 @@ void Scene::OnCreate()
 	skyboxID = AddSceneObject(skybox);
 
 	// Camera
-	ViewCamera* camera = new ViewCamera();
+	TerrainCamera* camera = new TerrainCamera();
+	//ViewCamera* camera = new ViewCamera();
 	AddCamera(camera);
 	SetActiveCamera(0);
 	camera->SetProjectionMatrix(45.0f, (float)windowWidth / (float)windowHeight, 1.0f, 2048.0f);
-	//camera->setPositionAndRotation(glm::vec3(0, 500, 0), glm::vec3(-65, 0, 0));
-	camera->SetPositionAndLookAt(glm::vec3(5.0f, 500.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	camera->SetInitPosAndRot(glm::vec3(0, 500, 0), glm::vec3(-65, 0, 0));
+	//camera->SetPositionAndLookAt(glm::vec3(5.0f, 500.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 
 
 	//MISC
@@ -63,28 +65,31 @@ void Scene::Render()
 
 void Scene::Update(const double deltaTime_)
 {
+	TerrainCamera& camera = ((TerrainCamera&)GetActiveCamera());
+
+
 	CoreEngine::Update(deltaTime_);
 }
 
 void Scene::WindowResizeCallback(const int width_, const int height_)
 {
-	//CoreEngine::WindowResizeCallback(width_, height_);
+	CoreEngine::WindowResizeCallback(width_, height_);
 
 }
 
 void Scene::KeyCallback(const int key_, const int scanCode_, const int action_, const int mode_)
 {
-	//CoreEngine::KeyCallback(key_, scanCode_, action_, mode_);
+	CoreEngine::KeyCallback(key_, scanCode_, action_, mode_);
 }
 
 void Scene::CursorPositionCallback(const double xpos_, const double ypos_)
 {
-	//CoreEngine::CursorPositionCallback(xpos_, ypos_);
+	CoreEngine::CursorPositionCallback(xpos_, ypos_);
 }
 
 void Scene::MouseButtonCallback(const int button_, const int action_, const int mode_)
 {
-	//CoreEngine::mouseButtonCallback(button_, action_, mode_);
+	CoreEngine::mouseButtonCallback(button_, action_, mode_);
 }
 
 void Scene::InitFBO()

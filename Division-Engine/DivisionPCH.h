@@ -42,6 +42,7 @@
 #include <glm/gtx/string_cast.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <cmath>
+#include <limits>
 
 // DEBUG
 #include "Engine/Core/Debug/Debug.h"
