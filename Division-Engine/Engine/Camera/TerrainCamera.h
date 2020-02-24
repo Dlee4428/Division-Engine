@@ -8,7 +8,7 @@ public:
 	TerrainCamera(float vel_ = 300.0f);
 	~TerrainCamera();
 
-	virtual void Update(float deltaTime_);
+	virtual void Update(double deltaTime_);
 
 	void SetInitPosAndRot(const glm::vec3& pos_, const glm::vec3& rot_);
 

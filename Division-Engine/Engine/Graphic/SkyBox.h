@@ -3,14 +3,14 @@
 
 #include "../../DivisionPCH.h"
 
-#include "../Rendering/SceneObject.h"
+#include "../Rendering/GameObject.h"
 #include "../Rendering/Shader/Shader.h"
 #include "../Rendering/Shader/ShaderProgram.h"
 #include "../Rendering/Texture/TexCubemap.h"
 #include "../Rendering/3D/Mesh.h"
 #include "../Rendering/3D/MaterialHandler.h"
 
-class Skybox : public SceneObject {
+class Skybox : public GameObject {
 public:
 	Skybox(const std::string& texLocation_);
 	~Skybox();

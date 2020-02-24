@@ -7,7 +7,7 @@ TerrainCamera::~TerrainCamera()
 {
 }
 
-void TerrainCamera::Update(float deltaTime_)
+void TerrainCamera::Update(double deltaTime_)
 {
 	// This is CONDITIONAL OPERATOR SHORTHAND FOR
 	// IF / THEN / ELSE
@@ -16,17 +16,17 @@ void TerrainCamera::Update(float deltaTime_)
 
 	// Update Camera Movement
 	if (vectorMovement.x < 0) {
-		ProceedForward(-vectorMovement.x * initVel * deltaTime_);
+		ProceedForward((float)-vectorMovement.x * initVel * (float)deltaTime_);
 	}
 	else if (vectorMovement.x > 0) {
-		ProceedBackward(vectorMovement.x * initVel * deltaTime_);
+		ProceedBackward((float)vectorMovement.x * initVel * (float)deltaTime_);
 	}
 
 	if (vectorMovement.y < 0) {
-		ProceedLeft(vectorMovement.y * initVel * deltaTime_);
+		ProceedLeft((float)-vectorMovement.y * initVel * (float)deltaTime_);
 	}
 	else if (vectorMovement.y > 0) {
-		ProceedRight(vectorMovement.y * initVel * deltaTime_);
+		ProceedRight((float)vectorMovement.y * initVel * (float)deltaTime_);
 	}
 }
 
@@ -128,20 +128,16 @@ void TerrainCamera::KeyCallback(const int key_, const int scanCode_, const int a
 	else if (action_ == GLFW_PRESS) {
 		if (key_ == 'W') {
 			vectorMovement.x = -1;
-			printf("W\n");
 		}
 		else if (key_ == 'S') {
 			vectorMovement.x = 1;
-			printf("S\n");
 		}
 		
 		if (key_ == 'A') {
 			vectorMovement.y = -1;
-			printf("A\n");
 		}
 		else if (key_ == 'D') {
 			vectorMovement.y = 1;
-			printf("D\n");
 		}
 	}
 	// IF PRESS CONTROL KEY set 1 to z axis vector coords

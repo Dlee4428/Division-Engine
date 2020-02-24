@@ -1,5 +1,5 @@
-#ifndef SCENEOBJECT_H
-#define SCENEOBJECT_H
+#ifndef GAMEOBJECT_H
+#define GAMEOBJECT_H
 
 #include "../../DivisionPCH.h"
 #include "../Core/Event/EventHandler.h"
@@ -9,10 +9,10 @@
 
 class CoreEngine;
 
-class SceneObject : public EventHandler {
+class GameObject : public EventHandler {
 public:
-	SceneObject();
-	virtual ~SceneObject();
+	GameObject();
+	virtual ~GameObject();
 
 	inline void SetMesh(Mesh* mesh_) { this->mesh = mesh_; }
 	inline void SetMaterial(MaterialHandler* material_) { this->material = material_; }
@@ -40,4 +40,4 @@ protected:
 	bool renderEnabled;
 };
 
-#endif // !SCENEOBJECT_H
+#endif // !GAMEOBJECT_H

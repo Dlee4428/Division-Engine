@@ -140,6 +140,7 @@
     <ClCompile Include="Engine\FX\DirectionLight.cpp" />
     <ClCompile Include="Engine\FX\Light.cpp" />
     <ClCompile Include="Engine\Graphic\Skybox.cpp" />
+    <ClCompile Include="Engine\Graphic\SunDirection.cpp" />
     <ClCompile Include="Engine\Graphic\Terrain.cpp" />
     <ClCompile Include="Engine\Math\Noise.cpp" />
     <ClCompile Include="Engine\Math\Plane.cpp" />
@@ -152,7 +153,7 @@
     <ClCompile Include="Engine\Rendering\Buffers\IndexBufferObject.cpp" />
     <ClCompile Include="Engine\Rendering\Buffers\VertexArrayObject.cpp" />
     <ClCompile Include="Engine\Rendering\Buffers\VertexBufferObject.cpp" />
-    <ClCompile Include="Engine\Rendering\SceneObject.cpp" />
+    <ClCompile Include="Engine\Rendering\GameObject.cpp" />
     <ClCompile Include="Engine\Rendering\Shader\Shader.cpp" />
     <ClCompile Include="Engine\Rendering\Shader\ShaderProgram.cpp" />
     <ClCompile Include="Engine\Rendering\Texture\Tex2D.cpp" />
@@ -176,6 +177,7 @@
     <ClInclude Include="Engine\FX\DirectionLight.h" />
     <ClInclude Include="Engine\FX\Light.h" />
     <ClInclude Include="Engine\Graphic\Skybox.h" />
+    <ClInclude Include="Engine\Graphic\SunDirection.h" />
     <ClInclude Include="Engine\Graphic\Terrain.h" />
     <ClInclude Include="Engine\Math\Noise.h" />
     <ClInclude Include="Engine\Math\Plane.h" />
@@ -188,7 +190,7 @@
     <ClInclude Include="Engine\Rendering\Buffers\IndexBufferObject.h" />
     <ClInclude Include="Engine\Rendering\Buffers\VertexArrayObject.h" />
     <ClInclude Include="Engine\Rendering\Buffers\VertexBufferObject.h" />
-    <ClInclude Include="Engine\Rendering\SceneObject.h" />
+    <ClInclude Include="Engine\Rendering\GameObject.h" />
     <ClInclude Include="Engine\Rendering\Shader\Shader.h" />
     <ClInclude Include="Engine\Rendering\Shader\ShaderProgram.h" />
     <ClInclude Include="Engine\Rendering\Texture\Tex2D.h" />

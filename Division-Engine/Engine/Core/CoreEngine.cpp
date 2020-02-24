@@ -137,12 +137,12 @@ void CoreEngine::CreateTimerLoop()
 
 void CoreEngine::OnDestroy()
 {
-	if (sceneObjects.size() > 0) {
-		for (auto obj : sceneObjects) {
+	if (gameObjects.size() > 0) {
+		for (auto obj : gameObjects) {
 			delete obj;
 			obj = nullptr;
 		}
-		sceneObjects.clear();
+		gameObjects.clear();
 	}
 
 	if (cameras.size() > 0) {
@@ -161,7 +161,7 @@ void CoreEngine::OnDestroy()
 void CoreEngine::OnCreate()
 {
 	// SceneObjects OnCreate()
-	for (auto object : sceneObjects) {
+	for (auto object : gameObjects) {
 		object->OnCreate();
 	}
 	initialized = true;
@@ -169,7 +169,7 @@ void CoreEngine::OnCreate()
 
 void CoreEngine::Render()
 {
-	for (auto object : sceneObjects) {
+	for (auto object : gameObjects) {
 		if (object->IsRenderEnabled()) {
 			object->Render();
 		}
@@ -179,7 +179,7 @@ void CoreEngine::Render()
 void CoreEngine::Update(const double deltaTime_)
 {
 	cameras[activeCamera]->Update(deltaTime_);
-	for (auto object : sceneObjects) {
+	for (auto object : gameObjects) {
 		object->Update(deltaTime_);
 	}
 }
@@ -256,11 +256,11 @@ void CoreEngine::AddCamera(Camera* camera_)
 	cameras.push_back(camera_);
 }
 
-int CoreEngine::AddSceneObject(SceneObject* sceneObject_)
+int CoreEngine::AddGameObject(GameObject* gameObject_)
 {
-	sceneObject_->SetCoreEngine(this);
-	sceneObjects.push_back(sceneObject_);
-	return sceneObjects.size() - 1;
+	gameObject_->SetCoreEngine(this);
+	gameObjects.push_back(gameObject_);
+	return gameObjects.size() - 1;
 }
 
 int CoreEngine::AddEventHandler(EventHandler* eventHandler_)

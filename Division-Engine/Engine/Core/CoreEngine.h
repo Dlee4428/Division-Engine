@@ -4,7 +4,7 @@
 #include "../../DivisionPCH.h"
 #include "Event/EventHandler.h"
 #include "../Camera/Camera.h"
-#include "../Rendering/SceneObject.h"
+#include "../Rendering/GameObject.h"
 #include "../Graphic/Skybox.h"
 
 class CoreEngine : public EventHandler {
@@ -39,13 +39,13 @@ public:
 
 	// Add Object into CoreEngine
 	void AddCamera(Camera* camera_);
-	int AddSceneObject(SceneObject* sceneObject_);
+	int AddGameObject(GameObject* gameObjects_);
 	int AddEventHandler(EventHandler* eventHandler_);
 
 protected:
 	GLFWwindow* window;
 
-	std::vector<SceneObject*> sceneObjects;
+	std::vector<GameObject*> gameObjects;
 	std::vector<EventHandler*> eventHandler;
 	std::vector<Camera*> cameras;
 	

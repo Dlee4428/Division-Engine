@@ -3,11 +3,11 @@
 
 #include "../../DivisionPCH.h"
 #include "Frustum.h"
-#include "../Rendering/SceneObject.h"
+#include "../Rendering/GameObject.h"
 
 // Encapsulating Projection and View matrices.			
 // Also maintains a Frustum to perform culling against. 
-class Camera : public SceneObject {
+class Camera : public GameObject {
 public:
 	Camera();
 	~Camera();
