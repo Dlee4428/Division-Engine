@@ -83,11 +83,11 @@ void Skybox::OnCreate()
 {
 }
 
-void Skybox::Render(int passIDref_)
+void Skybox::Render(int objectID_)
 {
 	material->Bind();
 
-	glUniformMatrix4fv(10, 1, GL_FALSE, glm::value_ptr(
+	glUniformMatrix4fv(3, 1, GL_FALSE, glm::value_ptr(
 		coreEngine->GetActiveCamera().GetProjectionMatrix() *
 		coreEngine->GetActiveCamera().GetViewMatrix() * 
 		transform.GetTransformationMatrix()));

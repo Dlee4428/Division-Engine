@@ -3,35 +3,45 @@
 
 
 #include "../../DivisionPCH.h"
-#include "../Camera/Camera.h"
 
-class Terrain {
+#include "../Camera/Camera.h"
+#include "../Rendering/GameObject.h"
+#include "../Graphic/SunDirection.h"
+
+class Terrain : public GameObject {
 public:
-	Terrain();
+	Terrain(SunDirection* sunDirection_);
 	~Terrain();
 
-	void OnCreate();
-	void Update(const float deltaTime_);
-	void Render();
+	virtual void OnCreate();
+	virtual void Render(int objectID_);
+	virtual void Update(double deltaTime_);
+
+	virtual void KeyCallback(const int key_, const int scanCode_, const int action_, const int mode_);
+
 private:
-	float displacementScale;
-	float tessellatedTriWidth;
-	glm::ivec2 gridSize;
-	glm::vec2 size;
+	// Pointers
+	Camera* camera;
+	SunDirection* sunDirection;
+
+	// Variables for Terrain Init
+	float scaleDisplacement;
+	float tessTriWidth;
+	glm::ivec2 pixelGridSize;
+	glm::vec2 initSize;
 	int patchCount;
 
-	Camera* camera;
-	//Sun* sun;
-
+	// For Frustum Top view
 	glm::mat4 topViewMatrix;
 
-	bool drawWireframe;
-	bool enableFog;
-	bool heightBasedTexturing;
+	// For KeyCallBack variables
+	bool fogVisible;
+	bool wireframeMode;
+	bool texBasedOnHeight;
 
-	//depth pass stuff
-	glm::mat4 sunProjectionMatrix;
-	glm::mat4 bias;
+	// For Terrain Depth pass
+	glm::mat4 sunProjMat;
+	glm::mat4 shadowBias;
 };
 
 #endif // !TERRAIN_H

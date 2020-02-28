@@ -13,7 +13,7 @@ void GameObject::OnCreate() {
 void GameObject::Update(double deltaTime_) {
 }
 
-void GameObject::Render(int passIDref_) {
+void GameObject::Render(int objectID_) {
 	BindMaterial();
 
 	if (mesh != 0) {

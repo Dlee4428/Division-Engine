@@ -16,7 +16,7 @@ public:
 	~Skybox();
 
 	virtual void OnCreate();
-	virtual void Render(int passIDref_);
+	virtual void Render(int objectID_);
 	virtual void Update(double deltaTime_);
 
 private:

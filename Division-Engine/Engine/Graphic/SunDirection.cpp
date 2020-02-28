@@ -22,9 +22,9 @@ void SunDirection::Update(double deltaTime_)
 {
 }
 
-void SunDirection::Render(int passIDref_)
+void SunDirection::Render(int objectID_)
 {
-	if (passIDref_ == 0) {
+	if (objectID_ == 0) {
 		material->Bind();
 
 		glDisable(GL_DEPTH_TEST);

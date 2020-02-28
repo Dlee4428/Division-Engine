@@ -79,6 +79,9 @@ public:
 	// Mostly Reducing stress on the GPU or CPU
 	inline void SetMipmapLevels(int mipmapLevels_) { mipmapLevels = mipmapLevels_; }
 
+
+	inline const ImageDataType& GetImageData(int idx_) { return images[idx_]; }
+
 protected:
 	GLenum type;
 	std::vector<ImageDataType> images;

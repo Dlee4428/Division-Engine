@@ -13,7 +13,7 @@ public:
 
 	virtual void OnCreate();
 	virtual void Update(double deltaTime_);
-	virtual void Render(int passIDref_ = 0);
+	virtual void Render(int objectID_);
 
 	virtual void KeyCallback(const int key_, const int scanCode_, const int action_, const int mode_);
 

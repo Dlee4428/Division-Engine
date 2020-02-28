@@ -1,0 +1,57 @@
+//how the fixed tessellator will work, and how to interpret its output
+layout (quads, fractional_even_spacing, ccw) in; // terrain.tes,
+
+// BINDING
+layout (binding = 0) uniform sampler2D displacementTexture; // terrain.tcs, terrain.tes, terrainDepthPass.tcs, terrainDepthPass.tes, 
+layout (binding = 1) uniform sampler2D normalsTexture; // terrain.fs, terrain2.fs,
+layout (binding = 2) uniform sampler2DArray albedoTextures; // terrain.fs, terrain2.fs,
+
+// Shadow Sampler - Depth comparison is active on the texture
+layout (binding = 3) uniform sampler2DShadow shadowMap; // terrain.fs, terrain2.fs,
+
+
+// LOCATION
+layout(location = 0) in vec3 position; // skybox.vs, 
+layout(location = 1) in vec2 texCoords;
+layout(vertices = 4) out;
+
+layout(location = 10) uniform mat4 mvp; // skybox.vs, 
+
+//MVP B = bias, remapping [-1, 1] to [0, 1]
+layout(location = 10) uniform mat4 shadowMatrix; // terrain.fs, terrain.gs, terrain2.fs,
+
+
+layout(location = 11) uniform mat4 view; // terrain.gs, terrain.tcs, terrain.tes, terrainDepthPass.tcs,
+layout(location = 12) uniform mat4 mvp; // terrainDepthPass.tes, terrainDepthPass.tes, 
+layout(location = 13) uniform mat4 projection; // terrain.gs, terrain.tcs, terrainDepthPass.tcs,
+layout(location = 14) uniform vec4 frustumPlanes[6]; // terrain.tcs, 
+
+
+
+// desired pixels per tri edge
+////////////////
+// PATCHS
+layout(location = 21) uniform ivec2 gridSize; // terrain.vs, terrainDepthPass.vs, 
+////////////////
+
+layout(location = 22) uniform float tessellatedTriWidth; // terrain.tcs, terrainDepthPass.tcs,
+layout(location = 23) uniform ivec2 viewportSize; // terrain.gs, terrain.tcs, terrainDepthPass.tcs,
+layout(location = 24) uniform float displacementScale; // terrain.fs, terrain.tcs, terrain.tes, terrain2.fs, terrainDepthPass.tcs, terrainDepthPass.tes, 
+
+////////////////
+// WORLD
+layout(location = 25) uniform vec2 terrainSize; // terrain.vs, terrainDepthPass.vs, 
+////////////////
+
+layout(location = 26) uniform bool enableWireframe; // terrain.fs, terrain2.fs,
+layout(location = 27) uniform bool enableShadowMapping; // terrain.fs, terrain2.fs,
+layout(location = 28) uniform bool enableFog; // terrain.fs, terrain2.fs,
+
+
+// SUN LOCATION
+layout(location = 30) uniform vec3 sunDirection; // terrain.fs, terrain2.fs,
+layout(location = 31) uniform vec3 sunColor; // terrain.fs, terrain2.fs,
+
+
+
+

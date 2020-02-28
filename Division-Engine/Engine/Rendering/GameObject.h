@@ -19,7 +19,7 @@ public:
 	inline void SetCoreEngine(CoreEngine* core_) { coreEngine = core_; }
 
 	virtual void OnCreate();
-	virtual void Render(int passIDref_ = 0);
+	virtual void Render(int objectID_ = 0);
 	virtual void Update(double deltaTime_);
 
 	inline Transform& GetTransform() { return transform; }

@@ -1,8 +1,7 @@
 #version 450 core
 
-layout (location = 0) in vec3 position;
-
-layout(location = 10) uniform mat4 mvp;
+layout(location = 0) in vec3 position;
+layout(location = 3) uniform mat4 mvp;
 
 out VertexShaderOut {
 	vec3 texCoord;
