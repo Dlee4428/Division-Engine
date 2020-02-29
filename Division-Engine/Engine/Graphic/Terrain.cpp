@@ -17,7 +17,7 @@ void Terrain::OnCreate()
 	tessTriWidth = 20.0f;
 	scaleDisplacement = 150.0f;
 	initSize = glm::vec2(1000.0f, 1000.0f); // 1km width and height
-	pixelGridSize = glm::ivec2(64, 64); // PixelGrid Size by 64 * 64
+	pixelGridSize = glm::ivec2(64, 64); // PixelGrid Size by 64 * 64, ivec2 = integers of vec2 instead of float
 	patchCount = pixelGridSize.x * pixelGridSize.y;
 
 	camera = &coreEngine->GetActiveCamera(); // Reference from Scene class CoreEngine

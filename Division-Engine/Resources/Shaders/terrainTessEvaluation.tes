@@ -1,0 +1,6 @@
+#version 450 core
+
+// WHAT TES DOES
+// The terrain height is calculated procedurally for 
+// each generated vertex in the tessellation evaluation shader.
+// How the fixed tessellator will work, and how to interpret its output
