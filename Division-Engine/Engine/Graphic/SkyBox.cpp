@@ -66,13 +66,13 @@ Skybox::Skybox(const std::string& texLocation_) : texLocation(texLocation_)
 	SetMaterial(matHandler);
 	SetMesh(mesh);
 
-	EntityManager& entityManager = EntityManager::GetInstance();
-	entityManager.AddEntity("skyboxVert", vertShader);
-	entityManager.AddEntity("skyboxFrag", fragShader);
-	entityManager.AddEntity("skyboxShaderProgram", shaderProgram);
-	entityManager.AddEntity("skyboxTexCube", texCube);
-	entityManager.AddEntity("skyboxMatHandler", matHandler);
-	entityManager.AddEntity("skyboxMesh", mesh);
+	EntityManager* entityManager = EntityManager::GetInstance();
+	entityManager->AddEntity("skyboxVert", vertShader);
+	entityManager->AddEntity("skyboxFrag", fragShader);
+	entityManager->AddEntity("skyboxShaderProgram", shaderProgram);
+	entityManager->AddEntity("skyboxTexCube", texCube);
+	entityManager->AddEntity("skyboxMatHandler", matHandler);
+	entityManager->AddEntity("skyboxMesh", mesh);
 }
 
 Skybox::~Skybox()

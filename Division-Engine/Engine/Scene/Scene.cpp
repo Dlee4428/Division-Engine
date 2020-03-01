@@ -21,7 +21,8 @@ void Scene::OnCreate()
 {
 	SetWindowProperties("Division Engine", 1280, 800);
 
-	EntityManager& entityManager = EntityManager::GetInstance();
+	// SET THE SINGLETON GET INSTANCE HERE
+	EntityManager* entityManager = EntityManager::GetInstance();
 
 	///////////////////////////////////////////////////
 	// Skybox
@@ -33,7 +34,7 @@ void Scene::OnCreate()
 	// SunDirection
 	Mesh* sunMesh = new Mesh();
 	sunMesh->InitFromFile("Resources/Models/sphere.obj");
-	entityManager.AddEntity("meshSphere", sunMesh);
+	entityManager->AddEntity("meshSphere", sunMesh);
 
 	// Shaders for the Sunlight
 	Shader* vertSunlight = new Shader("Resources/Shaders/sunVert.vs");
@@ -43,18 +44,18 @@ void Scene::OnCreate()
 	sunShaders.push_back(vertSunlight);
 	sunShaders.push_back(fragSunlight);
 	ShaderProgram* sunShaderProgram = new ShaderProgram(sunShaders);
-	entityManager.AddEntity("sunShaderProgram", sunShaderProgram);
+	entityManager->AddEntity("sunShaderProgram", sunShaderProgram);
 
 	// Sun Texture
 	Tex2D* sunTexture = new Tex2D();
 	sunTexture->InitFromImageFile("Resources/Textures/earthclouds.jpg");
-	entityManager.AddEntity("sunTextures", sunTexture);
+	entityManager->AddEntity("sunTextures", sunTexture);
 
 	// Sun Material Handler
 	MaterialHandler* sunMaterial = new MaterialHandler();
 	sunMaterial->SetTexture(0, sunTexture);
 	sunMaterial->SetShaderProgram(0, sunShaderProgram);
-	entityManager.AddEntity("sunMaterial", sunMaterial);
+	entityManager->AddEntity("sunMaterial", sunMaterial);
 
 	// Binding Sun
 	SunDirection* sunDirection = new SunDirection(-1.0f, 0.6f, 0.0f);

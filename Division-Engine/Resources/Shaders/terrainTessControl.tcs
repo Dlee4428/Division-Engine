@@ -4,3 +4,89 @@
 // Level of detail (determining the tessellation level) and view frustum culling are performed in the tessellation control shader. 
 // Level of detail is calculated based on the projected screen size of a sphere fitted to each patch edge.
 // Frustum Culling is performed by testing the bounding sphere of the patch against the view frustum planes.
+
+layout(binding = 0) uniform sampler2D texture;
+
+// THIS DETERMINES THE NUMBER OF LOOP SHADER RUN PER PATCH
+layout(vertices = 4) out;
+
+in TerrainVertOut {
+	vec2 texCoordNorm;
+	vec2 texCoordAlbedo;
+} tcs_in[];
+
+out TerrainTCSOut {
+	vec2 texCoordNorm;
+	vec2 texCoordAlbedo;
+} tcs_out[];
+
+layout(location = 11) uniform mat4 projMat;
+layout(location = 12) uniform mat4 viewMat;
+layout(location = 14) uniform vec4 frustum[6];
+layout(location = 15) uniform ivec2 viewPortSize;
+
+layout(location = 32) uniform float scaleDisplacement;
+layout(location = 34) uniform float tessTriWidth;
+
+
+// AABB FRUSTUM CULLING METHOD
+struct AABB {
+	vec3 min,
+	vec3 max;
+};
+
+// COMPUTE AABB PLANE INTERSECTION
+bool AABBPlaneIntersection(AABB aabb_, vec4 plane) {
+	// Convert AABB to center-extents representation
+	vec3 hD = (aabb_.max - aabb_.min) * 0.5; // Compute half diagonal
+	vec3 c = aabb.min + halfDiag; // Compute AABB center
+
+	float e = hD.x + abs(plane.x) +
+			  hD.y + abs(plane.y) +
+			  hD.z + abs(plane.z);  // Compute positive extents
+	
+	// Compute distance of box center from plane
+	float s = dot(c, plane.xyz) + plane.w;
+
+	// Intersection occurs when distance s falls within [-e, +e] if else statement
+	if (s - e > 0.0) {
+		return false; // Outside bound return false;
+	}
+	else if (s + e < 0.0) {
+		return true;  // Inside bound return true;
+	}
+	else {
+		return true;  // Even else, it's still intersecting within.
+	}
+}
+
+// COMPUTE AABB FRUSTUM INTERSECTION USING PREVIOUS AABB PLANE METHOD
+bool AABBFrustumIntersection(AABB aabb_) {
+	bool isIntersecting = false;
+	bool result = false;
+
+	for (int i = 0; i < 6; i++) {
+		result = AABBPlaneIntersection(aabb_, frustum[i]);	
+		if (!result) {
+			return false;
+		}
+		else {
+			isIntersecting = true;
+		}
+	}
+	return isIntersecting;
+}
+
+void OnCreateAABBPatch(vec3 patchA_, vec3 patchB_, vec3 patchC_, vec3 patchD_, out AABB aabb_){
+	// LINKING TO AABB MIN AND MAX USING INPUT VERTICES
+	aabb.min.x = patchD_.x;
+	aabb.min.y = min(0.0, scaleDisplacement);
+	aabb.min.z = patchD_.z;
+
+	aabb.max.x = patchB_.x;
+	aabb.max.y = min(0.0, scaleDisplacement);
+	aabb.max.z = patchB_.z;
+}
+
+
+// LEVEL OF DETAIL (LOD)

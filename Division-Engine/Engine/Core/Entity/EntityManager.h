@@ -7,15 +7,13 @@
 class EntityManager
 {
 public:
-	// This is Entity Repository
-	// I'm using Lazy-evaluated singleton design pattern C++ 11 implementation
-	// After Loading resources it will auto destroy
 	// Singleton design pattern to Intantiate functions for simply calling
-	// https://stackoverflow.com/questions/1008019/c-singleton-design-pattern
-	static EntityManager& GetInstance() {
-		static EntityManager instance;
-		return instance;
-	}
+	EntityManager(const EntityManager&) = delete;
+	EntityManager(EntityManager&&) = delete;
+	EntityManager& operator=(const EntityManager&) = delete;
+	EntityManager& operator=(EntityManager&&) = delete;
+
+	static EntityManager* GetInstance();
 
 	// Properly delete
 	void OnDestroy();
@@ -34,15 +32,8 @@ private:
 
 	std::unordered_map<std::string, Entity*> map;
 
-public:
-	EntityManager(EntityManager const&) = delete;
-	void operator=(EntityManager const&) = delete;
-
-// Note: Scott Meyers mentions in his Effective Modern
-//       C++ book, that deleted functions should generally
-//       be public as it results in better error messages
-//       due to the compilers behavior to check accessibility
-//       before deleted status
+	static std::unique_ptr<EntityManager> engineInstance;
+	friend std::default_delete<EntityManager>; // Whenever unique_ptr is out of scope this automatically call destructor
 };
 
 #endif // !ENTITYMANAGER_H

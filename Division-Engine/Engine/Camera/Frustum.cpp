@@ -69,8 +69,9 @@ void Frustum::UpdatePlanes() {
 }
 
 const float* Frustum::GetPackedPlaneData() {
-	if (planesDirty)
+	if (planesDirty) {
 		UpdatePlanes();
+	}
 
 	for (int i = 0; i < 6; ++i) {
 		Plane& plane = planes[i];
@@ -78,5 +79,6 @@ const float* Frustum::GetPackedPlaneData() {
 		memcpy(ptr, &plane.GetNormal(), 3 * sizeof(float));
 		*(ptr + 3) = plane.GetD();
 	}
+
 	return packedPlaneData;
 }

@@ -27,6 +27,8 @@ template void EntityManager::AddEntity<Tex2D>(const std::string& name_, Tex2D* e
 template void EntityManager::AddEntity<Tex2DArray>(const std::string& name_, Tex2DArray* entity_);
 template void EntityManager::AddEntity<TexCubemap>(const std::string& name_, TexCubemap* entity_);
 
+std::unique_ptr<EntityManager> EntityManager::engineInstance = nullptr;
+
 EntityManager::EntityManager() {
 }
 
@@ -34,9 +36,18 @@ EntityManager::~EntityManager() {
 	OnDestroy();
 }
 
+EntityManager* EntityManager::GetInstance()
+{
+	if (engineInstance.get() == nullptr) {
+		engineInstance.reset(new EntityManager);
+	}
+	return engineInstance.get();
+}
+
 void EntityManager::OnDestroy() {
-	for (auto it = map.begin(); it != map.end(); ++it)
+	for (auto it = map.begin(); it != map.end(); ++it) {
 		delete (*it).second;
+	}
 	map.clear();
 }
 
@@ -48,10 +59,12 @@ void EntityManager::AddEntity(const std::string& name_, T* entity_) {
 template<typename T>
 T* EntityManager::GetEntity(const std::string& name_) {
 	auto it = map.find(name_);
-	if (it == map.end())
+	if (it == map.end()) {
 		return 0;
-	else
+	}
+	else {
 		return (T*)((*it).second);
+	}
 }
 
 bool EntityManager::StoredEntity(const std::string& name_) {
