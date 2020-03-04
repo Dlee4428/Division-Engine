@@ -199,6 +199,9 @@
     <ClInclude Include="Engine\Rendering\Texture\TextureHandler.h" />
     <ClInclude Include="Engine\Scene\Scene.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Shaders\GL_PIPELINE_SUMMARY.glsl" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
