@@ -45,7 +45,7 @@ out TerrainGSOut {
 // MULTIPLY PROJ AND VIEW MATRIX
 mat4 projViewMat = projMat * viewMat;
 
-void vertEmission(int vert_, vec3 gEdgeDistance_) {
+void VertEmission(int vert_, vec3 gEdgeDistance_) {
 	gs_out.texCoordNorm = gs_in[vert_].texCoordNorm;
 	gs_out.texCoordAlbedo = gs_in[vert_].texCoordAlbedo;
 
@@ -65,7 +65,7 @@ void vertEmission(int vert_, vec3 gEdgeDistance_) {
 	EmitVertex();
 }
 
-vec2 viewportProjection(vec4 p_) {
+vec2 ViewportProjection(vec4 p_) {
 	vec4 clipSpace = projViewMat * p_;
 	clipSpace.xy /= clipSpace.w;
 	clipSpace.xy = ((clipSpace.xy * 0.5) + 0.5) * viewportSize;
@@ -87,6 +87,24 @@ void main() {
 
 	// DEFINING DOUBLE TRIANGLE AREA
 	// 1/2 * abs(cross(u, v)) with u and v being vectors from the same vertex
+	float dTriangle = abs((edge1.x * edge3.y) - (edge1.y * edge3.x));
 
+	// DEFINING TRIANGLE AREA
+	// Triangle area = Base * Height / 2,  Height = 2 * Area / Base
+	float height1 = dTriangle / length(edge1);
+	float height2 = dTriangle / length(edge2);
+	float height3 = dTriangle / length(edge3);
+
+	// EMIT VERTEX AND END PRIMITIVE
+	VertEmission(0, vec3(0, height2, 0));
+	VertEmission(1, vec3(0, 0, height3));
+	VertEmission(2, vec3(height1, 0, 0));
+
+	// EndPrimitive — complete the current output primitive on the first vertex stream
+	// completes the current output primitive on the first (and possibly only) vertex stream and starts a new one. 
+	// No vertex is emitted. 
+	// Calling EndPrimitive is equivalent to calling EmitStreamVertex with stream set to 0.
+	// Source - https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/EndPrimitive.xhtml
+	EndPrimitive();
 }
 
