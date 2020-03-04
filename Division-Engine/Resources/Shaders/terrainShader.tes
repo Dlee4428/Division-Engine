@@ -11,7 +11,7 @@
 // - fractional_even_spacing: There will always be an even number of segments. 
 //   Two of the segments will grow and shrink based on how close the tessellation level is to generating more vertices.
 // Primitive ordering
-// - ccw: 
+// - ccw: means that the PG will emit triangles in counter-clockwise order (you can also use cw for clockwise order). 
 // Source - https://www.khronos.org/opengl/wiki/Tessellation_Evaluation_Shader
 layout (quads, fractional_even_spacing, ccw) in;
 
@@ -31,19 +31,16 @@ out TerrainTESOut {
 } tes_out[];
 
 void main() {
-	// COMMENT HERE
 	vec2 texNorm1 = mix(tes_in[0].texCoordNorm, tes_in[1].texCoordNorm, gl_TessCoord.x);
 	vec2 texNorm2 = mix(tes_in[3].texCoordNorm, tes_in[2].texCoordNorm, gl_TessCoord.x);
-
 	vec2 texAlbedo1 = mix(tes_in[0].texCoordAlbedo, tes_in[1].texCoordAlbedo, gl_TessCoord.x);
 	vec2 texAlbedo2 = mix(tes_in[3].texCoordAlbedo, tes_in[2].texCoordAlbedo, gl_TessCoord.x);
-
 	vec4 pos1 = mix(gl_in[0].gl_Position, gl_in[1].gl_Position, gl_TessCoord.x);
 	vec4 pos2 = mix(gl_in[3].gl_Position, gl_in[2].gl_Position, gl_TessCoord.x);
 
 	tes_out.texCoordNorm = mix(texNorm1, texNorm2, gl_TessCoord.y);
 	tes_out.texCoordAlbedo = mix(texAlbedo1, texAlbedo2, gl_TessCoord.y);
-	
 	gl_Position = mix(pos1, pos2, gl_TessCoord.y);
+
 	gl_Position.y += texture(disTexture, tes_out.texCoordNorm).r * scaleDisplacement;
 }
