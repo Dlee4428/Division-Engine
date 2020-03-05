@@ -67,9 +67,9 @@ void Terrain::Render(int objectID_)
 		glUniform1f(32, scaleDisplacement);
 		glUniform2f(33, initSize.x, initSize.y);
 		glUniform1f(34, tessTriWidth);
-		glUniform1i(35, wireframeMode);
-		glUniform1i(36, ((Scene*)coreEngine)->enableShadowMapping);
-		glUniform1i(37, fogVisible);
+		glUniform1i(35, fogVisible);
+		glUniform1i(36, wireframeMode);
+		glUniform1i(37, ((Scene*)coreEngine)->enableShadowMapping);
 
 		// UNIFORM LOCATIONS FOR CAMERA
 		// CAMERA LOCATIONS STARTS FROM 11~
@@ -80,8 +80,8 @@ void Terrain::Render(int objectID_)
 		glUniform2i(15, width, height);
 
 		// UNIFORM LOCATIONS FOR SUN
-		glUniform3fv(30, 1, (GLfloat*)&sunDirection->GetDirectionLight().GetDirection());
-		glUniform3fv(31, 1, (GLfloat*)&sunDirection->GetDirectionLight().GetColor());
+		glUniform3fv(20, 1, (GLfloat*)&sunDirection->GetDirectionLight().GetDirection());
+		glUniform3fv(21, 1, (GLfloat*)&sunDirection->GetDirectionLight().GetColor());
 
 		// GL PATCHES
 		glDrawArraysInstanced(GL_PATCHES, 0, 4, patchCount);
