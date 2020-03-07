@@ -91,13 +91,21 @@ void main() {
 		result += textureProjOffset(shadowMapping, fs_in.shadowMappingPos, ivec2( 1,  1));
 		shadowFactor = result * 0.25;
 	}
-
+	//////////////////////////////////////////////////
 	// TERRAIN LIGHTING
-	vec3 norm = normalize((texture(textureNorm, fs_in.texCoordNorm).rgb * 2.0) - 0.8);
+	//////////////////////////////////////////////////
+	// NORMAL MAPPING
+	// Source - https://learnopengl.com/Advanced-Lighting/Normal-Mapping
+	// Obtain normal from normal map in range [0, 1]
+	vec3 norm = texture(textureNorm, fs_in.texCoordNorm).rgb;
+	// Transform normal vector to range [-1, 1];
+	norm = normalize(norm * 2.0 - 1.0);
+	//////////////////////////////////////////////////
+	// GENERAL LIGHTING FROM THE SUN DIRECTION
 	vec3 ambient = directionalLightColor * 0.15;
 	vec3 diffuse = directionalLightColor * max(0.0, dot(norm, -directionalLight));
 	vec3 light = ambient + shadowFactor * diffuse;
-
+	//////////////////////////////////////////////////
 	// HEIGHT BASED MULTILAYER TEXTURE
 	float height = fs_in.worldPos;
 	const float thres1 = scaleDisplacement * 0.15;
