@@ -1,0 +1,94 @@
+#version 450 core
+
+// WHAT TCS DOES
+// Level of detail (determining the tessellation level) and view frustum culling are performed in the tessellation control shader. 
+// Level of detail is calculated based on the projected screen size of a sphere fitted to each patch edge.
+// Frustum Culling is performed by testing the bounding sphere of the patch against the view frustum planes.
+
+layout(binding = 0) uniform sampler2D disTexture;
+
+// THIS DETERMINES THE NUMBER OF LOOP SHADER RUN PER PATCH
+layout(vertices = 4) out;
+
+in TerrainVertOut {
+	vec2 texCoordNorm;
+} tcs_in[];
+
+out TerrainTCSOut {
+	vec2 texCoordNorm;
+} tcs_out[];
+
+layout(location = 11) uniform mat4 projMat;
+layout(location = 12) uniform mat4 viewMat;
+layout(location = 15) uniform ivec2 viewportSize;
+layout(location = 32) uniform float scaleDisplacement;
+layout(location = 34) uniform float tessTriWidth;
+
+
+// COMPUTE LEVEL OF DETAIL (LOD)
+// PURPOSE - TO PROJECT SPHERE INTO THE CLIP SPACE AND RETURN THE AMOUNT OF TRIANGLES
+// THAT ARE REQUIRED TO FIT ACROSS THE SCREENSPACE DIAMETER.
+
+float ScreenSpaceTess(vec3 controlP1_, vec3 controlP2_, float diameter_) {
+	vec3 center = (controlP1_ + controlP2_) * 0.5;
+	vec4 p1 = viewMat * vec4(center, 1.0);
+	vec4 p2 = viewMat * vec4(center, 1.0);
+	p2.x += diameter_;
+
+	vec4 clipSpace1 = projMat * p1;
+	vec4 clipSpace2 = projMat * p2;
+
+	clipSpace1 /= clipSpace1.w;
+	clipSpace2 /= clipSpace2.w;
+
+	clipSpace1.xy = ((clipSpace1.xy * 0.5) + 0.5) * viewportSize;
+	clipSpace2.xy = ((clipSpace2.xy * 0.5) + 0.5) * viewportSize;
+
+	// distance func is from openGL shader
+	return distance(clipSpace1, clipSpace2) / tessTriWidth;
+}
+
+void main() {
+	// gl_InvocationID — contains the invocation index of the current shader
+	// contains the index of the output patch vertex assigned to the shader invocation. 
+	// It is assigned an integer value in the range [0, N-1] where N is the number of output patch vertices.
+	// Source - https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/gl_InvocationID.xhtml
+	if (gl_InvocationID == 0) {	
+		// Address control points positions to tess control shader in order to passing y in the pipeline
+		vec4 controlP1 = gl_in[0].gl_Position;
+		vec4 controlP2 = gl_in[1].gl_Position;
+		vec4 controlP3 = gl_in[2].gl_Position;
+		vec4 controlP4 = gl_in[3].gl_Position;
+
+		// Displace control points on y position for the height on LOD
+		controlP1.y += texture(disTexture, tcs_in[0].texCoordNorm).r * scaleDisplacement;
+		controlP2.y += texture(disTexture, tcs_in[1].texCoordNorm).r * scaleDisplacement;
+		controlP3.y += texture(disTexture, tcs_in[2].texCoordNorm).r * scaleDisplacement;
+		controlP4.y += texture(disTexture, tcs_in[3].texCoordNorm).r * scaleDisplacement;
+
+		const float sideLength = controlP2.x - controlP1.x; // Determining side length of tiles to the end
+
+		// gl_TessLevelOuter — contains the outer tessellation levels for the current patch
+		// Used to assign values to the corresponding outer tesellation levels of the current patch. 
+		// The values written into gl_TessLevelOuter by the tessellation control shader are used by the tessellation primitive generator 
+		// to control primitive tessellation and may be read by the subsequent tessellation evaluation shader.
+		// Source - https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/gl_TessLevelOuter.xhtml
+		gl_TessLevelOuter[0] = ScreenSpaceTess(controlP4.xyz, controlP1.xyz, sideLength);
+		gl_TessLevelOuter[1] = ScreenSpaceTess(controlP1.xyz, controlP2.xyz, sideLength);
+		gl_TessLevelOuter[2] = ScreenSpaceTess(controlP2.xyz, controlP3.xyz, sideLength);
+		gl_TessLevelOuter[3] = ScreenSpaceTess(controlP3.xyz, controlP4.xyz, sideLength);
+
+		// gl_TessLevelInner — contains the inner tessellation levels for the current patch
+		// Used to assign values to the corresponding inner tesellation levels of the current patch. 
+		// The values written into gl_TessLevelInner by the tessellation control shader are used by the tessellation primitive generator 
+		// to control primitive tessellation and may be read by the subsequent tessellation evaluation shader.
+		// Source - https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/gl_TessLevelInner.xhtml
+		gl_TessLevelInner[0] = (gl_TessLevelOuter[1] + gl_TessLevelOuter[3]) * 0.5;
+		gl_TessLevelInner[1] = (gl_TessLevelOuter[0] + gl_TessLevelOuter[2]) * 0.5;
+	}
+	// SEND TCS OUT USING gl_InvocationID references
+	tcs_out[gl_InvocationID].texCoordNorm = tcs_in[gl_InvocationID].texCoordNorm;
+
+	// SEND GL OUT USING gl_InvocationID references
+	gl_out[gl_InvocationID].gl_Position = gl_in[gl_InvocationID].gl_Position;
+}

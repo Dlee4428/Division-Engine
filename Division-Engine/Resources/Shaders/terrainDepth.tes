@@ -1,0 +1,37 @@
+#version 450 core
+
+// WHAT TES DOES
+// The terrain height is calculated procedurally for 
+// each generated vertex in the tessellation evaluation shader.
+// How the fixed tessellator will work, and how to interpret its output
+
+// Abstract patch type
+// - quads: The patch is a quadrilateral. The output is a series of triangles.
+// Spacing
+// - fractional_even_spacing: There will always be an even number of segments. 
+//   Two of the segments will grow and shrink based on how close the tessellation level is to generating more vertices.
+// Primitive ordering
+// - ccw: means that the PG will emit triangles in counter-clockwise order (you can also use cw for clockwise order). 
+// Source - https://www.khronos.org/opengl/wiki/Tessellation_Evaluation_Shader
+layout (quads, fractional_even_spacing, ccw) in;
+
+layout (binding = 0) uniform sampler2D disTexture;
+
+layout (location = 13) uniform mat4 sunMat;
+layout (location = 32) uniform float scaleDisplacement;
+
+in TerrainTCSOut {
+	vec2 texCoordNorm;
+} tes_in[];
+
+void main() {
+	vec2 texNorm1 = mix(tes_in[0].texCoordNorm, tes_in[1].texCoordNorm, gl_TessCoord.x);
+	vec2 texNorm2 = mix(tes_in[3].texCoordNorm, tes_in[2].texCoordNorm, gl_TessCoord.x);
+	vec4 pos1 = mix(gl_in[0].gl_Position, gl_in[1].gl_Position, gl_TessCoord.x);
+	vec4 pos2 = mix(gl_in[3].gl_Position, gl_in[2].gl_Position, gl_TessCoord.x);
+
+	vec2 texCoordNorm = mix(texNorm1, texNorm2, gl_TessCoord.y);
+	gl_Position = mix(pos1, pos2, gl_TessCoord.y);
+	gl_Position.y += texture(disTexture, texCoordNorm).r * scaleDisplacement;
+	gl_Position = sunMat * gl_Position;
+}
