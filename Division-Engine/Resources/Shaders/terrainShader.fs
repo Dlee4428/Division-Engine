@@ -22,7 +22,7 @@ layout(location = 36) uniform bool wireFrameMode;
 layout(location = 37) uniform bool isShadowMapping;
 
 // RECEIVE OUTS FROM GS
-out TerrainGSOut {
+in TerrainGSOut {
 	vec2 texCoordNorm;
 	vec2 texCoordAlbedo;
 	vec3 eyePos;
@@ -35,11 +35,11 @@ out vec4 fragColor;
 float shadowFactor = 1.0;
 
 // PARAM - Y VERT POS, THRESHHOLD FOR MULTITEXTURE HEIGHT BASED RENDERING
-vec4 BlendTextureAlbedo(float vert_, thres1_, thres2_, thres3_, float transition_) {
+vec4 BlendTextureAlbedo(float vert_, float thres1_, float thres2_, float thres3_, float transition_) {
 	// BLENDING TEXTURE IF ELSE STATEMENT TO CAP WHERE TO BLEND EACH STAGE OF HEIGHT
 	// THRESHOLD STAGE 1
 	if (vert_ < thres1_ - transition_) {
-		return texture(textureAlbedo, vec3(fs_in.texCoordAlbedo, 0.0);
+		return texture(textureAlbedo, vec3(fs_in.texCoordAlbedo, 0.0));
 	}
 	else if (vert_ < thres1_ + transition_) {
 		float factor1 = (vert_ - (thres1_ - transition_)) / (2.0 * transition_);
@@ -107,13 +107,13 @@ void main() {
 	vec3 light = ambient + shadowFactor * diffuse;
 	//////////////////////////////////////////////////
 	// HEIGHT BASED MULTILAYER TEXTURE
-	float height = fs_in.worldPos;
+	float height = fs_in.worldPos.y;
 	const float thres1 = scaleDisplacement * 0.15;
 	const float thres2 = scaleDisplacement * 0.45;
 	const float thres3 = scaleDisplacement * 0.9;
 	const float transition = scaleDisplacement * 0.1;
 
-	vec4 albedoTex = BlendTextureAlbedo(height, thres1, thre2, thre3, transition);
+	vec4 albedoTex = BlendTextureAlbedo(height, thres1, thres2, thres3, transition);
 	float texSlope = 1.0 - norm.y;
 	albedoTex = mix(albedoTex, texture(textureAlbedo, vec3(fs_in.texCoordAlbedo, 3.0)), texSlope * 0.15);
 	

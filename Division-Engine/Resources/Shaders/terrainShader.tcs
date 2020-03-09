@@ -23,23 +23,21 @@ out TerrainTCSOut {
 layout(location = 11) uniform mat4 projMat;
 layout(location = 12) uniform mat4 viewMat;
 layout(location = 14) uniform vec4 frustum[6];
-layout(location = 15) uniform ivec2 viewportSize;
 
 layout(location = 32) uniform float scaleDisplacement;
 layout(location = 34) uniform float tessTriWidth;
-
+layout(location = 22) uniform ivec2 viewportSize;
 
 // AABB FRUSTUM CULLING METHOD
 struct AABB {
-	vec3 min,
-	vec3 max;
+	vec3 min, max;
 };
 
 // COMPUTE AABB PLANE INTERSECTION
 bool AABBPlaneIntersection(AABB aabb_, vec4 plane) {
 	// Convert AABB to center-extents representation
 	vec3 hD = (aabb_.max - aabb_.min) * 0.5; // Compute half diagonal
-	vec3 c = aabb.min + halfDiag; // Compute AABB center
+	vec3 c = aabb_.min + hD; // Compute AABB center
 
 	float e = hD.x + abs(plane.x) +
 			  hD.y + abs(plane.y) +
@@ -79,13 +77,13 @@ bool AABBFrustumIntersection(AABB aabb_) {
 
 void OnCreateAABBPatch(vec3 patchA_, vec3 patchB_, vec3 patchC_, vec3 patchD_, out AABB aabb_){
 	// LINKING TO AABB MIN AND MAX USING INPUT VERTICES
-	aabb.min.x = patchD_.x;
-	aabb.min.y = min(0.0, scaleDisplacement);
-	aabb.min.z = patchD_.z;
+	aabb_.min.x = patchD_.x;
+	aabb_.min.y = min(0.0, scaleDisplacement);
+	aabb_.min.z = patchD_.z;
 
-	aabb.max.x = patchB_.x;
-	aabb.max.y = min(0.0, scaleDisplacement);
-	aabb.max.z = patchB_.z;
+	aabb_.max.x = patchB_.x;
+	aabb_.max.y = min(0.0, scaleDisplacement);
+	aabb_.max.z = patchB_.z;
 }
 
 
@@ -105,8 +103,8 @@ float ScreenSpaceTess(vec3 controlP1_, vec3 controlP2_, float diameter_) {
 	clipSpace1 /= clipSpace1.w;
 	clipSpace2 /= clipSpace2.w;
 
-	clipSpace1.xy = ((clipSpace1.xy * 0.5) + 0.5) * viewPortSize;
-	clipSpace2.xy = ((clipSpace2.xy * 0.5) + 0.5) * viewPortSize;
+	clipSpace1.xy = ((clipSpace1.xy * 0.5) + 0.5) * viewportSize;
+	clipSpace2.xy = ((clipSpace2.xy * 0.5) + 0.5) * viewportSize;
 
 	// distance func is from openGL shader
 	return distance(clipSpace1, clipSpace2) / tessTriWidth;

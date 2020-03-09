@@ -19,12 +19,13 @@ public:
 	virtual void CursorPositionCallback(const double xpos_, const double ypos_);
 	virtual void MouseButtonCallback(const int button_, const int action_, const int mode_);
 
-	bool enableShadowMapping;
+	bool isShadowMapping;
+
 private:
-	int terrainID, skyboxID, sunDirectionID;
+	int terrainLoc, skyboxLoc, sunDirectionLoc;
 	FrameBufferObject* depthFBO;
 
-	void InitFBO();
+	void InitFrameBufferObject();
 };
 
 #endif // !SCENE_H

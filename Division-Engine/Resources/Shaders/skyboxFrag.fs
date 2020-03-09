@@ -10,7 +10,7 @@ uniform samplerCube cubeMap;
 
 void main() {
 	vec4 envColor = texture(cubeMap, fs_in.texCoords);
-	float lowerLimit = 10.0;
+	float lowerLimit = 3.0;
 	float upperLimit = 0.0;
 	vec3 skyColor = vec3(0.6, 0.6, 0.6);
 	float factor = (fs_in.texCoords.y - lowerLimit) / (upperLimit - lowerLimit);

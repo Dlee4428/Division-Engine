@@ -37,7 +37,6 @@ private:
 	// For KeyCallBack variables
 	bool fogVisible;
 	bool wireframeMode;
-	bool texBasedOnHeight;
 
 	// For Terrain Depth pass
 	glm::mat4 sunProjMat;

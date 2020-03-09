@@ -22,7 +22,7 @@ template TexCubemap* EntityManager::GetEntity<TexCubemap>(const std::string& nam
 template void EntityManager::AddEntity<MaterialHandler>(const std::string& name_, MaterialHandler* entity_);
 template void EntityManager::AddEntity<Mesh>(const std::string& name_, Mesh* entity_);
 template void EntityManager::AddEntity<ShaderProgram>(const std::string& name_, ShaderProgram* entity_);
-template void EntityManager::AddEntity<Shader>(const std::string& name_, Shader* asset);
+template void EntityManager::AddEntity<Shader>(const std::string& name_, Shader* entity_);
 template void EntityManager::AddEntity<Tex2D>(const std::string& name_, Tex2D* entity_);
 template void EntityManager::AddEntity<Tex2DArray>(const std::string& name_, Tex2DArray* entity_);
 template void EntityManager::AddEntity<TexCubemap>(const std::string& name_, TexCubemap* entity_);

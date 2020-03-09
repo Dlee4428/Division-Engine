@@ -1,30 +1,30 @@
-﻿#version 450 core
-///////////////////////////////////////////////////////////
+#version 450 core
+
 // A Geometry Shader (GS) is a Shader program written in GLSL 
 // that governs the processing of Primitives. Geometry shaders reside between the 
 // Vertex Shaders (or the optional Tessellation stage) 
 // and the fixed-function Vertex Post-Processing stage.
-///////////////////////////////////////////////////////////
+
 // Each geometry shader is designed to accept a specific Primitive type as input and to output a specific primitive type. 
 // The accepted input primitive type is defined in the shader:
 // layout(input_primitive) in;
 // GS inputs: points, lines, lines_adjacency, triangles, triangles_adjacency
-///////////////////////////////////////////////////////////
+
 layout(triangles) in;
 
-///////////////////////////////////////////////////////////
+
 // The vertex count is the number of vertices that the GS 
 // receives per-input primitive.
 // The output primitive type is defined as follows:
-// layout(output_primitive​, max_vertices = vert_count​) out;
-///////////////////////////////////////////////////////////
+// layout(output_primitive?, max_vertices = vert_count?) out;
+
 layout(triangle_strip, max_vertices = 3) out;
 
 // UNIFORM LOCATIONS FOR TERRAIN GEOMETRY SHADER
 layout(location = 11) uniform mat4 projMat;
 layout(location = 12) uniform mat4 viewMat;
 layout(location = 13) uniform mat4 shadowMat; // Remapping [-1, 1] to [0, 1]
-layout(location = 15) uniform ivec2 viewportSize;
+layout(location = 22) uniform ivec2 viewportSize;
 
 // RECEIVE TES OUTs
 out TerrainTESOut {
@@ -57,7 +57,7 @@ void VertEmission(int vert_, vec3 gEdgeDistance_) {
 
 	gl_Position = projViewMat * gl_in[vert_].gl_Position;
 
-	// EmitVertex — emit a vertex to the first vertex stream
+	// EmitVertex � emit a vertex to the first vertex stream
 	// emits the current values of output variables to the current output primitive on 
 	// the first (and possibly only) primitive stream. 
 	// It is equivalent to calling EmitStreamVertex with stream set to 0.
@@ -76,9 +76,9 @@ vec2 ViewportProjection(vec4 p_) {
 void main() {
 	
 	// DEFINING PRIMS
-	vec2 prim1 = viewportProjection(gl_in[0].gl_Position);
-	vec2 prim2 = viewportProjection(gl_in[1].gl_Position);
-	vec2 prim3 = viewportProjection(gl_in[2].gl_Position);
+	vec2 prim1 = ViewportProjection(gl_in[0].gl_Position);
+	vec2 prim2 = ViewportProjection(gl_in[1].gl_Position);
+	vec2 prim3 = ViewportProjection(gl_in[2].gl_Position);
 
 	// DEFINING EDGES
 	vec2 edge1 = prim2 - prim1;
@@ -100,7 +100,7 @@ void main() {
 	VertEmission(1, vec3(0, 0, height3));
 	VertEmission(2, vec3(height1, 0, 0));
 
-	// EndPrimitive — complete the current output primitive on the first vertex stream
+	// EndPrimitive � complete the current output primitive on the first vertex stream
 	// completes the current output primitive on the first (and possibly only) vertex stream and starts a new one. 
 	// No vertex is emitted. 
 	// Calling EndPrimitive is equivalent to calling EmitStreamVertex with stream set to 0.

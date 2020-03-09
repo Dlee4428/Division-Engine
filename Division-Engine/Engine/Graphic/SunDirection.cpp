@@ -12,7 +12,7 @@ SunDirection::~SunDirection()
 void SunDirection::OnCreate()
 {
 	transform.SetPosition(sunDistance, 0.0f, 0.0f, WORLD);
-	transform.SetScale(50.0f, 50.0f, 50.0f, WORLD);
+	//transform.SetScale(50.0f, 50.0f, 50.0f, WORLD);
 	transform.SetRotation(0.0f, 90.0f, 0.0f, LOCAL, LOCAL);
 	transform.RotateObj(0.0f, 0.0f, 25.0f, WORLD, WORLD);
 	DirectionControl();

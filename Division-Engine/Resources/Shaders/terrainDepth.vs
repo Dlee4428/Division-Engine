@@ -16,12 +16,9 @@ const vec3 quadPatches[] = vec3[](
 	vec3( 0.5,  0.0, -0.5),
 	vec3(-0.5,  0.0, -0.5));
 
-const vec2 HALF_COORDS = vec2(0.5, 0.5);
-vec2 terrainOffset = vec2(0.0, 0.0);
-
 out TerrainVertOut {
 	vec2 texCoordNorm;
-} tvs_out;
+} vs_out;
 
 
 void main() {
@@ -29,12 +26,13 @@ void main() {
 	const vec2 patchSizeWorld = terrainSizeWorld / vec2(pixelGridSize);
 
 	// TERRAIN OFFSETS
+	vec2 terrainOffset;
 	terrainOffset.x = float(gl_InstanceID& (pixelGridSize.x -1)) * patchSizeWorld.x; // gl_InstanceID — contains the index of the current primitive in an instanced draw command
-	terrainOffset.y = floor(float(gl_InstanceID) / gridSize.x) * patchSizeWorld.y;
+	terrainOffset.y = float(int(float(gl_InstanceID) / float(pixelGridSize.x))) * patchSizeWorld.y;
 
 	// TERRAIN DISPLACEMENT WITH NORMAL TEXTURE
-	tvs_out.texCoordNorm = (((quadPatches[gl_VertexID].xz + HALF_COORDS) * patchSizeWorld) + terrainOffset) / terrainSizeWorld;
-	tvs_out.texCoordNorm.t = 1.0 - tvs_out.texCoord.t; // TEXTURE COORDINATE OF t
+	vs_out.texCoordNorm = (((quadPatches[gl_VertexID].xz + vec2(0.5)) * patchSizeWorld) + terrainOffset) / terrainSizeWorld;
+	vs_out.texCoordNorm.t = 1.0 - vs_out.texCoordNorm.t; // TEXTURE COORDINATE OF t
 
 	// TERRAIN INSTANCING FOR POSITION
 	// SETTING Y AXIS WITH STATIC VALUE

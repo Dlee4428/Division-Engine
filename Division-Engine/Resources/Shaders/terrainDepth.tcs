@@ -20,7 +20,7 @@ out TerrainTCSOut {
 
 layout(location = 11) uniform mat4 projMat;
 layout(location = 12) uniform mat4 viewMat;
-layout(location = 15) uniform ivec2 viewportSize;
+layout(location = 22) uniform ivec2 viewportSize;
 layout(location = 32) uniform float scaleDisplacement;
 layout(location = 34) uniform float tessTriWidth;
 
