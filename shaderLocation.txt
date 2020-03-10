@@ -19,24 +19,24 @@ layout(binding = 3) uniform sampler2DShadow shadowMapping;
 layout(vertices = 4) out;
 
 // CAMERA LOCATION
-layout(location = 11) uniform mat4 projMat;
-layout(location = 12) uniform mat4 viewMat;
-layout(location = 13) uniform mat4 shadowMat; // Remapping [-1, 1] to [0, 1]
+layout(location = 10) uniform mat4 shadowMat; // Remapping [-1, 1] to [0, 1]
+layout(location = 11) uniform mat4 viewMat;
+layout(location = 12) uniform mat4 mvp;
+layout(location = 13) uniform mat4 projMat;
 layout(location = 14) uniform vec4 frustum[6];
-layout(location = 15) uniform ivec2 viewportSize;
-
 // SUN LOCATION
 layout(location = 20) uniform vec3 directionalLight; // Sun Direction
 layout(location = 21) uniform vec3 directionalLightColor; // Sun Light Color
 
 // TERRAIN LOCATION
+layout(location = 30) uniform ivec2 viewportSize;
 layout(location = 31) uniform ivec2 pixelGridSize;		// PATCHES SIZE
 layout(location = 32) uniform float scaleDisplacement;
-layout(location = 33) uniform vec2 terrainSizeWorld;	// WORLD SIZE
-layout(location = 34) uniform float tessTriWidth;
-layout(location = 35) uniform bool isFogEnable;
-layout(location = 36) uniform bool wireFrameMode;
-layout(location = 37) uniform bool isShadowMapping;
+layout(location = 33) uniform float tessTriWidth;
+layout(location = 34) uniform vec2 terrainSizeWorld;	// WORLD SIZE
+layout(location = 35) uniform bool wireFrameMode;
+layout(location = 36) uniform bool isShadowMapping;
+layout(location = 37) uniform bool isFogEnable;
 
 
 

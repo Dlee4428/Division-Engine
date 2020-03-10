@@ -19,6 +19,11 @@ TextureHandler::~TextureHandler()
 {
 	OnDestroy();
 
+	for (unsigned int i = 0; i < images.size(); ++i) {
+		if (images[i].data != 0) {
+			delete[] images[i].data;
+		}
+	}
 }
 
 void TextureHandler::OnCreate()
@@ -30,12 +35,6 @@ void TextureHandler::OnDestroy()
 {
 	// Clear out Textures and image memory data 
 	glDeleteTextures(1, &name);
-
-	for (unsigned int i = 0; i < images.size(); ++i) {
-		if (images[i].data != 0) {
-			delete[] images[i].data;
-		}
-	}
 }
 
 void TextureHandler::Bind() const
@@ -86,9 +85,9 @@ void TextureHandler::InitFromImageData(uint32_t width_, uint32_t height_, const 
 		imageData.data = new uint8_t[imageData.sizeInBytes];
 		memcpy(imageData.data, imageData_, imageData.sizeInBytes);
 	}
-	else
+	else {
 		imageData.data = 0;
-
+	}
 	images.push_back(imageData);
 
 	LoadGPU();

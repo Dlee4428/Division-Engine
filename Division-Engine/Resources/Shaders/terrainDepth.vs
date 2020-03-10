@@ -7,7 +7,7 @@
 // The actual patch origin positions are then calculated from the gl_InstanceID in the vertex shader.
 
 layout(location = 31) uniform ivec2 pixelGridSize;		// PATCHES SIZE
-layout(location = 33) uniform vec2 terrainSizeWorld;	// WORLD SIZE
+layout(location = 34) uniform vec2 terrainSizeWorld;	// WORLD SIZE
 
 // SETTING VEC3 ARRAYS OF QUAD PATCHES
 const vec3 quadPatches[] = vec3[](

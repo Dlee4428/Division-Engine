@@ -56,6 +56,6 @@ void SunDirection::KeyCallback(const int key_, const int scanCode_, const int ac
 
 void SunDirection::DirectionControl()
 {
-	const glm::vec3 direction = -transform.GetPosition();
+	const glm::vec3& direction = -transform.GetPosition();
 	dLight.SetDirection(direction.x, direction.y, direction.z);
 }

@@ -10,24 +10,27 @@ layout(binding = 2) uniform sampler2DArray textureAlbedo;
 // This type changes the texture lookup functions (see below), adding an additional component to the textures' usual texture coordinate vector. 
 // This extra value is used to compare against the value sampled from the texture.
 // Source - https://www.khronos.org/opengl/wiki/Sampler_(GLSL)
-layout(binding = 3) uniform sampler2DShadow shadowMapping;
+layout(binding = 3) uniform sampler2DShadow shadowMap;
 
 // UNIFORM LOCATION FOR TERRAIN FRAGMENT SHADER
-layout(location = 13) uniform mat4 shadowMat;
-layout(location = 20) uniform vec3 directionalLight; // Sun Direction
-layout(location = 21) uniform vec3 directionalLightColor; // Sun Light Color
+layout(location = 10) uniform mat4 shadowMat;
+
+layout(location = 20) uniform vec3 sunLightDirection; // Sun Direction
+layout(location = 21) uniform vec3 sunColor; // Sun Light Color
+
 layout(location = 32) uniform float scaleDisplacement;
-layout(location = 35) uniform bool isFogEnable;
-layout(location = 36) uniform bool wireFrameMode;
-layout(location = 37) uniform bool isShadowMapping;
+layout(location = 35) uniform bool wireFrameMode;
+layout(location = 36) uniform bool isShadowMapping;
+layout(location = 37) uniform bool isFogEnable;
+
 
 // RECEIVE OUTS FROM GS
 in TerrainGSOut {
-	vec2 texCoordNorm;
-	vec2 texCoordAlbedo;
 	vec3 eyePos;
 	vec3 worldPos;
 	vec4 shadowMappingPos;
+	vec2 texCoordNorm;
+	vec2 texCoordAlbedo;
 	noperspective vec3 gEdgeDistance; // The value will be linearly interpolated in window-space. This is usually not what you want, but it can have its uses.
 } fs_in;
 
@@ -42,33 +45,28 @@ vec4 BlendTextureAlbedo(float vert_, float thres1_, float thres2_, float thres3_
 		return texture(textureAlbedo, vec3(fs_in.texCoordAlbedo, 0.0));
 	}
 	else if (vert_ < thres1_ + transition_) {
-		float factor1 = (vert_ - (thres1_ - transition_)) / (2.0 * transition_);
-		return mix(
-			texture(textureAlbedo, vec3(fs_in.texCoordAlbedo, 0.0)), 
-			texture(textureAlbedo, vec3(fs_in.texCoordAlbedo, 1.0)), 
-			factor1);
-	}
-	// THRESHOLD STAGE 2
+		float factor = (vert_ - (thres1_ - transition_)) / (2.0 * transition_);
+		return mix(texture(textureAlbedo, vec3(fs_in.texCoordAlbedo, 0.0)), 
+				   texture(textureAlbedo, vec3(fs_in.texCoordAlbedo, 1.0)), 
+				   factor);
+	} // THRESHOLD STAGE 2
 	else if (vert_ < thres2_ - transition_) {
 		return texture(textureAlbedo, vec3(fs_in.texCoordAlbedo, 1.0));
 	}
 	else if (vert_ < thres2_ + transition_) {
-		float factor2 = (vert_ - (thres2_ - transition_)) / (2.0 * transition_);
-		return mix(
-			texture(textureAlbedo, vec3(fs_in.texCoordAlbedo, 1.0)), 
-			texture(textureAlbedo, vec3(fs_in.texCoordAlbedo, 2.0)), 
-			factor2);
-	}
-	// THRESHOLD STAGE 3
+		float factor = (vert_ - (thres2_ - transition_)) / (2.0 * transition_);
+		return mix(texture(textureAlbedo, vec3(fs_in.texCoordAlbedo, 1.0)), 
+				   texture(textureAlbedo, vec3(fs_in.texCoordAlbedo, 2.0)), 
+				   factor);
+	} // THRESHOLD STAGE 3
 	else if (vert_ < thres3_ - transition_) {
 		return texture(textureAlbedo, vec3(fs_in.texCoordAlbedo, 2.0));
 	}
 	else if (vert_ < thres3_ + transition_) {
-		float factor3 = (vert_ - (thres3_ - transition_)) / (2.0 * transition_);
-		return mix(
-			texture(textureAlbedo, vec3(fs_in.texCoordAlbedo, 2.0)), 
-			texture(textureAlbedo, vec3(fs_in.texCoordAlbedo, 3.0)), 
-			factor3);
+		float factor = (vert_ - (thres3_ - transition_)) / (2.0 * transition_);
+		return mix(texture(textureAlbedo, vec3(fs_in.texCoordAlbedo, 2.0)), 
+				   texture(textureAlbedo, vec3(fs_in.texCoordAlbedo, 3.0)), 
+				   factor);
 	}
 	else {
 		return texture(textureAlbedo, vec3(fs_in.texCoordAlbedo, 3.0));
@@ -85,27 +83,26 @@ void main() {
 		// (because its a shadow sampler with depth comparison)
 		// 4 texels sampled diagonally. If filtering is enabled this yields 16 texels
 		float result = 0;
-		result += textureProjOffset(shadowMapping, fs_in.shadowMappingPos, ivec2(-1, -1));
-		result += textureProjOffset(shadowMapping, fs_in.shadowMappingPos, ivec2( 1, -1));
-		result += textureProjOffset(shadowMapping, fs_in.shadowMappingPos, ivec2(-1,  1));
-		result += textureProjOffset(shadowMapping, fs_in.shadowMappingPos, ivec2( 1,  1));
+		result += textureProjOffset(shadowMap, fs_in.shadowMappingPos, ivec2(-1, -1));
+		result += textureProjOffset(shadowMap, fs_in.shadowMappingPos, ivec2(1, -1));
+		result += textureProjOffset(shadowMap, fs_in.shadowMappingPos, ivec2(-1, 1));
+		result += textureProjOffset(shadowMap, fs_in.shadowMappingPos, ivec2(1, 1));
 		shadowFactor = result * 0.25;
 	}
-	//////////////////////////////////////////////////
 	// TERRAIN LIGHTING
-	//////////////////////////////////////////////////
 	// NORMAL MAPPING
 	// Source - https://learnopengl.com/Advanced-Lighting/Normal-Mapping
 	// Obtain normal from normal map in range [0, 1]
-	vec3 norm = texture(textureNorm, fs_in.texCoordNorm).rgb;
+	vec3 normal = texture(textureNorm, fs_in.texCoordNorm).rgb;
+
 	// Transform normal vector to range [-1, 1];
-	norm = normalize(norm * 2.0 - 1.0);
-	//////////////////////////////////////////////////
+	normal = normalize(normal * 2.0 - 1.0);
+
 	// GENERAL LIGHTING FROM THE SUN DIRECTION
-	vec3 ambient = directionalLightColor * 0.15;
-	vec3 diffuse = directionalLightColor * max(0.0, dot(norm, -directionalLight));
+	vec3 ambient = sunColor * 0.15;
+	vec3 diffuse = sunColor * max(0.0, dot(normal, -sunLightDirection));
 	vec3 light = ambient + shadowFactor * diffuse;
-	//////////////////////////////////////////////////
+
 	// HEIGHT BASED MULTILAYER TEXTURE
 	float height = fs_in.worldPos.y;
 	const float thres1 = scaleDisplacement * 0.15;
@@ -113,21 +110,21 @@ void main() {
 	const float thres3 = scaleDisplacement * 0.9;
 	const float transition = scaleDisplacement * 0.1;
 
-	vec4 albedoTex = BlendTextureAlbedo(height, thres1, thres2, thres3, transition);
-	float texSlope = 1.0 - norm.y;
-	albedoTex = mix(albedoTex, texture(textureAlbedo, vec3(fs_in.texCoordAlbedo, 3.0)), texSlope * 0.15);
+	vec4 tex = BlendTextureAlbedo(height, thres1, thres2, thres3, transition);
+	float texSlope = 1.0 - normal.y;
+	tex = mix(tex, texture(textureAlbedo, vec3(fs_in.texCoordAlbedo, 3.0)), texSlope * 0.15);
 	
-	fragColor = vec4(light, 1.0) * albedoTex;
+	fragColor = vec4(light, 1.0) * tex;
 
 	// WIREFRAME MODE
 	if (wireFrameMode) {
-		const vec4 wireframeColor = vec4(0.0, 0.0, 0.0, 0.0);
+		const vec4 wireframeColor = vec4(0.0, 0.0, 0.0, 1.0);
 		const float wireframeLineSize = 1.0;
 		float wireframeStrength = 0.0;
 
-		float fDistToEdge = min(fs_in.gEdgeDistance.x, min(fs_in.gEdgeDistance.y, fs_in.gEdgeDistance.z));
-		if (fDistToEdge <= wireframeLineSize) {
-			wireframeStrength = smoothstep(0.0, 1.0, 1.0 - (fDistToEdge / wireframeLineSize));
+		float minDistToEdge = min(fs_in.gEdgeDistance.x, min(fs_in.gEdgeDistance.y, fs_in.gEdgeDistance.z));
+		if (minDistToEdge <= wireframeLineSize) {
+			wireframeStrength = smoothstep(0.0, 1.0, 1.0 - (minDistToEdge / wireframeLineSize));
 		}
 		fragColor = wireframeColor * wireframeStrength + (1.0 - wireframeStrength) * fragColor;
 	}

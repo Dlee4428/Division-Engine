@@ -14,8 +14,8 @@ void Terrain::OnCreate()
 	// Source - https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glPatchParameter.xhtml
 	glPatchParameteri(GL_PATCH_VERTICES, 4);
 
-	tessTriWidth = 20.0f;
 	scaleDisplacement = 150.0f;
+	tessTriWidth = 20.0f;
 	pixelGridSize = glm::ivec2(64, 64); // PixelGrid Size by 64 * 64, ivec2 = integers of vec2 instead of float
 	initSize = glm::vec2(1000.0f, 1000.0f); // 1km width and height
 	patchCount = pixelGridSize.x * pixelGridSize.y;
@@ -43,7 +43,7 @@ void Terrain::OnCreate()
 	wireframeMode = false;
 
 	// MINIMAP FROM TOP VIEW
-	topViewMatrix = glm::lookAt(glm::vec3(0, 1500.0f, 0), glm::vec3(0, 0, 0), glm::vec3(0, 0, -1));
+	topViewMatrix = glm::lookAt(glm::vec3(0, 1400.0f, 0), glm::vec3(0, 0, 0), glm::vec3(0, 0, -1));
 
 }
 
@@ -60,28 +60,28 @@ void Terrain::Render(int objectID_)
 		material->SetActiveShader(0);
 		material->Bind();
 
-		// UNIFORM LOCATIONS FOR TERRAIN
-		// LOCATIONS STARTS FROM 31~ FOR TERRAIN LOCATIONS
-		glUniform2i(31, pixelGridSize.x, pixelGridSize.y); 
-		glUniform1f(32, scaleDisplacement);
-		glUniform2f(33, initSize.x, initSize.y);
-		glUniform1f(34, tessTriWidth);
-		glUniform1i(35, fogVisible);
-		glUniform1i(36, wireframeMode);
-		glUniform1i(37, ((Scene*)coreEngine)->isShadowMapping);
-
 		// UNIFORM LOCATIONS FOR CAMERA
 		// CAMERA LOCATIONS STARTS FROM 11~
-		glUniformMatrix4fv(11, 1, GL_FALSE, glm::value_ptr(camera->GetProjectionMatrix()));
-		glUniformMatrix4fv(12, 1, GL_FALSE, glm::value_ptr(camera->GetViewMatrix()));
-		glUniformMatrix4fv(13, 1, GL_FALSE, glm::value_ptr(shadowBias * sunMatrix));
+		glUniformMatrix4fv(10, 1, GL_FALSE, glm::value_ptr(shadowBias * sunMatrix));
+		glUniformMatrix4fv(11, 1, GL_FALSE, glm::value_ptr(camera->GetViewMatrix()));
+		glUniformMatrix4fv(13, 1, GL_FALSE, glm::value_ptr(camera->GetProjectionMatrix()));
 		glUniform4fv(14, 6, camera->GetFrustum().GetPackedPlaneData());
-		glUniform2i(22, width, height);
 
 		// UNIFORM LOCATIONS FOR SUN
 		glUniform3fv(20, 1, (GLfloat*)&sunDirection->GetDirectionLight().GetDirection());
 		glUniform3fv(21, 1, (GLfloat*)&sunDirection->GetDirectionLight().GetColor());
 
+		// UNIFORM LOCATIONS FOR TERRAIN
+		// LOCATIONS STARTS FROM 31~ FOR TERRAIN LOCATIONS
+		glUniform2i(30, width, height);
+		glUniform2i(31, pixelGridSize.x, pixelGridSize.y);
+		glUniform1f(32, scaleDisplacement);
+		glUniform1f(33, tessTriWidth);
+		glUniform2f(34, initSize.x, initSize.y);
+		glUniform1i(35, wireframeMode);
+		glUniform1i(36, ((Scene*)coreEngine)->isShadowMapping);
+		glUniform1i(37, fogVisible);
+	
 		// GL PATCHES
 		glDrawArraysInstanced(GL_PATCHES, 0, 4, patchCount);
 
@@ -94,8 +94,8 @@ void Terrain::Render(int objectID_)
 
 		glViewport(x, y, w, h);
 
-		glUniformMatrix4fv(12, 1, GL_FALSE, glm::value_ptr(topViewMatrix));
-		glUniform2i(22, w, h);
+		glUniformMatrix4fv(11, 1, GL_FALSE, glm::value_ptr(topViewMatrix));
+		glUniform2i(23, w, h);
 		glDrawArraysInstanced(GL_PATCHES, 0, 4, patchCount);
 
 		glEnable(GL_DEPTH_TEST);
@@ -106,17 +106,17 @@ void Terrain::Render(int objectID_)
 		material->SetActiveShader(1);
 		material->Bind();
 
+		// CAMERA UNIFORM LOCATION BUT SHADOW MAPPING
+		glUniformMatrix4fv(11, 1, GL_FALSE, glm::value_ptr(camera->GetViewMatrix()));
+		glUniformMatrix4fv(12, 1, GL_FALSE, glm::value_ptr(sunMatrix));
+		glUniformMatrix4fv(13, 1, GL_FALSE, glm::value_ptr(camera->GetProjectionMatrix()));
+
 		// TERRAIN UNIFORM LOCATION BUT SHADOW MAPPING
+		glUniform2i(30, width, height);
 		glUniform2i(31, pixelGridSize.x, pixelGridSize.y);
 		glUniform1f(32, scaleDisplacement);
-		glUniform2f(33, initSize.x, initSize.y);
-		glUniform1f(34, tessTriWidth);
-
-		// CAMERA UNIFORM LOCATION BUT SHADOW MAPPING
-		glUniformMatrix4fv(11, 1, GL_FALSE, glm::value_ptr(camera->GetProjectionMatrix()));
-		glUniformMatrix4fv(12, 1, GL_FALSE, glm::value_ptr(camera->GetViewMatrix()));
-		glUniformMatrix4fv(13, 1, GL_FALSE, glm::value_ptr(sunMatrix));
-		glUniform2i(22, width, height);
+		glUniform1f(33, tessTriWidth);
+		glUniform2f(34, initSize.x, initSize.y);
 
 		// INIT FOR DEPTH TEXTURE OF WIDTH AND HEIGHT AT GL VIEWPORT
 		const ImageDataType& depthTexture = material->GetTextureHandler(3)->GetImageData(0);

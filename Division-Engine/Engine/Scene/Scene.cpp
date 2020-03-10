@@ -9,13 +9,13 @@
 #include "../Rendering/Texture/Tex2D.h"
 #include "../Rendering/Texture/Tex2DArray.h"
 
-Scene::Scene() : depthFBO(0), skyboxLoc(0), terrainLoc(0), sunDirectionLoc(0),
-isShadowMapping(false) {
+Scene::Scene() {
 	depthFBO = 0;
 }
 
 Scene::~Scene()
 {
+	delete depthFBO;
 	OnDestroy();
 }
 
@@ -25,14 +25,6 @@ void Scene::OnCreate()
 
 	// SET THE SINGLETON GET INSTANCE HERE
 	EntityManager* entityManager = EntityManager::GetInstance();
-
-	// TERRAIN CAMERA
-	TerrainCamera* camera = new TerrainCamera();
-	AddCamera(camera);
-	SetActiveCamera(0);
-	camera->SetProjectionMatrix(45.0f, (float)windowWidth / (float)windowHeight, 1.0f, 2048.0f);
-	camera->SetInitPosAndRot(glm::vec3(0, 500, 0), glm::vec3(-65, 0, 0));
-
 
 	// SKYBOX
 	Skybox* skybox = new Skybox("Resources/Textures/SkyBoxCube/skycube.png");
@@ -85,17 +77,17 @@ void Scene::OnCreate()
 
 	std::vector<Shader*> terrainShaderVector;
 	terrainShaderVector.push_back(terrainVS);
+	terrainShaderVector.push_back(terrainFS);
 	terrainShaderVector.push_back(terrainTCS);
 	terrainShaderVector.push_back(terrainTES);
 	terrainShaderVector.push_back(terrainGS);
-	terrainShaderVector.push_back(terrainFS);
 	ShaderProgram* terrainShaderProgramVector = new ShaderProgram(terrainShaderVector);
 
 	// ADD TO REGISTRY FOR STORING DATA
 	entityManager->AddEntity("terrainVS", terrainVS);
+	entityManager->AddEntity("terrainFS", terrainFS);
 	entityManager->AddEntity("terrainTCS", terrainTCS);
 	entityManager->AddEntity("terrainTES", terrainTES);
-	entityManager->AddEntity("terrainFS", terrainFS);
 	entityManager->AddEntity("terrainGS", terrainGS);
 	entityManager->AddEntity("terrainShaderProgram", terrainShaderProgramVector);
 
@@ -119,7 +111,7 @@ void Scene::OnCreate()
 	// TERRAIN DISPLACEMENT TEXTURE
 	// Init Height 16bit4 map
 	Tex2D* terrainDis1 = new Tex2D();
-	terrainDis1->InitFromImageFile("Resources/Textures/height16bit4.png", ImageFormatType::IMAGE_FORMAT_R16);
+	terrainDis1->InitFromImageFile("Resources/Textures/height16bit1.png", ImageFormatType::IMAGE_FORMAT_R16);
 	terrainDis1->ModifyTextureParam(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	terrainDis1->ModifyTextureParam(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	entityManager->AddEntity("terrainDis1", terrainDis1);
@@ -209,6 +201,13 @@ void Scene::OnCreate()
 	InitFrameBufferObject();
 	isShadowMapping = true;
 
+	// TERRAIN CAMERA
+	TerrainCamera* camera = new TerrainCamera();
+	AddCamera(camera);
+	SetActiveCamera(0);
+	camera->SetProjectionMatrix(45.0f, (float)windowWidth / (float)windowHeight, 1.0f, 2048.0f);
+	camera->SetInitPosAndRot(glm::vec3(0, 500, 0), glm::vec3(-65, 0, 0));
+
 	//MISC
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
@@ -223,59 +222,6 @@ void Scene::OnCreate()
 
 void Scene::OnDestroy()
 {
-	delete depthFBO;
-}
-
-void Scene::Render()
-{
-	static const GLfloat backGroundColor[4] = { 0.7f, 0.7f, 0.7f, 1.0f };
-	static const GLfloat depthValue = 1.0f;
-
-	if (isShadowMapping) {
-		depthFBO->Bind();
-		glEnable(GL_POLYGON_OFFSET_FILL);
-		glClearBufferfv(GL_DEPTH, 0, &depthValue);
-		gameObjects[terrainLoc]->Render(1);
-		glDisable(GL_POLYGON_OFFSET_FILL);
-		depthFBO->BindDefaultFramebuffer();
-	}
-	
-	glClearBufferfi(GL_DEPTH_STENCIL, 0, 1.0f, 0);
-
-	CoreEngine::Render();
-}
-
-void Scene::Update(const double deltaTime_)
-{
-	TerrainCamera& camera = ((TerrainCamera&)GetActiveCamera());
-
-
-	CoreEngine::Update(deltaTime_);
-}
-
-void Scene::WindowResizeCallback(const int width_, const int height_)
-{
-	CoreEngine::WindowResizeCallback(width_, height_);
-
-	if (initialized) {
-		InitFrameBufferObject();
-	}
-
-}
-
-void Scene::KeyCallback(const int key_, const int scanCode_, const int action_, const int mode_)
-{
-	CoreEngine::KeyCallback(key_, scanCode_, action_, mode_);
-}
-
-void Scene::CursorPositionCallback(const double xpos_, const double ypos_)
-{
-	CoreEngine::CursorPositionCallback(xpos_, ypos_);
-}
-
-void Scene::MouseButtonCallback(const int button_, const int action_, const int mode_)
-{
-	CoreEngine::mouseButtonCallback(button_, action_, mode_);
 }
 
 void Scene::InitFrameBufferObject()
@@ -292,12 +238,12 @@ void Scene::InitFrameBufferObject()
 	depthTex->ModifyTextureParam(GL_TEXTURE_COMPARE_MODE, GL_COMPARE_REF_TO_TEXTURE);
 	depthTex->ModifyTextureParam(GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);
 
-	MaterialHandler* depthMat = EntityManager::GetInstance()->GetEntity<MaterialHandler>("terrainMat1");
-	depthMat->SetTexture(3, depthTex);
-	depthMat = EntityManager::GetInstance()->GetEntity<MaterialHandler>("terrainMat2");
-	depthMat->SetTexture(3, depthTex);
-	depthMat = EntityManager::GetInstance()->GetEntity<MaterialHandler>("terrainMat3");
-	depthMat->SetTexture(3, depthTex);
+	MaterialHandler* m = EntityManager::GetInstance()->GetEntity<MaterialHandler>("terrainMat1");
+	m->SetTexture(3, depthTex);
+	m = EntityManager::GetInstance()->GetEntity<MaterialHandler>("terrainMat2");
+	m->SetTexture(3, depthTex);
+	m = EntityManager::GetInstance()->GetEntity<MaterialHandler>("terrainMat3");
+	m->SetTexture(3, depthTex);
 
 	EntityManager::GetInstance()->AddEntity("depthTex", depthTex);
 
@@ -307,4 +253,60 @@ void Scene::InitFrameBufferObject()
 
 	depthFBO->AttachTextureToDepthBuffer(*depthTex);
 	depthFBO->LoadGPU();
+}
+
+void Scene::Render()
+{
+	static const GLfloat backGroundColor[4] = { 0.7f, 0.7f, 0.7f, 1.0f };
+	static const GLfloat depthValue = 1.0f;
+
+	if (isShadowMapping) {
+		depthFBO->Bind();
+		glEnable(GL_POLYGON_OFFSET_FILL);
+		glClearBufferfv(GL_DEPTH, 0, &depthValue);
+		gameObjects[terrainLoc]->Render(1);
+		glDisable(GL_POLYGON_OFFSET_FILL);
+
+		depthFBO->BindDefaultFramebuffer();
+	}
+	
+	glClearBufferfi(GL_DEPTH_STENCIL, 0, 1.0f, 0);
+
+	CoreEngine::Render();
+}
+
+void Scene::Update(const double deltaTime_)
+{
+	TerrainCamera& camera = ((TerrainCamera&)GetActiveCamera());
+	CoreEngine::Update(deltaTime_);
+}
+
+void Scene::WindowResizeCallback(const int width_, const int height_)
+{
+	CoreEngine::WindowResizeCallback(width_, height_);
+
+	// IF WINDOW RESIZE CALLBACKS INIT FBO TO ARRANGE DEPTH SHADER
+	if (initialized) {
+		InitFrameBufferObject();
+	}
+
+}
+
+void Scene::KeyCallback(const int key_, const int scanCode_, const int action_, const int mode_)
+{
+	CoreEngine::KeyCallback(key_, scanCode_, action_, mode_);
+
+	if (key_ == GLFW_KEY_H && action_ == GLFW_PRESS) {
+		isShadowMapping = !isShadowMapping;
+	}
+}
+
+void Scene::CursorPositionCallback(const double xpos_, const double ypos_)
+{
+	CoreEngine::CursorPositionCallback(xpos_, ypos_);
+}
+
+void Scene::MouseButtonCallback(const int button_, const int action_, const int mode_)
+{
+	CoreEngine::mouseButtonCallback(button_, action_, mode_);
 }
