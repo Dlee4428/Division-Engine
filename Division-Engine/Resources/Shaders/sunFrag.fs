@@ -1,14 +1,16 @@
 #version 450 core
 
-uniform sampler2D tex2D;
-out vec4 color;
-
 in VertexShaderOut {
-	vec2 TexCoords;
+	vec3 vertNormal;
+	vec3 vertDir;
+	vec2 texCoords;
 } fs_in;
 
-void main() {
-	// color = vec4(1.0, 1.0, 1.0, 1.0);
+out vec4 fragColor;
 
-	color = texture(tex2D, fs_in.TexCoords);
+uniform sampler2D tex2D;
+
+void main() {
+	vec4 texColor = texture(tex2D, fs_in.texCoords);
+	fragColor = texColor;
 }
