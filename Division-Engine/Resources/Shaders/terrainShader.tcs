@@ -4,6 +4,7 @@
 // Level of detail (determining the tessellation level) and view frustum culling are performed in the tessellation control shader. 
 // Level of detail is calculated based on the projected screen size of a sphere fitted to each patch edge.
 // Frustum Culling is performed by testing the bounding sphere of the patch against the view frustum planes.
+
 // THIS DETERMINES THE NUMBER OF LOOP SHADER RUN PER PATCH
 layout (vertices = 4) out;
 

@@ -114,6 +114,9 @@
     <ClCompile Include="Engine\Rendering\GameObject.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Graphic\Water.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Camera\Camera.h">
@@ -216,6 +219,9 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Rendering\GameObject.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphic\Water.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

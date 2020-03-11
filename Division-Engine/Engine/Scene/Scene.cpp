@@ -111,7 +111,7 @@ void Scene::OnCreate()
 	// TERRAIN DISPLACEMENT TEXTURE
 	// Init Height 16bit4 map
 	Tex2D* terrainDis1 = new Tex2D();
-	terrainDis1->InitFromImageFile("Resources/Textures/height16bit1.png", ImageFormatType::IMAGE_FORMAT_R16);
+	terrainDis1->InitFromImageFile("Resources/Textures/height16bit4.png", ImageFormatType::IMAGE_FORMAT_R16);
 	terrainDis1->ModifyTextureParam(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	terrainDis1->ModifyTextureParam(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	entityManager->AddEntity("terrainDis1", terrainDis1);

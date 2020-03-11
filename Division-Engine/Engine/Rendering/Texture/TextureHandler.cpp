@@ -130,22 +130,3 @@ const ImageDataType TextureHandler::LoadFileType(const std::string& imagePath_, 
 
 	return imageData;
 }
-
-const void* TextureHandler::GetTexelImage(const ImageDataType& imageDataType_, const int x_, const int y_, const int z_)
-{
-	// Get the Texel sizes from images format bytes per channel and number of channels of data
-	uint32_t sizeOfTexel = imageDataType_.format.bytesPerChannel * imageDataType_.format.numberChannels;
-	uint8_t* texelPtr = imageDataType_.data + (y_ * sizeOfTexel * imageDataType_.width) + (x_ * sizeOfTexel);
-	return texelPtr;
-}
-
-void TextureHandler::SetTexelImage(int imageIndex_, const int x_, const int y_, const int z_, const void* value_)
-{
-	// Set the Texel sizes from images format bytes per channel and number of channels of data
-	const ImageDataType& imageData = images[imageIndex_];
-	uint32_t texelSize = imageData.format.bytesPerChannel * imageData.format.numberChannels;
-	uint8_t* ptr = imageData.data + (y_ * texelSize * imageData.width) + (x_ * texelSize);
-
-	// Dist, source, size
-	memcpy(ptr, value_, texelSize);
-}

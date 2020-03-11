@@ -49,14 +49,6 @@ public:
 
 	void Bind(int unit_) const;
 	void ModifyTextureParam(GLenum param_, GLfloat value_);
-	
-	// Getters for Texel Image data
-	virtual const void* GetTexelImage(const ImageDataType& imageDataType_, 
-		const int x_, const int y_, const int z_);
-
-	// Setters for Texel Image data
-	virtual void SetTexelImage(int imageIndex_, 
-		const int x_, const int y_, const int z_, const void* value_);
 
 	// For Setting Terrains into single texture such as heightMap and Normal mapping
 	virtual void InitFromImageFile(const std::string& imagePath_, 
