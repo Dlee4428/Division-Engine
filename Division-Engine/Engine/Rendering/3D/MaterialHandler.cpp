@@ -1,6 +1,6 @@
 #include "MaterialHandler.h"
 
-MaterialHandler::MaterialHandler() : shaderActive(0)
+MaterialHandler::MaterialHandler() : activeShader(0)
 {
 }
 
@@ -30,7 +30,7 @@ void MaterialHandler::SetShaderProgram(unsigned int idx_, ShaderProgram* sProgra
 
 void MaterialHandler::BindShader() const
 {
-	sProgramVector[shaderActive]->BindShader();
+	sProgramVector[activeShader]->BindShader();
 }
 
 void MaterialHandler::BindTexture() const

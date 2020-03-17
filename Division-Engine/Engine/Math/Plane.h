@@ -28,7 +28,7 @@ public:
 
 	inline const glm::vec3& GetNormal() const { return normal; }
 	inline const glm::vec3& GetPoint() const { return point; }
-	inline float GetD() const { return distance; }
+	inline float GetDistance() const { return distance; }
 
 private:
 	glm::vec3 normal;

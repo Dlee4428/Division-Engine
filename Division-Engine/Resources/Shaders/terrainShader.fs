@@ -84,9 +84,9 @@ void main() {
 		// 4 texels sampled diagonally. If filtering is enabled this yields 16 texels
 		float result = 0;
 		result += textureProjOffset(shadowMap, fs_in.shadowMappingPos, ivec2(-1, -1));
-		result += textureProjOffset(shadowMap, fs_in.shadowMappingPos, ivec2(1, -1));
-		result += textureProjOffset(shadowMap, fs_in.shadowMappingPos, ivec2(-1, 1));
-		result += textureProjOffset(shadowMap, fs_in.shadowMappingPos, ivec2(1, 1));
+		result += textureProjOffset(shadowMap, fs_in.shadowMappingPos, ivec2( 1, -1));
+		result += textureProjOffset(shadowMap, fs_in.shadowMappingPos, ivec2(-1,  1));
+		result += textureProjOffset(shadowMap, fs_in.shadowMappingPos, ivec2( 1,  1));
 		shadowFactor = result * 0.25;
 	}
 	// TERRAIN LIGHTING
@@ -117,8 +117,10 @@ void main() {
 	fragColor = vec4(light, 1.0) * tex;
 
 	// WIREFRAME MODE
+	// nVidia's SolidWireFrame Approach
+	// Source - http://developer.download.nvidia.com/SDK/10/direct3d/Source/SolidWireframe/Doc/SolidWireframe.pdf
 	if (wireFrameMode) {
-		const vec4 wireframeColor = vec4(0.0, 0.0, 0.0, 1.0);
+		vec4 wireframeColor = vec4(0.0, 0.0, 5.0, 0.5);
 		const float wireframeLineSize = 1.0;
 		float wireframeStrength = 0.0;
 

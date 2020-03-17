@@ -1,10 +1,11 @@
 #version 450 core
 
 // RENDERING PROCESS OF TERRAIN
-// The code renders the terrain as a grid of patches, each of which can generate a grid of up to 64 x 64 quads. 
+// The code renders the terrain as a grid of patches, each of which can generate a grid of up to 64 x 64 triangles. 
 // The patches are rendered using instancing, using the glDrawArraysInstanced() function with a dummy vertex buffer. 
 // This means the whole terrain is rendered with a single draw call. 
 // The actual patch origin positions are then calculated from the gl_InstanceID in the vertex shader.
+// Useful links - https://victorbush.com/2015/01/tessellated-terrain/
 
 out TerrainVertOut {
 	vec2 texCoordNorm;
@@ -17,7 +18,7 @@ const vec3 quadPatches[] = vec3[] (vec3(-0.5, 0.0,  0.5),
 								   vec3( 0.5, 0.0, -0.5), 
 								   vec3(-0.5, 0.0, -0.5));
 
-layout(location = 31) uniform ivec2 pixelGridSize;		// PATCHES SIZE
+layout(location = 31) uniform ivec2 pixelGridSize;		// PATCHES SIZE (64, 64)
 layout(location = 34) uniform vec2 terrainSizeWorld;	// WORLD SIZE
 
 void main() {
@@ -30,11 +31,11 @@ void main() {
 	terrainOffset.y = float(int(float(gl_InstanceID) / float(pixelGridSize.x))) * patchSizeWorld.y;
 	
 	// TERRAIN DISPLACEMENT WITH NORMAL TEXTURE
-	vs_out.texCoordNorm = (((quadPatches[gl_VertexID].xz + vec2(0.5)) * patchSizeWorld) + terrainOffset) / terrainSizeWorld;
+	vs_out.texCoordNorm = (((quadPatches[gl_VertexID].xz + vec2(0.5, 0.5)) * patchSizeWorld) + terrainOffset) / terrainSizeWorld;
 	vs_out.texCoordNorm.t = 1.0 - vs_out.texCoordNorm.t; // TEXTURE COORDINATE OF t
 
 	// TERRAIN ALBEDO TEXTURE
-	vs_out.texCoordAlbedo = quadPatches[gl_VertexID].xz + vec2(0.5);
+	vs_out.texCoordAlbedo = quadPatches[gl_VertexID].xz + vec2(0.5, 0.5);
 	vs_out.texCoordAlbedo.t = 1.0 - vs_out.texCoordAlbedo.t;
 
 	// TERRAIN INSTANCING FOR POSITION

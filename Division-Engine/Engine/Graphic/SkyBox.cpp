@@ -28,18 +28,14 @@ Skybox::Skybox(const std::string& texLocation_) : texLocation(texLocation_)
 	// Create Mesh Pointer to initialize Raw Data
 	Mesh* mesh = new Mesh();
 	mesh->InitFromRawData(8, 36); // Param -> Vert number and Indices number
-	const float vert = 2.0f;
 
 	// Size of vertices position of float array
 	GLfloat vPos[] = {
-		-vert, vert, vert,
-		-vert,-vert, vert,
-		 vert,-vert, vert,
-		 vert, vert, vert,
-		-vert, vert,-vert,
-		-vert,-vert,-vert,
-		 vert,-vert,-vert,
-		 vert, vert,-vert,
+		-2.0f, 2.0f, 2.0f, -2.0f,-2.0f,
+		 2.0f, 2.0f,-2.0f,  2.0f, 2.0f,
+		 2.0f, 2.0f,-2.0f,  2.0f,-2.0f,
+		-2.0f,-2.0f,-2.0f,  2.0f,-2.0f,
+		-2.0f, 2.0f, 2.0f, -2.0f,
 	};
 
 	// Size of indices for skybox
@@ -90,7 +86,7 @@ void Skybox::Render(int objectID_)
 	glUniformMatrix4fv(3, 1, GL_FALSE, glm::value_ptr(
 		coreEngine->GetActiveCamera().GetProjectionMatrix() *
 		coreEngine->GetActiveCamera().GetViewMatrix() * 
-		transform.GetTransformationMatrix()));
+		transform.GetTransformMatrix()));
 
 	glDisable(GL_DEPTH_TEST);
 	mesh->RenderIndex();

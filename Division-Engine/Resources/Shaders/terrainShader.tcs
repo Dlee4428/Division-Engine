@@ -26,7 +26,7 @@ layout(location = 30) uniform ivec2 viewportSize;
 layout(location = 32) uniform float scaleDisplacement;
 layout(location = 33) uniform float tessTriWidth;
 
-layout(binding = 0) uniform sampler2D disTexture;
+layout(binding = 0) uniform sampler2D disTexture; // Displacement Texture
 
 // AABB FRUSTUM CULLING METHOD
 struct AABB {
@@ -34,17 +34,18 @@ struct AABB {
 };
 
 // COMPUTE AABB PLANE INTERSECTION
-bool AABBPlaneIntersection(AABB aabb, vec4 plane) {
+bool AABBPlaneIntersection(AABB aabb_, vec4 plane_) {
 	// Convert AABB to center-extents representation
-	vec3 halfDiag = (aabb.max - aabb.min) * 0.5; // Compute half diagonal
-	vec3 center = aabb.min + halfDiag; // Compute AABB center
+	vec3 hD = (aabb_.max - aabb_.min) * 0.5; // Compute half diagonal
+	vec3 center = aabb_.min + hD; // Compute AABB center
 
-	float e = halfDiag.x + abs(plane.x) +
-			  halfDiag.y + abs(plane.y) +
-			  halfDiag.z + abs(plane.z);  // Compute positive extents
+	// abs() = Absolute number function always stays as positive
+	float e = hD.x + abs(plane_.x) +
+			  hD.y + abs(plane_.y) +
+			  hD.z + abs(plane_.z);  // Compute positive extents
 	
 	// Compute distance of box center from plane
-	float s = dot(center, plane.xyz) + plane.w;
+	float s = dot(center, plane_.xyz) + plane_.w;
 
 	// Intersection occurs when distance s falls within [-e, +e] if else statement
 	if (s - e > 0.0) {
@@ -59,12 +60,12 @@ bool AABBPlaneIntersection(AABB aabb, vec4 plane) {
 }
 
 // COMPUTE AABB FRUSTUM INTERSECTION USING PREVIOUS AABB PLANE METHOD
-bool AABBFrustumIntersection(AABB aabb) {
+bool AABBFrustumIntersection(AABB aabb_) {
 	bool isIntersecting = false;
 	bool result = false;
 
 	for (int i = 0; i < 6; ++i) {
-		result = AABBPlaneIntersection(aabb, frustum[i]);	
+		result = AABBPlaneIntersection(aabb_, frustum[i]);	
 		if (!result) {
 			return false;
 		}
@@ -90,7 +91,6 @@ void OnCreateAABBPatch(vec3 patch1_, vec3 patch2_, vec3 patch3_, vec3 patch4_, o
 // COMPUTE LEVEL OF DETAIL (LOD)
 // PURPOSE - TO PROJECT SPHERE INTO THE CLIP SPACE AND RETURN THE AMOUNT OF TRIANGLES
 // THAT ARE REQUIRED TO FIT ACROSS THE SCREENSPACE DIAMETER.
-
 float ScreenSpaceTess(vec3 controlP0_, vec3 controlP1_, float diameter_) {
 	vec3 center = (controlP0_ + controlP1_) * 0.5;
 	vec4 p0 = viewMat * vec4(center, 1.0);
@@ -119,9 +119,8 @@ void main() {
 	// It is assigned an integer value in the range [0, N-1] where N is the number of output patch vertices.
 	// Source - https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/gl_InvocationID.xhtml
 	if (gl_InvocationID == 0) {	
-		// gl_in[].gl_Position.xyz -> Grabbing vert shader gl_positions for the AABB patch
 		OnCreateAABBPatch(gl_in[0].gl_Position.xyz, gl_in[1].gl_Position.xyz, 
-						  gl_in[2].gl_Position.xyz, gl_in[3].gl_Position.xyz, aabb);
+						  gl_in[2].gl_Position.xyz, gl_in[3].gl_Position.xyz, aabb); // gl_in[].gl_Position.xyz -> Grabbing vert shader gl_positions for the AABB patch
 
 		// IF AABB FRUSTUM INTERSECTION OCCURS PROCEED 
 		if (AABBFrustumIntersection(aabb)) {

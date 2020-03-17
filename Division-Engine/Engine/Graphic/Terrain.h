@@ -27,8 +27,8 @@ private:
 	// Variables for Terrain Init
 	float scaleDisplacement;
 	float tessTriWidth;
-	glm::ivec2 pixelGridSize;
-	glm::vec2 initSize;
+	glm::ivec2 patchSize;
+	glm::vec2 worldSize;
 	int patchCount;
 
 	// For Frustum Top view

@@ -4,17 +4,17 @@
 #include "../../DivisionPCH.h"
 #include "../Math/Plane.h"
 
-#ifndef PLANE_COUNT 
-#define PLANE_COUNT 6
+#ifndef PLANE_DATA 
+#define PLANE_DATA 6
 #endif
 
-enum PlaneData {
-	NEAR = 0,
-	FAR,
-	LEFT,
-	RIGHT,
-	TOP,
-	BOTTOM
+enum FrustumPlanes {
+	NEAR = 0,	// NEAR side of the frustum
+	FAR = 1,	// FAR side of the frustum
+	RIGHT = 2, // RIGHT side of the frustum
+	LEFT = 3,	// LEFT side of the frustum
+	BOTTOM = 4,	// BOTTOM side of the frustum
+	TOP = 5,	// TOP side of the frustum
 };
 
 // For setting Frustum Culling using plane.
@@ -29,8 +29,8 @@ public:
 	void SetCameraPosition(const glm::vec3& position_);
 	void SetCameraOrientation(const glm::vec3& view_, const glm::vec3& up_, const glm::vec3& right_);
 
-	inline const Plane* GetPlanes() { if (planesDirty) UpdatePlanes();  return planes; }
-	const float* GetPackedPlaneData(); // Use for send data to shader
+	inline const Plane* GetPlanes() { if (isPlanes) { UpdatePlanes(); } return planes; }
+	const float* GetFrustumPlanes(); // Use for sending data to tcs shader for terrain
 
 	float fovy; //degrees
 	float aspectRatio;
@@ -47,8 +47,8 @@ private:
 
 	float packedPlaneData[24]; // 6 times N.x, N.y, N.z and D
 	
-	Plane planes[PLANE_COUNT]; // Near, Far, Left, Right, Up, Down in order
-	bool planesDirty;
+	Plane planes[PLANE_DATA]; // Near, Far, Left, Right, Up, Down in order
+	bool isPlanes;
 	void UpdatePlanes();
 };
 

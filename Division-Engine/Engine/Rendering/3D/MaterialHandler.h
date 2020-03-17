@@ -16,7 +16,7 @@ public:
 	inline ShaderProgram* GetShaderProgram(int shader_) const { return sProgramVector[shader_]; }
 	inline TextureHandler* GetTextureHandler(int texture_) const { return texVector[texture_]; }
 
-	inline void SetActiveShader (int shaderActive_) { shaderActive = shaderActive_; }
+	inline void SetActiveShader (int shaderActive_) { activeShader = shaderActive_; }
 	inline int GetTextureSize() { return texVector.size(); }
 
 	void Bind() const;
@@ -24,7 +24,7 @@ public:
 	void BindTexture() const;
 
 private:
-	int shaderActive;
+	int activeShader;
 
 	std::vector<TextureHandler*> texVector;
 	std::vector<ShaderProgram*> sProgramVector;

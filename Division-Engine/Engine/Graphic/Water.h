@@ -1,9 +1,6 @@
 #ifndef WATER_H
 #define WATER_H
 
-#include "../../DivisionPCH.h"
-
-#include "../Camera/Camera.h"
 #include "../Rendering/GameObject.h"
 
 class Water : public GameObject {
@@ -15,8 +12,11 @@ public:
 	virtual void Render(int objectID_);
 	virtual void Update(double deltaTime_);
 
-private:
+	virtual void KeyCallback(const int key_, const int scanCode_, const int action_, const int mode_);
 
+
+private:
+	std::string texLocation;
 };
 
 #endif // !WATER_H

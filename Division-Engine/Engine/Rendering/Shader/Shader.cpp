@@ -49,16 +49,16 @@ void Shader::ReadFromFile(const std::string& filePath_, std::string& fileOut) co
 
 void Shader::CheckCompilation(const GLuint shader_) const
 {
-	std::cout << "\nShader " << shader_ << " Compilation Status \n";
+	std::cout << "\n[" << shader_ << "] Shader Compilation Status \n";
 
 	// Check Compile status
 	GLint status;
 	glGetShaderiv(shader_, GL_COMPILE_STATUS, &status);
 	if (!status) {
-		std::cout << "Failed to compile Shader\n";
+		std::cout << "[" << shader_ << "] Failed!" << std::endl;
 	}
 	else {
-		std::cout << "Shader Compiled sucessfully!\n";
+		std::cout << "[" << shader_ << "] Success!" << std::endl;
 	}
 
 	GLint bufflen;

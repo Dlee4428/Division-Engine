@@ -12,7 +12,7 @@ SunDirection::~SunDirection()
 void SunDirection::OnCreate()
 {
 	transform.SetPosition(sunDistance, 0.0f, 0.0f, WORLD);
-	//transform.SetScale(50.0f, 50.0f, 50.0f, WORLD);
+	//transform.SetScale(5.0f, 5.0f, 5.0f, WORLD);
 	transform.SetRotation(0.0f, 90.0f, 0.0f, LOCAL, LOCAL);
 	transform.RotateObj(0.0f, 0.0f, 25.0f, WORLD, WORLD);
 	DirectionControl();
@@ -30,11 +30,11 @@ void SunDirection::Render(int objectID_)
 		glDisable(GL_DEPTH_TEST);
 
 		Camera& camera = coreEngine->GetActiveCamera();
-		glm::mat3 normalMatrix = glm::mat3(transform.GetTransformationMatrix());
+		glm::mat3 normalMatrix = glm::mat3(transform.GetTransformMatrix());
 
 		glUniformMatrix4fv(10, 1, GL_FALSE, glm::value_ptr(camera.GetProjectionMatrix()));			// PROJ MATRIX
 		glUniformMatrix4fv(11, 1, GL_FALSE, glm::value_ptr(camera.GetViewMatrix()));				// VIEW MATRIX
-		glUniformMatrix4fv(12, 1, GL_FALSE, glm::value_ptr(transform.GetTransformationMatrix()));	// MODEL MATRIX
+		glUniformMatrix4fv(12, 1, GL_FALSE, glm::value_ptr(transform.GetTransformMatrix()));		// MODEL MATRIX
 		glUniformMatrix3fv(13, 1, GL_FALSE, glm::value_ptr(normalMatrix));							// NORMAL MATRIX
 
 		mesh->RenderIndex();

@@ -26,9 +26,8 @@ void GLFW_FramebufferCallback(GLFWwindow* window_, int width_, int height_) {
 }
 
 
-CoreEngine::CoreEngine() : windowWidth(800), windowHeight(600), windowTitle("OpenGL Window"),
-isCursorEnabled(true), vsyncEnabled(true), initialized(false), activeCamera(0),
-lastFPSShowTime(0), lastFrameTime(0), window(nullptr) {
+CoreEngine::CoreEngine() : windowWidth(1200), windowHeight(800), windowTitle("Hello OpenGL Window"),
+lastFPSShowTime(0), lastFrameTime(0), window(nullptr), isCursorEnabled(true), vsyncEnabled(true), initialized(false), activeCamera(0) {
 	core = this;
 }
 

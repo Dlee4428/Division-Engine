@@ -40,8 +40,8 @@ public:
 	const glm::vec3& GetLocalYVector();
 	const glm::vec3& GetLocalZVector();
 
-	const glm::mat4& GetTransformationMatrix();
-	const glm::mat4& GetInverseTransformationMatrix();
+	const glm::mat4& GetTransformMatrix();
+	const glm::mat4& GetInvTransformMatrix();
 	const glm::mat3& GetNormalMatrix();
 
 private:
@@ -51,20 +51,20 @@ private:
 	glm::vec3 scale;	 // Scale Object
 	glm::mat4 localAxis; // For Rotation purposes but to mat4
 
-	glm::mat4 transformationMatrix;			// Local to world transformation matrix
-	glm::mat4 inverseTransformationMatrix;  // World to local transformation matrix
+	glm::mat4 transformMatrix;				// Local to world transformation matrix
+	glm::mat4 invTransformMatrix;			// World to local transformation matrix
 	glm::mat3 normalMatrix;					// For Normal Matrix
 
 	// For returns
-	glm::vec3 tempVector;
-	glm::vec3 tempVector2;
-	glm::vec3 tempVector3;
+	glm::vec3 tmpVector;
+	glm::vec3 tmpVector2;
+	glm::vec3 tmpVector3;
 
 	// Dirty Flag design pattern
 	// Soruce - https://gameprogrammingpatterns.com/dirty-flag.html
-	bool invTransMatrixDirty;
-	bool transMatrixDirty;
-	bool normalMatrixDirty;
+	bool isInvTransMatrix;
+	bool isTransMatrix;
+	bool isNormalMatrix;
 };
 
 #endif // !TRANSFORM_H

@@ -30,17 +30,17 @@ void ShaderProgram::BindShader() const
 
 void ShaderProgram::LinkStatus(const GLuint program_) const
 {
-	std::cout << "\nShader Program " << program << " Link Status: \n";
+	std::cout << "\n[" << program << "] ShaderProgram Link Status: " << std::endl;
 
 	// Check Link Shaderprogram status
 	GLint status;
 	glGetProgramiv(program_, GL_LINK_STATUS, &status);
 	
 	if (!status) {
-		std::cout << "Link status Unsuccessful\n";
+		std::cout << "[" << program << "] Failed!" << std::endl;
 	}
 	else {
-		std::cout << "Link status complete! :)\n";
+		std::cout << "[" << program << "] Success!" << std::endl;;
 	}
 
 	//Check GL info log length status 
