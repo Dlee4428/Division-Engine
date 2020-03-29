@@ -39,7 +39,7 @@ void TerrainCamera::SetInitPosAndRot(const glm::vec3& pos_, const glm::vec3& rot
 	const glm::mat4& getTransform = transform.GetTransformMatrix();
 	frustum.SetCameraData(pos_, -transform.GetLocalZVector(), transform.GetLocalYVector());
 
-	isDirty = true;
+	isUpdate = true;
 }
 
 void TerrainCamera::ProceedForward(float value_, SpaceType spaceType_)
@@ -47,7 +47,7 @@ void TerrainCamera::ProceedForward(float value_, SpaceType spaceType_)
 	transform.TranslateObj(0.0f, 0.0f, -value_, spaceType_);
 	frustum.SetCameraPosition(transform.GetPosition());
 	
-	isDirty = true;
+	isUpdate = true;
 }
 
 void TerrainCamera::ProceedBackward(float value_, SpaceType spaceType_)
@@ -55,7 +55,7 @@ void TerrainCamera::ProceedBackward(float value_, SpaceType spaceType_)
 	transform.TranslateObj(0.0f, 0.0f, value_, spaceType_);
 	frustum.SetCameraPosition(transform.GetPosition());
 	
-	isDirty = true;
+	isUpdate = true;
 }
 
 void TerrainCamera::ProceedLeft(float value_, SpaceType spaceType_)
@@ -63,7 +63,7 @@ void TerrainCamera::ProceedLeft(float value_, SpaceType spaceType_)
 	transform.TranslateObj(-value_, 0.0f, 0.0f, spaceType_);
 	frustum.SetCameraPosition(transform.GetPosition());
 	
-	isDirty = true;
+	isUpdate = true;
 }
 
 void TerrainCamera::ProceedRight(float value_, SpaceType spaceType_)
@@ -71,7 +71,7 @@ void TerrainCamera::ProceedRight(float value_, SpaceType spaceType_)
 	transform.TranslateObj(value_, 0.0f, 0.0f, spaceType_);
 	frustum.SetCameraPosition(transform.GetPosition());
 	
-	isDirty = true;
+	isUpdate = true;
 }
 
 void TerrainCamera::Yaw(float value_, SpaceType spaceType_)
@@ -82,7 +82,7 @@ void TerrainCamera::Yaw(float value_, SpaceType spaceType_)
 		transform.GetLocalYVector(), 
 		transform.GetLocalXVector());
 
-	isDirty = true;
+	isUpdate = true;
 }
 
 void TerrainCamera::Pitch(float value_, SpaceType spaceType_)
@@ -93,7 +93,7 @@ void TerrainCamera::Pitch(float value_, SpaceType spaceType_)
 		transform.GetLocalYVector(),
 		transform.GetLocalXVector());
 
-	isDirty = true;
+	isUpdate = true;
 }
 
 void TerrainCamera::Roll(float value_, SpaceType spaceType_)
@@ -104,7 +104,7 @@ void TerrainCamera::Roll(float value_, SpaceType spaceType_)
 		transform.GetLocalYVector(),
 		transform.GetLocalXVector());
 
-	isDirty = true;
+	isUpdate = true;
 }
 
 void TerrainCamera::WindowResizeCallback(const int width_, const int height_)

@@ -34,7 +34,7 @@ public:
 		const void* data_);
 
 	virtual void Bind() const;
-	virtual void LoadGPU(bool afterGPU_ = true);
+	virtual void Process(bool afterProcess_ = true);
 
 	inline const VertexArrayObject& GetVAO() const { return vao; }
 	inline unsigned int GetVerticesNumber() const { return verticesNumber; }

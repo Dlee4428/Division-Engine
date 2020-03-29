@@ -1,16 +1,16 @@
 #include "DirectionLight.h"
 
-DirectionLight::DirectionLight(float x, float y, float z) {
-	SetDirection(x, y, z);
+DirectionLight::DirectionLight(float x_, float y_, float z_) {
+	SetDirection(x_, y_, z_);
 }
 
 DirectionLight::~DirectionLight() {
 }
 
-void DirectionLight::SetDirection(float x, float y, float z) {
-	direction.x = x;
-	direction.y = y;
-	direction.z = z;
+void DirectionLight::SetDirection(float x_, float y_, float z_) {
+	direction.x = x_;
+	direction.y = y_;
+	direction.z = z_;
 
 	direction = glm::normalize(direction);
 }

@@ -59,7 +59,7 @@ void TextureHandler::InitFromImageFile(const std::string& imagePath_, const Imag
 	// Push single file element into vector
 	// With the type of DevIl image LoadPath
 	images.push_back(LoadFileType(imagePath_, imageFormat_));
-	LoadGPU();
+	Process();
 }
 
 void TextureHandler::InitFromImageFiles(const std::vector<std::string>& imagePaths_, const ImageFormatType& imageFormat_)
@@ -68,7 +68,7 @@ void TextureHandler::InitFromImageFiles(const std::vector<std::string>& imagePat
 	for (auto p : imagePaths_) {
 		images.push_back(LoadFileType(p, imageFormat_));
 	}
-	LoadGPU();
+	Process();
 }
 
 void TextureHandler::InitFromImageData(uint32_t width_, uint32_t height_, const uint8_t* imageData_, const ImageFormatType& imageFormat_)
@@ -90,7 +90,7 @@ void TextureHandler::InitFromImageData(uint32_t width_, uint32_t height_, const 
 	}
 	images.push_back(imageData);
 
-	LoadGPU();
+	Process();
 }
 
 const ImageDataType TextureHandler::LoadFileType(const std::string& imagePath_, const ImageFormatType& imageFormat_)

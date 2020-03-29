@@ -13,7 +13,7 @@ public:
 	void AddIndex(GLuint index_);
 
 	virtual void Bind() const;
-	virtual void LoadGPU(bool afterGPU_ = true);
+	virtual void Process(bool afterProcess_ = true);
 
 	inline unsigned int GetIndicesNumber() const { return indicesNumber; }
 

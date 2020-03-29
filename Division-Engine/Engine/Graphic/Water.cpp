@@ -1,7 +1,7 @@
 #include "Water.h"
 #include "../Core/CoreEngine.h"
 
-Water::Water()
+Water::Water(SunDirection* sunDirection_) : sunDirection(sunDirection_)
 {
 
 }
@@ -16,11 +16,14 @@ void Water::OnCreate()
 	transform.SetScale(12.5f, 12.5f, 12.5f, WORLD);
 	transform.SetRotation(0.0f, 90.0f, 0.0f, LOCAL, LOCAL);
 	transform.RotateObj(0.0f, 0.0f, 0.0f, WORLD, WORLD);
+
+
 }
 
 void Water::Render(int objectID_)
 {
 	if (objectID_ == 0) {
+
 		material->Bind();
 
 		//glDisable(GL_DEPTH_TEST);

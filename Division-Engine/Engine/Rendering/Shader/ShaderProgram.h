@@ -10,6 +10,7 @@ public:
 
 	void OnDestroy();
 	void BindShader() const;
+	void UnBindShader() const;
 private:
 	GLuint program;
 	

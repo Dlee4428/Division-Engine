@@ -14,37 +14,35 @@ void Terrain::OnCreate()
 	// Source - https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glPatchParameter.xhtml
 	glPatchParameteri(GL_PATCH_VERTICES, 4);
 
-	scaleDisplacement = 150.0f;
-	tessTriWidth = 20.0f;
-	patchSize = glm::ivec2(64, 64); // PixelGrid Size by 64 * 64, ivec2 = integers of vec2 instead of float
-	worldSize = glm::vec2(1000.0f, 1000.0f); // 1km width and height
-	patchCount = patchSize.x * patchSize.y;
-
-	camera = &coreEngine->GetActiveCamera(); // Reference from Scene class CoreEngine
-
-	// DETERMINING SUN PROJECTION MATRIX
-	sunProjMat = glm::ortho(
-		-worldSize.x / 2.0f,								  // LEFT
-		 worldSize.x / 2.0f,								  // RIGHT
-		-worldSize.y / 2.0f,								  // BOTTOM
-		 worldSize.y / 2.0f,								  // TOP
-		 sunDirection->sunDistance - worldSize.x / 2.0f,   // Z NEAR
-		 sunDirection->sunDistance + worldSize.x / 2.0f);  // Z FAR
+	scaleDisplacement = 150.0f;					// Displacement Scale Y-Axis
+	tessTriWidth = 20.0f;						// Tessellation Triangle width
+	patchSize = glm::ivec2(64, 64);				// PixelGrid Size by 64 * 64, ivec2 = integers of vec2 instead of float
+	worldSize = glm::vec2(1000.0f, 1000.0f);	// 1km width and height
+	patchCount = patchSize.x * patchSize.y;		// Patch total size
+	camera = &coreEngine->GetActiveCamera();	// Reference Active camera from CoreEngine
 
 	// SHADOW MAPPING BIAS
 	shadowBias = glm::mat4(
-		 glm::vec4(0.5f, 0.0f, 0.0f, 0.0f),
-		 glm::vec4(0.0f, 0.5f, 0.0f, 0.0f),
-		 glm::vec4(0.0f, 0.0f, 0.5f, 0.0f),
-		 glm::vec4(0.5f, 0.5f, 0.5f, 1.0f));
+		glm::vec4(0.5f, 0.0f, 0.0f, 0.0f),
+		glm::vec4(0.0f, 0.5f, 0.0f, 0.0f),
+		glm::vec4(0.0f, 0.0f, 0.5f, 0.0f),
+		glm::vec4(0.5f, 0.5f, 0.5f, 1.0f));
+
+	// DETERMINING SUN PROJECTION MATRIX
+	sunProjMat = glm::ortho(
+		-worldSize.x / 2.0f,									// LEFT
+		 worldSize.x / 2.0f,									// RIGHT
+		-worldSize.y / 2.0f,									// BOTTOM
+		 worldSize.y / 2.0f,									// TOP
+		 sunDirection->sunDistance - worldSize.x / 2.0f,		// Z NEAR
+		 sunDirection->sunDistance + worldSize.x / 2.0f);		// Z FAR
 	
-	// DIRTY FLAGS SET UP BY INIT
+	// BOOLS for wireframe mode and fog
 	fogVisible = false;
 	wireframeMode = false;
 
-	// MINIMAP FROM TOP VIEW
+	// MINIMAP FROM TOP VIEW using gl looAt Function 
 	topViewMatrix = glm::lookAt(glm::vec3(0, 1400.0f, 0), glm::vec3(0, 0, 0), glm::vec3(0, 0, -1));
-
 }
 
 
@@ -102,7 +100,7 @@ void Terrain::Render(int objectID_)
 		glViewport(0, 0, width, height);
 	}
 	else {
-		// TERRAIN DEPTH PASS
+		// TERRAIN DEPTH PASS SHADER UNIFORMS
 		material->SetActiveShader(1);
 		material->Bind();
 
@@ -133,37 +131,35 @@ void Terrain::Update(double deltaTime_)
 
 void Terrain::KeyCallback(const int key_, const int scanCode_, const int action_, const int mode_)
 {
-	if (key_ == GLFW_KEY_O) {
-		scaleDisplacement -= scaleDisplacement * 0.03f;
+	// TERRAIN SET 1
+	if (key_ == GLFW_KEY_1 && action_ == GLFW_PRESS) {
+		MaterialHandler* matHandler = EntityManager::GetInstance()->GetEntity<MaterialHandler>("terrainMat1");
+		SetMaterial(matHandler);
 	}
-	else if (key_ == GLFW_KEY_P) {
-		scaleDisplacement += scaleDisplacement * 0.03f;
+	// TERRAIN SET 2
+	else if (key_ == GLFW_KEY_2 && action_ == GLFW_PRESS) {
+		MaterialHandler* matHandler = EntityManager::GetInstance()->GetEntity<MaterialHandler>("terrainMat2");
+		SetMaterial(matHandler);
 	}
-
-	else if (key_ == GLFW_KEY_K) {
-		tessTriWidth = glm::max(tessTriWidth - 1.0f, 0.0f);
+	// TERRAIN SET 3
+	else if (key_ == GLFW_KEY_3 && action_ == GLFW_PRESS) {
+		MaterialHandler* matHandler = EntityManager::GetInstance()->GetEntity<MaterialHandler>("terrainMat3");
+		SetMaterial(matHandler);
 	}
-	else if (key_ == GLFW_KEY_L) {
-		tessTriWidth += 1.0f;
-	}
-
+	// TERRAIN WIREFRAME MODE
 	else if (key_ == GLFW_KEY_G && action_ == GLFW_PRESS) {
 		wireframeMode = !wireframeMode;
 	}
+	// TERRAIN FOG MODE
 	else if (key_ == GLFW_KEY_F && action_ == GLFW_PRESS) {
 		fogVisible = !fogVisible;
 	}
-
-	else if (key_ == GLFW_KEY_1 && action_ == GLFW_PRESS) {
-		MaterialHandler* m = EntityManager::GetInstance()->GetEntity<MaterialHandler>("terrainMat1");
-		SetMaterial(m);
+	// TERRAIN DISPLACEMENT SCALE HEIGHT RAISE DOWN
+	else if (key_ == GLFW_KEY_9) {
+		scaleDisplacement -= scaleDisplacement * 0.02f;
 	}
-	else if (key_ == GLFW_KEY_2 && action_ == GLFW_PRESS) {
-		MaterialHandler* m = EntityManager::GetInstance()->GetEntity<MaterialHandler>("terrainMat2");
-		SetMaterial(m);
-	}
-	else if (key_ == GLFW_KEY_3 && action_ == GLFW_PRESS) {
-		MaterialHandler* m = EntityManager::GetInstance()->GetEntity<MaterialHandler>("terrainMat3");
-		SetMaterial(m);
+	// TERRAIN DISPLACEMENT SCALE HEIGHT RAISE UP
+	else if (key_ == GLFW_KEY_0) {
+		scaleDisplacement += scaleDisplacement * 0.02f;
 	}
 }

@@ -28,6 +28,11 @@ void ShaderProgram::BindShader() const
 	glUseProgram(program);
 }
 
+void ShaderProgram::UnBindShader() const
+{
+	glUseProgram(0);
+}
+
 void ShaderProgram::LinkStatus(const GLuint program_) const
 {
 	std::cout << "\n[" << program << "] ShaderProgram Link Status: " << std::endl;

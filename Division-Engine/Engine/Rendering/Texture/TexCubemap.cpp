@@ -43,10 +43,10 @@ void TexCubemap::InitFromImageFile(const std::string& imagePath_, const ImageFor
 		images.push_back(LoadFileType(imagePath, imageFormat_));
 	}
 
-	LoadGPU();
+	Process();
 }
 
-void TexCubemap::LoadGPU(bool afterGPU_)
+void TexCubemap::Process(bool afterProcess_)
 {
 	// glTextureStorage2D specify the storage requirements for all levels of a
 	// two - dimensional texture or one - dimensional texture array simultaneously.Once a texture is
@@ -73,7 +73,7 @@ void TexCubemap::LoadGPU(bool afterGPU_)
 				dataType.format.baseFormat, dataType.format.type, dataType.data);
 		}
 		// After Load all texture clear memory
-		if (afterGPU_) {
+		if (afterProcess_) {
 			delete[] dataType.data;
 			dataType.data = 0;
 		}

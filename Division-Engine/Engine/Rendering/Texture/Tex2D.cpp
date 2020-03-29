@@ -8,7 +8,7 @@ Tex2D::~Tex2D()
 {
 }
 
-void Tex2D::LoadGPU(bool afterGPU_)
+void Tex2D::Process(bool afterProcess_)
 {
 	// Accessing Protected variable from ImageDataType vector
 	ImageDataType& dataType = images[0];
@@ -34,7 +34,7 @@ void Tex2D::LoadGPU(bool afterGPU_)
 	}
 
 	// After Load all texture clear memory
-	if (afterGPU_) {
+	if (afterProcess_) {
 		delete[] dataType.data;
 		dataType.data = 0;
 	}

@@ -154,6 +154,7 @@
     <ClCompile Include="Engine\Rendering\Buffers\IndexBufferObject.cpp" />
     <ClCompile Include="Engine\Rendering\Buffers\VertexArrayObject.cpp" />
     <ClCompile Include="Engine\Rendering\Buffers\VertexBufferObject.cpp" />
+    <ClCompile Include="Engine\Rendering\Buffers\WaterFrameBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\GameObject.cpp" />
     <ClCompile Include="Engine\Rendering\Shader\Shader.cpp" />
     <ClCompile Include="Engine\Rendering\Shader\ShaderProgram.cpp" />
@@ -192,6 +193,7 @@
     <ClInclude Include="Engine\Rendering\Buffers\IndexBufferObject.h" />
     <ClInclude Include="Engine\Rendering\Buffers\VertexArrayObject.h" />
     <ClInclude Include="Engine\Rendering\Buffers\VertexBufferObject.h" />
+    <ClInclude Include="Engine\Rendering\Buffers\WaterFrameBuffer.h" />
     <ClInclude Include="Engine\Rendering\GameObject.h" />
     <ClInclude Include="Engine\Rendering\Shader\Shader.h" />
     <ClInclude Include="Engine\Rendering\Shader\ShaderProgram.h" />

@@ -9,7 +9,7 @@ public:
 	Tex2DArray();
 	virtual ~Tex2DArray();
 
-	virtual void LoadGPU(bool afterGPU_ = false);
+	virtual void Process(bool afterProcess_ = false);
 
 private:
 };

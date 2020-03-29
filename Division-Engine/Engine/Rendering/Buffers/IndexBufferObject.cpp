@@ -29,13 +29,13 @@ void IndexBufferObject::Bind() const
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, name);
 }
 
-void IndexBufferObject::LoadGPU(bool afterGPU_)
+void IndexBufferObject::Process(bool afterProcess_)
 {
 	// Using sizeof to find out number of elements in a indices array
 	sizeInBytes = indicesNumber * sizeof(unsigned int);
 	glNamedBufferStorage(name, sizeInBytes, indices, 0);
 
-	if (afterGPU_) {
+	if (afterProcess_) {
 		DeleteLocalData();
 	}
 }

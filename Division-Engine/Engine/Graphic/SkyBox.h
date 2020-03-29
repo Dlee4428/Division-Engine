@@ -12,7 +12,7 @@
 
 class Skybox : public GameObject {
 public:
-	Skybox(const std::string& texLocation_);
+	Skybox(const std::string& texLoc_);
 	~Skybox();
 
 	virtual void OnCreate();

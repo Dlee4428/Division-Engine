@@ -27,7 +27,7 @@ public:
 
 	// Create context samples to determine fxaa, SRGB Framebuffer enable status
 	bool CreateGLContext(int samples_ = 0, bool srgbFrameBuffer_ = true);
-	void CreateTimerLoop();
+	void CreateTimer();
 
 	// Window Properties and Getters
 	void SetWindowProperties(const std::string& title_, const int width_, const int height_);

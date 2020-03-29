@@ -9,7 +9,7 @@ public:
 	Tex2D();
 	virtual ~Tex2D();
 
-	virtual void LoadGPU(bool afterGPU_ = false);
+	virtual void Process(bool afterProcess_ = false);
 
 private:
 };

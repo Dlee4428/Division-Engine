@@ -25,12 +25,12 @@ void FrameBufferObject::Bind() const
 	glBindFramebuffer(GL_FRAMEBUFFER, name);
 }
 
-void FrameBufferObject::BindDefaultFramebuffer() const
+void FrameBufferObject::UnBindFrameBuffer() const
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void FrameBufferObject::LoadGPU(bool afterGPU_)
+void FrameBufferObject::Process(bool afterProcess_)
 {
 	GLenum* drawBuffers = new GLenum[colorAtachmentCount];
 	for (int i = 0; i < colorAtachmentCount; ++i) {
@@ -40,9 +40,9 @@ void FrameBufferObject::LoadGPU(bool afterGPU_)
 	delete[] drawBuffers;
 }
 
-void FrameBufferObject::AttachTextureToColorBuffer(int colorAttachmentNumber_, const TextureHandler& texture_)
+void FrameBufferObject::AttachTextureToColorBuffer(int colorAttacNum_, const TextureHandler& texture_)
 {
-	glNamedFramebufferTexture(name, GL_COLOR_ATTACHMENT0 + colorAttachmentNumber_, texture_.GetName(), 0);
+	glNamedFramebufferTexture(name, GL_COLOR_ATTACHMENT0 + colorAttacNum_, texture_.GetName(), 0);
 	colorAtachmentCount++;
 }
 

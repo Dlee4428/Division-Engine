@@ -45,7 +45,7 @@ public:
 	virtual void OnDestroy();
 
 	virtual void Bind() const;
-	virtual void LoadGPU(bool afterGPU_ = false) = 0;
+	virtual void Process(bool afterProcess_ = false) = 0;
 
 	void Bind(int unit_) const;
 	void ModifyTextureParam(GLenum param_, GLfloat value_);

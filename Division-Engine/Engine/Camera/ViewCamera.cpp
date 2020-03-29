@@ -47,5 +47,5 @@ void ViewCamera::UpdateVector()
 		 transform.GetLocalYVector(), 
 		 transform.GetLocalXVector());
 
-	isDirty = true;
+	isUpdate = true;
 }

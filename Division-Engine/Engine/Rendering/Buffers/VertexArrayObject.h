@@ -13,7 +13,7 @@ public:
 	virtual void OnDestroy();
 
 	virtual void Bind() const;
-	virtual void LoadGPU(bool afterGPU_ = true) {};
+	virtual void Process(bool afterProcess_ = true) {};
 
 	void EnableVertexAttribute(GLuint indexAttribute_, GLuint vbo_, GLintptr vboOffset_, GLsizei vboStride_);
 	void SetVertexAttribute(GLuint indexAttribute_, GLint size_, GLenum type_, GLboolean normalized_, GLuint relativeOffset_);

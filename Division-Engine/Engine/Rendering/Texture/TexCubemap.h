@@ -11,7 +11,7 @@ public:
 
 	virtual void InitFromImageFile(const std::string& imagePath_,
 		const ImageFormatType& imageFormat_ = ImageFormatType::IMAGE_FORMAT_SRGB8);
-	virtual void LoadGPU(bool afterGPU_ = false);
+	virtual void Process(bool afterProcess_ = false);
 
 private:
 	bool yInverse;

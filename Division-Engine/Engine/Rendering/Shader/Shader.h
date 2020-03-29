@@ -12,7 +12,6 @@ enum ShaderDefinition {
 	GEOMETRY
 };
 
-
 class Shader : public Entity {
 public:
 	Shader(const std::string& shaderPath_);

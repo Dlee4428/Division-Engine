@@ -16,10 +16,10 @@ public:
 	virtual void OnDestroy();
 
 	virtual void Bind() const;
-	void BindDefaultFramebuffer() const;
-	virtual void LoadGPU(bool afterGPU_ = false);
+	void UnBindFrameBuffer() const;
+	virtual void Process(bool afterProcess_ = false);
 
-	void AttachTextureToColorBuffer(int colorAttachmentNumber_, const TextureHandler&texture_);
+	void AttachTextureToColorBuffer(int colorAttacNum_, const TextureHandler&texture_);
 	void AttachTextureToDepthBuffer(const TextureHandler& texture_);
 	void AttachTextureToStencilBuffer(const TextureHandler& texture_);
 	void AttachTextureToDepthAndStencilBuffer(const TextureHandler& texture_);

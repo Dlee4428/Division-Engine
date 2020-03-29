@@ -8,7 +8,7 @@ enum SpaceType {
 	LOCAL
 };
 
-
+// USING SEPARATE TRANSFORM CLASS FOR DYNAMIC WAY TO DIVIDE WORLD AND LOCAL LOCATION
 class Transform
 {
 public:

@@ -81,7 +81,7 @@ const float* Frustum::GetFrustumPlanes() {
 
 	for (int i = 0; i < 6; ++i) {
 		Plane& plane = planes[i];
-		float* planePtr = packedPlaneData + (i * 4);
+		float* planePtr = packedPlane + (i * 4);
 
 		// Copy block of memory
 		// Copies the values of num bytes from the location pointed to by source directly 
@@ -90,5 +90,5 @@ const float* Frustum::GetFrustumPlanes() {
 		*(planePtr + 3) = plane.GetDistance(); // Dereference ptr
 	}
 
-	return packedPlaneData;
+	return packedPlane;
 }

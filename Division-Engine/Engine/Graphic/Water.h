@@ -1,11 +1,15 @@
 #ifndef WATER_H
 #define WATER_H
 
+#include "../../DivisionPCH.h"
+
+#include "../Camera/Camera.h"
 #include "../Rendering/GameObject.h"
+#include "../Graphic/SunDirection.h"
 
 class Water : public GameObject {
 public:
-	Water();
+	Water(SunDirection* sunDirection_);
 	~Water();
 
 	virtual void OnCreate();
@@ -16,7 +20,18 @@ public:
 
 
 private:
+	// Pointers
+	Camera* camera;
+	SunDirection* sunDirection;
+
 	std::string texLocation;
+
+	// For Frustum Top view
+	glm::mat4 topViewMatrix;
+
+	// For Water Depth pass
+	glm::mat4 sunProjMat;
+	glm::mat4 shadowBias;
 };
 
 #endif // !WATER_H

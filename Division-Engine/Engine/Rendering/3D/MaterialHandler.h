@@ -5,6 +5,7 @@
 #include "../../Core/Entity/Entity.h"
 #include "../Shader/ShaderProgram.h"
 
+// Material Handler Class that binds all shader and textures
 class MaterialHandler : public Entity{
 public:
 	MaterialHandler();

@@ -27,10 +27,12 @@ void Scene::OnCreate()
 	// SET THE SINGLETON GET INSTANCE HERE
 	EntityManager* entityManager = EntityManager::GetInstance();
 
+	///////////////////////////////////////////////////////////////////////////
 	// SKYBOX
 	Skybox* skybox = new Skybox("Resources/Textures/SkyBoxCube/skycube.png");
 	skyboxLoc = AddGameObject(skybox);
 
+	///////////////////////////////////////////////////////////////////////////
 	// SUN DIRECTION
 	Mesh* sunMesh = new Mesh();
 	sunMesh->InitFromFile("Resources/Models/sphere.obj");
@@ -68,41 +70,41 @@ void Scene::OnCreate()
 	AddEventHandler(sunDirection);
 	
 	///////////////////////////////////////////////////////////////////////
-	// WATER
-	Mesh* waterMesh = new Mesh();
-	waterMesh->InitFromFile("Resources/Models/plane.obj");
-	entityManager->AddEntity("meshPlane", waterMesh);
+	//// WATER
+	//Mesh* waterMesh = new Mesh();
+	//waterMesh->InitFromFile("Resources/Models/plane.obj");
+	//entityManager->AddEntity("meshPlane", waterMesh);
 
-	// WATER INIT SHADER
-	Shader* vertWater = new Shader("Resources/Shaders/waterShader.vs");
-	Shader* fragWater = new Shader("Resources/Shaders/waterShader.fs");
-	entityManager->AddEntity("waterVertShader", vertWater);
-	entityManager->AddEntity("waterFragShader", fragWater);
+	//// WATER INIT SHADER
+	//Shader* vertWater = new Shader("Resources/Shaders/waterShader.vs");
+	//Shader* fragWater = new Shader("Resources/Shaders/waterShader.fs");
+	//entityManager->AddEntity("waterVertShader", vertWater);
+	//entityManager->AddEntity("waterFragShader", fragWater);
 
-	// WATER SHADER PROGRAM
-	std::vector<Shader*> waterShaders;
-	waterShaders.push_back(vertWater);
-	waterShaders.push_back(fragWater);
-	ShaderProgram* waterShaderProgram = new ShaderProgram(waterShaders);
-	entityManager->AddEntity("waterShaderProgram", waterShaderProgram);
+	//// WATER SHADER PROGRAM
+	//std::vector<Shader*> waterShaders;
+	//waterShaders.push_back(vertWater);
+	//waterShaders.push_back(fragWater);
+	//ShaderProgram* waterShaderProgram = new ShaderProgram(waterShaders);
+	//entityManager->AddEntity("waterShaderProgram", waterShaderProgram);
 
-	////// WATER TEXTURE 
-	////TexCubemap* waterTexture = new TexCubemap();
-	////waterTexture->InitFromImageFile("Resources/Textures/mars.jpg");
-	////entityManager->AddEntity("waterTextures", waterTexture);
+	//////// WATER TEXTURE 
+	//////TexCubemap* waterTexture = new TexCubemap();
+	//////waterTexture->InitFromImageFile("Resources/Textures/mars.jpg");
+	//////entityManager->AddEntity("waterTextures", waterTexture);
 
-	// WATER MATERIAL HANDLER
-	MaterialHandler* waterMaterial = new MaterialHandler();
-	//waterMaterial->SetTexture(0, waterTexture);
-	waterMaterial->SetShaderProgram(0, waterShaderProgram);
-	entityManager->AddEntity("waterMaterial", waterMaterial);
+	//// WATER MATERIAL HANDLER
+	//MaterialHandler* waterMaterial = new MaterialHandler();
+	////waterMaterial->SetTexture(0, waterTexture);
+	//waterMaterial->SetShaderProgram(0, waterShaderProgram);
+	//entityManager->AddEntity("waterMaterial", waterMaterial);
 
-	// WATER ADD TO GAMEOBJECT
-	Water* water = new Water();
-	water->SetMesh(waterMesh);
-	water->SetMaterial(waterMaterial);
-	waterLoc = AddGameObject(water);
-	AddEventHandler(water);
+	//// WATER ADD TO GAMEOBJECT
+	//Water* water = new Water(sunDirection);
+	//water->SetMesh(waterMesh);
+	//water->SetMaterial(waterMaterial);
+	//waterLoc = AddGameObject(water);
+	//AddEventHandler(water);
 
 	////////////////////////////////////////////////////////////////////////
 	// TERRAIN FEATURES
@@ -120,7 +122,7 @@ void Scene::OnCreate()
 	terrainShaderVector.push_back(terrainTES);
 	terrainShaderVector.push_back(terrainGS);
 	ShaderProgram* terrainShaderProgramVector = new ShaderProgram(terrainShaderVector);
-
+	///////////////////////////////////////////////////////////////////////////
 	// ADD TO REGISTRY FOR STORING DATA
 	entityManager->AddEntity("terrainVS", terrainVS);
 	entityManager->AddEntity("terrainFS", terrainFS);
@@ -128,7 +130,7 @@ void Scene::OnCreate()
 	entityManager->AddEntity("terrainTES", terrainTES);
 	entityManager->AddEntity("terrainGS", terrainGS);
 	entityManager->AddEntity("terrainShaderProgram", terrainShaderProgramVector);
-
+	///////////////////////////////////////////////////////////////////////////
 	// TERRAIN DEPTH PASS SHADERS
 	Shader* terrainDepthVS = new Shader("Resources/Shaders/terrainDepth.vs");
 	Shader* terrainDepthTCS = new Shader("Resources/Shaders/terrainDepth.tcs");
@@ -144,8 +146,7 @@ void Scene::OnCreate()
 	entityManager->AddEntity("terrainDepthTCS", terrainDepthTCS);
 	entityManager->AddEntity("terrainDepthTES", terrainDepthTES);
 	entityManager->AddEntity("terrainDepthShaderProgram", terrainDepthShaderProgramVector);
-
-
+	///////////////////////////////////////////////////////////////////////////
 	// TERRAIN DISPLACEMENT TEXTURE
 	// Init Height 16bit4 map
 	Tex2D* terrainDis1 = new Tex2D();
@@ -165,8 +166,7 @@ void Scene::OnCreate()
 	terrainDis3->ModifyTextureParam(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	terrainDis3->ModifyTextureParam(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	entityManager->AddEntity("terrainDis3", terrainDis3);
-
-
+	///////////////////////////////////////////////////////////////////////////
 	// TERRAIN NORMAL MAPPING TEXTURE
 	Tex2D* terrainNorm1 = new Tex2D();
 	terrainNorm1->InitFromImageFile("Resources/Textures/normalmap1.png", ImageFormatType::IMAGE_FORMAT_RGB8_LINEAR);
@@ -185,12 +185,12 @@ void Scene::OnCreate()
 	terrainNorm3->ModifyTextureParam(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	terrainNorm3->ModifyTextureParam(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	entityManager->AddEntity("terrainNorm3", terrainNorm3);
-
+	///////////////////////////////////////////////////////////////////////////
 	// SET TERRAIN MATERIAL TEXTURES INTO TEXTURE 2D ARRAY
 	std::vector<std::string> terrainTex1;
 	terrainTex1.push_back("Resources/Textures/1grass.png");
-	terrainTex1.push_back("Resources/Textures/8wetGrass.jpg");
 	terrainTex1.push_back("Resources/Textures/3soil.jpg");
+	terrainTex1.push_back("Resources/Textures/8wetGrass.jpg");
 	terrainTex1.push_back("Resources/Textures/4rock.jpg");
 	Tex2DArray* terrainTexArray1 = new Tex2DArray();
 	terrainTexArray1->InitFromImageFiles(terrainTex1);
@@ -204,7 +204,7 @@ void Scene::OnCreate()
 	Tex2DArray* terrainTexArray2 = new Tex2DArray();
 	terrainTexArray2->InitFromImageFiles(terrainTex2);
 	entityManager->AddEntity("terrainTexArray2", terrainTexArray2);
-
+	///////////////////////////////////////////////////////////////////////////
 	// COMBINE ALL TEXTURES INTO MATERIAL HANDLER
 	MaterialHandler* terrainMatHandler1 = new MaterialHandler();
 	terrainMatHandler1->SetShaderProgram(0, terrainShaderProgramVector);
@@ -234,18 +234,18 @@ void Scene::OnCreate()
 	terrain->SetMaterial(terrainMatHandler1);
 	AddEventHandler(terrain);
 	terrainLoc = AddGameObject(terrain);
-
+	///////////////////////////////////////////////////////////////////////////
 	// DEPTH FBO
 	InitFrameBufferObject();
 	isShadowMapping = true;
-
+	///////////////////////////////////////////////////////////////////////////
 	// TERRAIN CAMERA
 	TerrainCamera* camera = new TerrainCamera();
 	AddCamera(camera);
 	SetActiveCamera(0);
 	camera->SetProjectionMatrix(45.0f, (float)windowWidth / (float)windowHeight, 1.0f, 2048.0f);
 	camera->SetInitPosAndRot(glm::vec3(0, 500, 0), glm::vec3(-65, 0, 0));
-
+	///////////////////////////////////////////////////////////////////////////
 	////MISC
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
@@ -265,48 +265,51 @@ void Scene::OnDestroy()
 
 void Scene::InitFrameBufferObject()
 {
-	Tex2D* depthTex = EntityManager::GetInstance()->GetEntity<Tex2D>("depthTex");
+	Tex2D* depthTerrain = EntityManager::GetInstance()->GetEntity<Tex2D>("depthTex");
 
-	if (depthTex != 0) {
-		delete depthTex;
+	if (depthTerrain != 0) {
+		delete depthTerrain;
 	}
 
-	depthTex = new Tex2D();
-	depthTex->SetMipmapLevels(1);
-	depthTex->InitFromImageData(GetWindowWidth() / 2, GetWindowHeight() / 2, 0, ImageFormatType::IMAGE_FORMAT_DEPTH_32F);
-	depthTex->ModifyTextureParam(GL_TEXTURE_COMPARE_MODE, GL_COMPARE_REF_TO_TEXTURE);
-	depthTex->ModifyTextureParam(GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);
+	depthTerrain = new Tex2D();
+	depthTerrain->SetMipmapLevels(1);
+	depthTerrain->InitFromImageData(GetWindowWidth() / 2, GetWindowHeight() / 2, 0, ImageFormatType::IMAGE_FORMAT_DEPTH_32F);
+	depthTerrain->ModifyTextureParam(GL_TEXTURE_COMPARE_MODE, GL_COMPARE_REF_TO_TEXTURE);
+	depthTerrain->ModifyTextureParam(GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);
 
-	MaterialHandler* m = EntityManager::GetInstance()->GetEntity<MaterialHandler>("terrainMat1");
-	m->SetTexture(3, depthTex);
-	m = EntityManager::GetInstance()->GetEntity<MaterialHandler>("terrainMat2");
-	m->SetTexture(3, depthTex);
-	m = EntityManager::GetInstance()->GetEntity<MaterialHandler>("terrainMat3");
-	m->SetTexture(3, depthTex);
+	MaterialHandler* matHandler = EntityManager::GetInstance()->GetEntity<MaterialHandler>("terrainMat1");
+	matHandler->SetTexture(3, depthTerrain);
+	matHandler = EntityManager::GetInstance()->GetEntity<MaterialHandler>("terrainMat2");
+	matHandler->SetTexture(3, depthTerrain);
+	matHandler = EntityManager::GetInstance()->GetEntity<MaterialHandler>("terrainMat3");
+	matHandler->SetTexture(3, depthTerrain);
 
-	EntityManager::GetInstance()->AddEntity("depthTex", depthTex);
+	EntityManager::GetInstance()->AddEntity("depthTex", depthTerrain);
 
 	if (depthFBO == 0) {
 		depthFBO = new FrameBufferObject();
 	}
 
-	depthFBO->AttachTextureToDepthBuffer(*depthTex);
-	depthFBO->LoadGPU();
+	depthFBO->AttachTextureToDepthBuffer(*depthTerrain);
+	depthFBO->Process();
 }
 
 void Scene::Render()
 {
-	static const GLfloat backGroundColor[4] = { 0.7f, 0.7f, 0.7f, 1.0f };
-	static const GLfloat depthValue = 1.0f;
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f); //Black background
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	static const GLfloat depthOffset = 1.0f;
 
 	if (isShadowMapping) {
 		depthFBO->Bind();
+
 		glEnable(GL_POLYGON_OFFSET_FILL);
-		glClearBufferfv(GL_DEPTH, 0, &depthValue);
+		glClearBufferfv(GL_DEPTH, 0, &depthOffset);
 		gameObjects[terrainLoc]->Render(1);
 		glDisable(GL_POLYGON_OFFSET_FILL);
 
-		depthFBO->BindDefaultFramebuffer();
+		depthFBO->UnBindFrameBuffer();
 	}
 	
 	glClearBufferfi(GL_DEPTH_STENCIL, 0, 1.0f, 0);

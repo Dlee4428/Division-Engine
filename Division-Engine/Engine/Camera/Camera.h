@@ -19,7 +19,7 @@ public:
 	const glm::mat4& GetProjectionMatrix();
 	inline Frustum& GetFrustum() { return frustum; }
 
-	inline bool ChangedSinceLastCall() { bool temp = isDirty; isDirty = false; return temp; }
+	inline bool LastUpdate() { bool tmp = isUpdate; isUpdate = false; return tmp; }
 
 	// CallBack Function from GameObject EventHandler
 	virtual void WindowResizeCallback(const int width_, const int height_);
@@ -27,7 +27,7 @@ public:
 protected:
 	glm::mat4 projectionMatrix;
 	bool isProjMatrix;
-	bool isDirty;
+	bool isUpdate;
 	Frustum frustum;
 };
 

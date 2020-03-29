@@ -4,8 +4,8 @@
 #include "../../DivisionPCH.h"
 #include "../Math/Plane.h"
 
-#ifndef PLANE_DATA 
-#define PLANE_DATA 6
+#ifndef FRUSTUM_PLANES 
+#define FRUSTUM_PLANES 6
 #endif
 
 enum FrustumPlanes {
@@ -45,9 +45,9 @@ private:
 	glm::vec3 up;
 	glm::vec3 right;
 
-	float packedPlaneData[24]; // 6 times N.x, N.y, N.z and D
+	float packedPlane[24]; // 6 times N.x, N.y, N.z and D
 	
-	Plane planes[PLANE_DATA]; // Near, Far, Left, Right, Up, Down in order
+	Plane planes[FRUSTUM_PLANES]; // Near, Far, Left, Right, Up, Down in order
 	bool isPlanes;
 	void UpdatePlanes();
 };

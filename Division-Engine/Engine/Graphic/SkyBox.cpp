@@ -3,27 +3,35 @@
 #include "../Core/CoreEngine.h"
 #include "../Camera/Camera.h"
 
-Skybox::Skybox(const std::string& texLocation_) : texLocation(texLocation_)
+Skybox::Skybox(const std::string& texLoc_) : texLocation(texLoc_)
 {
+	// Declare Singleton Instance of Entity Manager
+	EntityManager* entityManager = EntityManager::GetInstance();
+
 	// Declaration of vert and frag shader pointers
 	Shader* vertShader = new Shader("Resources/Shaders/skyboxVert.vs");
 	Shader* fragShader = new Shader("Resources/Shaders/skyboxFrag.fs");
+	entityManager->AddEntity("skyboxVert", vertShader);
+	entityManager->AddEntity("skyboxFrag", fragShader);
 
 	// Push vector of Shader pointer and combine them into shaderprogram
 	std::vector<Shader*> skyboxShader;
 	skyboxShader.push_back(vertShader);
 	skyboxShader.push_back(fragShader);
 	ShaderProgram* shaderProgram = new ShaderProgram(skyboxShader);
+	entityManager->AddEntity("skyboxShaderProgram", shaderProgram);
 
 	// Set yInverse of TexCubemap true
 	TexCubemap* texCube = new TexCubemap(true);
 	texCube->SetMipmapLevels(1);
-	texCube->InitFromImageFile(texLocation_);
+	texCube->InitFromImageFile(texLoc_);
+	entityManager->AddEntity("skyboxTexCube", texCube);
 
 	// Set Material of texture and shaderProgram
 	MaterialHandler* matHandler = new MaterialHandler();
 	matHandler->SetTexture(0, texCube);
 	matHandler->SetShaderProgram(0, shaderProgram);
+	entityManager->AddEntity("skyboxMatHandler", matHandler);
 
 	// Create Mesh Pointer to initialize Raw Data
 	Mesh* mesh = new Mesh();
@@ -31,11 +39,14 @@ Skybox::Skybox(const std::string& texLocation_) : texLocation(texLocation_)
 
 	// Size of vertices position of float array
 	GLfloat vPos[] = {
-		-2.0f, 2.0f, 2.0f, -2.0f,-2.0f,
-		 2.0f, 2.0f,-2.0f,  2.0f, 2.0f,
-		 2.0f, 2.0f,-2.0f,  2.0f,-2.0f,
-		-2.0f,-2.0f,-2.0f,  2.0f,-2.0f,
-		-2.0f, 2.0f, 2.0f, -2.0f,
+		-2.0f, 2.0f, 2.0f, // single Vertex point 
+		-2.0f,-2.0f, 2.0f, 
+		 2.0f,-2.0f, 2.0f, 
+		 2.0f, 2.0f, 2.0f,
+		-2.0f, 2.0f,-2.0f,
+		-2.0f,-2.0f,-2.0f,  
+		 2.0f,-2.0f,-2.0f, 
+		 2.0f, 2.0f,-2.0f,
 	};
 
 	// Size of indices for skybox
@@ -61,13 +72,6 @@ Skybox::Skybox(const std::string& texLocation_) : texLocation(texLocation_)
 	// From SceneObject
 	SetMaterial(matHandler);
 	SetMesh(mesh);
-
-	EntityManager* entityManager = EntityManager::GetInstance();
-	entityManager->AddEntity("skyboxVert", vertShader);
-	entityManager->AddEntity("skyboxFrag", fragShader);
-	entityManager->AddEntity("skyboxShaderProgram", shaderProgram);
-	entityManager->AddEntity("skyboxTexCube", texCube);
-	entityManager->AddEntity("skyboxMatHandler", matHandler);
 	entityManager->AddEntity("skyboxMesh", mesh);
 }
 
@@ -83,10 +87,9 @@ void Skybox::Render(int objectID_)
 {
 	material->Bind();
 
-	glUniformMatrix4fv(3, 1, GL_FALSE, glm::value_ptr(
-		coreEngine->GetActiveCamera().GetProjectionMatrix() *
-		coreEngine->GetActiveCamera().GetViewMatrix() * 
-		transform.GetTransformMatrix()));
+	glUniformMatrix4fv(10, 1, GL_FALSE, glm::value_ptr(coreEngine->GetActiveCamera().GetProjectionMatrix()));		// PROJ MATRIX
+	glUniformMatrix4fv(11, 1, GL_FALSE, glm::value_ptr(coreEngine->GetActiveCamera().GetViewMatrix()));				// VIEW MATRIX
+	glUniformMatrix4fv(12, 1, GL_FALSE, glm::value_ptr(transform.GetTransformMatrix()));							// MODEL MATRIX
 
 	glDisable(GL_DEPTH_TEST);
 	mesh->RenderIndex();
@@ -97,7 +100,7 @@ void Skybox::Update(double deltaTime_)
 {
 	Camera& camera = coreEngine->GetActiveCamera();
 	
-	if (camera.ChangedSinceLastCall()) {
+	if (camera.LastUpdate()) {
 		transform.SetPosition(camera.GetTransform().GetPosition(), WORLD);
 	}
 }

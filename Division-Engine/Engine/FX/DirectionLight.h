@@ -7,11 +7,11 @@
 class DirectionLight : public Light
 {
 public:
-	DirectionLight(float x, float y, float z);
+	DirectionLight(float x_, float y_, float z_);
 	~DirectionLight();
 
 	inline glm::vec3& GetDirection() { return direction; }
-	void SetDirection(float x, float y, float z);
+	void SetDirection(float x_, float y_, float z_);
 
 protected:
 	glm::vec3 direction;

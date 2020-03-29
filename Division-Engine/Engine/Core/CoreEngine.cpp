@@ -104,7 +104,7 @@ bool CoreEngine::CreateGLContext(int samples_, bool srgbFrameBuffer_)
 	return true;
 }
 
-void CoreEngine::CreateTimerLoop()
+void CoreEngine::CreateTimer()
 {
 	// Timer Loop for GLFW
 	double deltaTime = 0, actualTime = 0;

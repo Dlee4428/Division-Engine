@@ -4,6 +4,7 @@
 #include "../../../DivisionPCH.h"
 #include "Entity.h"
 
+// It's more like a repository for storing data objects
 class EntityManager
 {
 public:

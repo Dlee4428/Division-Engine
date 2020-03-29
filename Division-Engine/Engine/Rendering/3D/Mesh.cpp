@@ -103,8 +103,8 @@ void Mesh::InitAssimpScene(const aiScene* scene_)
 			}
 		}
 
-		vbo->LoadGPU();
-		ibo->LoadGPU();
+		vbo->Process();
+		ibo->Process();
 
 		vboVector[meshI] = vbo;
 		iboVector[meshI] = ibo;
@@ -153,10 +153,10 @@ void Mesh::AddIndex(GLuint index_)
 void Mesh::EndFromRawData()
 {
 	// After Init RawDatas, either VBO and IBO LoadGPU() 
-	vboVector[0]->LoadGPU();
+	vboVector[0]->Process();
 
 	if (!iboVector.empty()) {
-		iboVector[0]->LoadGPU();
+		iboVector[0]->Process();
 	}
 }
 

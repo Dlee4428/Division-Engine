@@ -12,7 +12,7 @@ public:
 	virtual void OnCreate() = 0;
 	virtual void OnDestroy() = 0;
 	virtual void Bind() const = 0;
-	virtual void LoadGPU(bool afterGPU_ = false) = 0;
+	virtual void Process(bool afterProcess_ = false) = 0;
 
 	inline GLuint GetName() const { return name; };
 protected:

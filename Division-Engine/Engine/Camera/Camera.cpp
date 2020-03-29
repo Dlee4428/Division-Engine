@@ -1,6 +1,6 @@
 #include "Camera.h"
 
-Camera::Camera() : isDirty(false), isProjMatrix(false) {
+Camera::Camera() : isUpdate(false), isProjMatrix(false) {
 	frustum.SetProjectionData(0.1f, 100.0f, 45.0f, 1.0f);
 	frustum.SetCameraData(transform.GetPosition(), -transform.GetLocalZVector(), transform.GetLocalYVector());
 }
@@ -30,7 +30,7 @@ void Camera::SetProjectionMatrix(float fovy_, float aspectRatio_, float near_, f
 {
 	frustum.SetProjectionData(near_, far_, fovy_, aspectRatio_);
 	isProjMatrix = true;
-	isDirty = true;
+	isUpdate = true;
 }
 
 // If Resize Window Call ProjMatrix and glViewPort

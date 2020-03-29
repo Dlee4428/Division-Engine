@@ -16,7 +16,7 @@ void VertexBufferObject::Bind() const
 	glBindBuffer(GL_ARRAY_BUFFER, name);
 }
 
-void VertexBufferObject::LoadGPU(bool afterGPU_)
+void VertexBufferObject::Process(bool afterProcess_)
 {
 	for (VertexAttribute desc : descriptionData.attributes) {
 		// Grabbing sizeInBytes from glewBuffer.h
@@ -39,7 +39,7 @@ void VertexBufferObject::LoadGPU(bool afterGPU_)
 	}
 
 	// After GPU processed proceed to delete and clear local data
-	if (afterGPU_) {
+	if (afterProcess_) {
 		DeleteLocalData();
 	}
 }

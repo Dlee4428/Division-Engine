@@ -9,7 +9,7 @@ Tex2DArray::~Tex2DArray()
 {
 }
 
-void Tex2DArray::LoadGPU(bool afterGPU_)
+void Tex2DArray::Process(bool afterProcess_)
 {
 	//////////////////////////////////////////////////////////////////////////
 	// glTextureStorage3D
@@ -30,7 +30,7 @@ void Tex2DArray::LoadGPU(bool afterGPU_)
 				dataType.format.baseFormat, dataType.format.type, dataType.data);
 		}
 
-		if (afterGPU_) {
+		if (afterProcess_) {
 			delete[] dataType.data;
 			dataType.data = 0;
 		}

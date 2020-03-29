@@ -5,7 +5,7 @@ int main() {
 	Scene scene;
 	if (scene.CreateGLContext(2, true)) {
 		scene.OnCreate();
-		scene.CreateTimerLoop();
+		scene.CreateTimer();
 		return 1;
 	}
 	else {
