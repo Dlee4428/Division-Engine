@@ -70,42 +70,41 @@ void Scene::OnCreate()
 	AddEventHandler(sunDirection);
 	
 	///////////////////////////////////////////////////////////////////////
-	//// WATER
-	//Mesh* waterMesh = new Mesh();
-	//waterMesh->InitFromFile("Resources/Models/plane.obj");
-	//entityManager->AddEntity("meshPlane", waterMesh);
+	// WATER
+	Mesh* waterMesh = new Mesh();
+	waterMesh->InitFromFile("Resources/Models/plane.obj");
+	entityManager->AddEntity("meshPlane", waterMesh);
 
-	//// WATER INIT SHADER
-	//Shader* vertWater = new Shader("Resources/Shaders/waterShader.vs");
-	//Shader* fragWater = new Shader("Resources/Shaders/waterShader.fs");
-	//entityManager->AddEntity("waterVertShader", vertWater);
-	//entityManager->AddEntity("waterFragShader", fragWater);
+	// WATER INIT SHADER
+	Shader* vertWater = new Shader("Resources/Shaders/waterShader.vs");
+	Shader* fragWater = new Shader("Resources/Shaders/waterShader.fs");
+	entityManager->AddEntity("waterVertShader", vertWater);
+	entityManager->AddEntity("waterFragShader", fragWater);
 
-	//// WATER SHADER PROGRAM
-	//std::vector<Shader*> waterShaders;
-	//waterShaders.push_back(vertWater);
-	//waterShaders.push_back(fragWater);
-	//ShaderProgram* waterShaderProgram = new ShaderProgram(waterShaders);
-	//entityManager->AddEntity("waterShaderProgram", waterShaderProgram);
+	// WATER SHADER PROGRAM
+	std::vector<Shader*> waterShaders;
+	waterShaders.push_back(vertWater);
+	waterShaders.push_back(fragWater);
+	ShaderProgram* waterShaderProgram = new ShaderProgram(waterShaders);
+	entityManager->AddEntity("waterShaderProgram", waterShaderProgram);
 
-	//////// WATER TEXTURE 
-	//////TexCubemap* waterTexture = new TexCubemap();
-	//////waterTexture->InitFromImageFile("Resources/Textures/mars.jpg");
-	//////entityManager->AddEntity("waterTextures", waterTexture);
+	////// WATER TEXTURE 
+	////TexCubemap* waterTexture = new TexCubemap();
+	////waterTexture->InitFromImageFile("Resources/Textures/mars.jpg");
+	////entityManager->AddEntity("waterTextures", waterTexture);
 
-	//// WATER MATERIAL HANDLER
-	//MaterialHandler* waterMaterial = new MaterialHandler();
-	////waterMaterial->SetTexture(0, waterTexture);
-	//waterMaterial->SetShaderProgram(0, waterShaderProgram);
-	//entityManager->AddEntity("waterMaterial", waterMaterial);
+	// WATER MATERIAL HANDLER
+	MaterialHandler* waterMaterial = new MaterialHandler();
+	//waterMaterial->SetTexture(0, waterTexture);
+	waterMaterial->SetShaderProgram(0, waterShaderProgram);
+	entityManager->AddEntity("waterMaterial", waterMaterial);
 
-	//// WATER ADD TO GAMEOBJECT
-	//Water* water = new Water(sunDirection);
-	//water->SetMesh(waterMesh);
-	//water->SetMaterial(waterMaterial);
-	//waterLoc = AddGameObject(water);
-	//AddEventHandler(water);
-
+	// WATER ADD TO GAMEOBJECT
+	Water* water = new Water(sunDirection);
+	water->SetMesh(waterMesh);
+	water->SetMaterial(waterMaterial);
+	waterLoc = AddGameObject(water);
+	AddEventHandler(water);
 	////////////////////////////////////////////////////////////////////////
 	// TERRAIN FEATURES
 	// TERRAIN SHADER POINTERS

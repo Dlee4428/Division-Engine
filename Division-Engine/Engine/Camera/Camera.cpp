@@ -1,6 +1,6 @@
 #include "Camera.h"
 
-Camera::Camera() : isUpdate(false), isProjMatrix(false) {
+Camera::Camera() : isUpdate(false), isProjMatrix(false), isInvProjMatrix(false) {
 	frustum.SetProjectionData(0.1f, 100.0f, 45.0f, 1.0f);
 	frustum.SetCameraData(transform.GetPosition(), -transform.GetLocalZVector(), transform.GetLocalYVector());
 }
@@ -25,11 +25,21 @@ const glm::mat4& Camera::GetProjectionMatrix()
 	return projectionMatrix;
 }
 
+const glm::mat4& Camera::GetInvProjectionMatrix()
+{
+	if (isInvProjMatrix) {
+		invProjectionMatrix = glm::perspective(glm::radians(-frustum.fovy), frustum.aspectRatio, frustum.near, frustum.far);
+		isInvProjMatrix = false;
+	}
+	return invProjectionMatrix;
+}
+
 // Frustum Camera Projection Matrix Set
 void Camera::SetProjectionMatrix(float fovy_, float aspectRatio_, float near_, float far_)
 {
 	frustum.SetProjectionData(near_, far_, fovy_, aspectRatio_);
 	isProjMatrix = true;
+	isInvProjMatrix = true;
 	isUpdate = true;
 }
 

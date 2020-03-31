@@ -83,19 +83,35 @@ void Terrain::Render(int objectID_)
 		// GL PATCHES
 		glDrawArraysInstanced(GL_PATCHES, 0, 4, patchCount);
 
-		// TOP CAMERA FOR FRUSTUM CULLING VIEW
+		// THIS WILL BE REFLECTION
 		glDisable(GL_DEPTH_TEST);
-		int x = 0;
-		int y = 0;
 		int h = int((float)height / 3.0f);
 		int w = int((float)h * (float)camera->GetFrustum().aspectRatio);
+		int x = 0;
+		int y = int((float)height - (float)h);;
 
 		glViewport(x, y, w, h);
 
-		glUniformMatrix4fv(11, 1, GL_FALSE, glm::value_ptr(topViewMatrix));					// Using View Matrix Location
+		//glUniformMatrix4fv(11, 1, GL_FALSE, glm::value_ptr(topViewMatrix));				// Using View Matrix Location
+		glUniformMatrix4fv(13, 1, GL_FALSE, glm::value_ptr(camera->GetInvProjectionMatrix()));
 		glUniform2i(30, w, h);																// Viewport size Location
 		glDrawArraysInstanced(GL_PATCHES, 0, 4, patchCount);
+		
 
+		glEnable(GL_DEPTH_TEST);
+		glViewport(0, 0, width, height);
+
+
+		// THIS WILL BE REFRACTION
+		glDisable(GL_DEPTH_TEST);
+		x = int((float)width - (float)w - 10.0f);
+
+		glViewport(x, y, w, h);
+
+		//glUniformMatrix4fv(11, 1, GL_FALSE, glm::value_ptr(topViewMatrix));				// Using View Matrix Location
+		glUniformMatrix4fv(13, 1, GL_FALSE, glm::value_ptr(camera->GetProjectionMatrix()));
+		glUniform2i(30, w, h);																// Viewport size Location
+		glDrawArraysInstanced(GL_PATCHES, 0, 4, patchCount);
 		glEnable(GL_DEPTH_TEST);
 		glViewport(0, 0, width, height);
 	}

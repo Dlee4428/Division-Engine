@@ -73,6 +73,9 @@ Skybox::Skybox(const std::string& texLoc_) : texLocation(texLoc_)
 	SetMaterial(matHandler);
 	SetMesh(mesh);
 	entityManager->AddEntity("skyboxMesh", mesh);
+
+	// MINIMAP FROM TOP VIEW using gl looAt Function 
+	topViewMatrix = glm::lookAt(glm::vec3(0, -500.0f, 0), glm::vec3(0, 0, 0), glm::vec3(0, 0, -1));
 }
 
 Skybox::~Skybox()
@@ -81,19 +84,45 @@ Skybox::~Skybox()
 
 void Skybox::OnCreate()
 {
+	
 }
 
 void Skybox::Render(int objectID_)
 {
+	int width = coreEngine->GetWindowWidth();
+	int height = coreEngine->GetWindowHeight();
+
 	material->Bind();
 
 	glUniformMatrix4fv(10, 1, GL_FALSE, glm::value_ptr(coreEngine->GetActiveCamera().GetProjectionMatrix()));		// PROJ MATRIX
 	glUniformMatrix4fv(11, 1, GL_FALSE, glm::value_ptr(coreEngine->GetActiveCamera().GetViewMatrix()));				// VIEW MATRIX
 	glUniformMatrix4fv(12, 1, GL_FALSE, glm::value_ptr(transform.GetTransformMatrix()));							// MODEL MATRIX
-
+	
 	glDisable(GL_DEPTH_TEST);
 	mesh->RenderIndex();
 	glEnable(GL_DEPTH_TEST);
+
+	// THIS WILL BE REFLECTION
+	glDisable(GL_DEPTH_TEST);
+	int h = int((float)height / 3.0f);
+	int w = int((float)width / 3.0f);
+	int x = 0;
+	int y = int((float)height - (float)h);
+	glViewport(x, y, w, h);
+	glUniformMatrix4fv(10, 1, GL_FALSE, glm::value_ptr(coreEngine->GetActiveCamera().GetInvProjectionMatrix()));
+	mesh->RenderIndex();
+	glEnable(GL_DEPTH_TEST);
+	glViewport(0, 0, width, height);
+
+	// THIS WILL BE REFRACTION
+	glDisable(GL_DEPTH_TEST);
+	x = int((float)width - (float)w - 10.0f);
+	
+	glViewport(x, y, w, h);
+	glUniformMatrix4fv(10, 1, GL_FALSE, glm::value_ptr(coreEngine->GetActiveCamera().GetProjectionMatrix()));
+	mesh->RenderIndex();
+	glEnable(GL_DEPTH_TEST);
+	glViewport(0, 0, width, height);
 }
 
 void Skybox::Update(double deltaTime_)

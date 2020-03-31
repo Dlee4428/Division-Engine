@@ -21,6 +21,10 @@ public:
 
 private:
 	std::string texLocation;
+
+	// For Frustum Top view
+	glm::mat4 topViewMatrix;
+
 };
 
 #endif // !SKYBOX_H
