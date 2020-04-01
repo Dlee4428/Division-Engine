@@ -1,6 +1,5 @@
 #include "Scene.h"
 #include "../Camera/ViewCamera.h"
-#include "../Camera/TerrainCamera.h"
 #include "../Core/Entity/EntityManager.h"
 #include "../Graphic/Skybox.h"
 #include "../Graphic/SunDirection.h"
@@ -23,9 +22,16 @@ Scene::~Scene()
 void Scene::OnCreate()
 {
 	SetWindowProperties("Division Engine", 1280, 800);
-
+	///////////////////////////////////////////////////////////////////////////
 	// SET THE SINGLETON GET INSTANCE HERE
 	EntityManager* entityManager = EntityManager::GetInstance();
+	///////////////////////////////////////////////////////////////////////////
+	// TERRAIN CAMERA
+	terrainCamera = new TerrainCamera();
+	AddCamera(terrainCamera);
+	SetActiveCamera(0);
+	terrainCamera->SetProjectionMatrix(45.0f, (float)windowWidth / (float)windowHeight, 1.0f, 2048.0f);
+	terrainCamera->SetInitPosAndRot(glm::vec3(0, 500, 0), glm::vec3(-65, 0, 0));
 
 	///////////////////////////////////////////////////////////////////////////
 	// SKYBOX
@@ -237,13 +243,6 @@ void Scene::OnCreate()
 	// DEPTH FBO
 	InitFrameBufferObject();
 	isShadowMapping = true;
-	///////////////////////////////////////////////////////////////////////////
-	// TERRAIN CAMERA
-	TerrainCamera* camera = new TerrainCamera();
-	AddCamera(camera);
-	SetActiveCamera(0);
-	camera->SetProjectionMatrix(45.0f, (float)windowWidth / (float)windowHeight, 1.0f, 2048.0f);
-	camera->SetInitPosAndRot(glm::vec3(0, 500, 0), glm::vec3(-65, 0, 0));
 	///////////////////////////////////////////////////////////////////////////
 	////MISC
 	glEnable(GL_DEPTH_TEST);

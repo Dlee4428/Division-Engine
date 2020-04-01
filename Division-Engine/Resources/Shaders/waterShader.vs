@@ -13,7 +13,11 @@ layout (location = 11) uniform mat4 viewMat;
 layout (location = 12) uniform mat4 modelMat;
 layout (location = 13) uniform mat3 normalMat;
 
+const vec4 plane = vec4(0, 0, 0, 0);
+
 void main() {
 	gl_Position = projMat * viewMat * modelMat * vVertex;
 	vs_out.texCoords = vTexCoords;
+
+	gl_ClipDistance[0] = dot(gl_Position, plane);
 }

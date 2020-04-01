@@ -3,9 +3,12 @@
 
 #include "../Core/CoreEngine.h"
 #include "../Rendering/Buffers/FrameBufferObject.h"
+#include "../Camera/TerrainCamera.h"
 
 class Scene : public CoreEngine {
 public:
+	TerrainCamera* terrainCamera;
+
 	Scene();
 	~Scene();
 

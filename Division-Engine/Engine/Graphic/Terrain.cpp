@@ -52,6 +52,9 @@ void Terrain::Render(int objectID_)
 
 	int width = coreEngine->GetWindowWidth();
 	int height = coreEngine->GetWindowHeight();
+	glm::vec4 defaultPlane = glm::vec4(0, 0, 0, 0);
+	glm::vec4 reflectionPlane = glm::vec4(0, 1, 0, -30);
+	glm::vec4 refractionPlane = glm::vec4(0, -1, 0, 30);
 
 	if (objectID_ == 0) {
 
@@ -79,41 +82,51 @@ void Terrain::Render(int objectID_)
 		glUniform1i(35, wireframeMode);														// WireframeMode Bool Location				FS
 		glUniform1i(36, ((Scene*)coreEngine)->isShadowMapping);								// Shadow Mapping Bool Location				FS
 		glUniform1i(37, fogVisible);														// Fog Bool Location						FS
-	
+
+		glEnable(GL_CLIP_DISTANCE0);
+		// UNIFORM LOCATION FOR CLIPPING PLANE
+		glUniform4fv(40, 1, glm::value_ptr(defaultPlane));
+
 		// GL PATCHES
 		glDrawArraysInstanced(GL_PATCHES, 0, 4, patchCount);
 
 		// THIS WILL BE REFLECTION
 		glDisable(GL_DEPTH_TEST);
 		int h = int((float)height / 3.0f);
-		int w = int((float)h * (float)camera->GetFrustum().aspectRatio);
+		int w = int((float)width / 3.0f);
 		int x = 0;
 		int y = int((float)height - (float)h);;
 
 		glViewport(x, y, w, h);
 
+		float distance = 2 * (((Scene*)coreEngine)->terrainCamera->GetPosition().y - 30);
+		((Scene*)coreEngine)->terrainCamera->GetPosition().y - distance;
+		((Scene*)coreEngine)->terrainCamera->InvertPitch();
+
 		//glUniformMatrix4fv(11, 1, GL_FALSE, glm::value_ptr(topViewMatrix));				// Using View Matrix Location
 		glUniformMatrix4fv(13, 1, GL_FALSE, glm::value_ptr(camera->GetInvProjectionMatrix()));
 		glUniform2i(30, w, h);																// Viewport size Location
+		glUniform4fv(40, 1, glm::value_ptr(reflectionPlane));
 		glDrawArraysInstanced(GL_PATCHES, 0, 4, patchCount);
-		
 
 		glEnable(GL_DEPTH_TEST);
 		glViewport(0, 0, width, height);
-
 
 		// THIS WILL BE REFRACTION
 		glDisable(GL_DEPTH_TEST);
 		x = int((float)width - (float)w - 10.0f);
-
 		glViewport(x, y, w, h);
 
 		//glUniformMatrix4fv(11, 1, GL_FALSE, glm::value_ptr(topViewMatrix));				// Using View Matrix Location
-		glUniformMatrix4fv(13, 1, GL_FALSE, glm::value_ptr(camera->GetProjectionMatrix()));
+		glUniformMatrix4fv(13, 1, GL_FALSE, glm::value_ptr(camera->GetInvProjectionMatrix()));
 		glUniform2i(30, w, h);																// Viewport size Location
+		glUniform4fv(40, 1, glm::value_ptr(refractionPlane));
 		glDrawArraysInstanced(GL_PATCHES, 0, 4, patchCount);
 		glEnable(GL_DEPTH_TEST);
 		glViewport(0, 0, width, height);
+		((Scene*)coreEngine)->terrainCamera->GetPosition().y + distance;
+		((Scene*)coreEngine)->terrainCamera->InvertPitch();
+
 	}
 	else {
 		// TERRAIN DEPTH PASS SHADER UNIFORMS

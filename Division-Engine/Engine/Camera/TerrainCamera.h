@@ -10,6 +10,7 @@ public:
 
 	virtual void Update(double deltaTime_);
 
+	inline glm::vec3 GetPosition() { return pos; }
 	void SetInitPosAndRot(const glm::vec3& pos_, const glm::vec3& rot_);
 
 	void ProceedForward(float value_, SpaceType spaceType_ = LOCAL);
@@ -24,6 +25,7 @@ public:
 	// Z axis
 	void Roll(float value_, SpaceType spaceType_ = LOCAL);
 
+	void InvertPitch();
 
 	virtual void WindowResizeCallback(const int width_, const int height_);
 	virtual void KeyCallback(const int key_, const int scanCode_, const int action_, const int mode_);
@@ -33,8 +35,10 @@ public:
 private:
 	glm::ivec2 prevCursorPos;
 	glm::ivec3 vectorMovement;
+	glm::vec3 pos;
 
 	float vel, lateVel;
+	int xpos, ypos;
 	bool leftMouseDown = false;
 
 	const int maxInt = std::numeric_limits<int>::max();

@@ -32,6 +32,8 @@ void TerrainCamera::Update(double deltaTime_)
 
 void TerrainCamera::SetInitPosAndRot(const glm::vec3& pos_, const glm::vec3& rot_)
 {
+	pos = pos_;
+
 	// Set Camera Initial Position and Rotation into the WORLD Coords
 	transform.SetPosition(pos_.x, pos_.y, pos_.z, WORLD);
 	transform.SetRotation(rot_.x, rot_.y, rot_.z, WORLD, LOCAL);
@@ -107,6 +109,11 @@ void TerrainCamera::Roll(float value_, SpaceType spaceType_)
 	isUpdate = true;
 }
 
+void TerrainCamera::InvertPitch()
+{
+	ypos *= -1;
+}
+
 void TerrainCamera::WindowResizeCallback(const int width_, const int height_)
 {
 	Camera::WindowResizeCallback(width_, height_);
@@ -151,8 +158,6 @@ void TerrainCamera::KeyCallback(const int key_, const int scanCode_, const int a
 
 void TerrainCamera::CursorPositionCallback(const double xpos_, const double ypos_)
 {
-	int xpos, ypos;
-
 	if (leftMouseDown) {
 		if (prevCursorPos.x != maxInt) {
 			xpos = int(prevCursorPos.x - float(xpos_));
@@ -163,6 +168,7 @@ void TerrainCamera::CursorPositionCallback(const double xpos_, const double ypos
 			Pitch(ypos * 0.1f, LOCAL);
 		}
 	}
+
 	// Static cast conversion converts between types using a combination of implicit 
 	// and user-defined conversions.
 	prevCursorPos.x = static_cast<int>(xpos_);

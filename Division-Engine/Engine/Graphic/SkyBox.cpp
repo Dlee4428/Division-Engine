@@ -119,7 +119,7 @@ void Skybox::Render(int objectID_)
 	x = int((float)width - (float)w - 10.0f);
 	
 	glViewport(x, y, w, h);
-	glUniformMatrix4fv(10, 1, GL_FALSE, glm::value_ptr(coreEngine->GetActiveCamera().GetProjectionMatrix()));
+	glUniformMatrix4fv(10, 1, GL_FALSE, glm::value_ptr(coreEngine->GetActiveCamera().GetInvProjectionMatrix()));
 	mesh->RenderIndex();
 	glEnable(GL_DEPTH_TEST);
 	glViewport(0, 0, width, height);

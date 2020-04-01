@@ -23,6 +23,7 @@ layout(location = 10) uniform mat4 shadowMat; // Remapping [-1, 1] to [0, 1]
 layout(location = 11) uniform mat4 viewMat;
 layout(location = 13) uniform mat4 projMat;
 layout(location = 30) uniform ivec2 viewportSize;
+layout(location = 40) uniform vec4 plane;
 
 // RECEIVE TES OUTs
 in TerrainTESOut {
@@ -61,6 +62,8 @@ void VertEmission(int v, vec3 gEdgeDistances) {
 	gs_out.gEdgeDistance = gEdgeDistances;
 
 	gl_Position = projViewMat * gl_in[v].gl_Position;
+
+	gl_ClipDistance[0] = dot(gl_in[v].gl_Position, plane);
 
 	// EmitVertex — emit a vertex to the first vertex stream
 	// emits the current values of output variables to the current output primitive on 

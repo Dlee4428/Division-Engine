@@ -14,4 +14,6 @@ out VertexShaderOut {
 void main() {
 	vs_out.texCoords = vec3(aPos.x, -aPos.y, aPos.z);
 	gl_Position = projMat * viewMat * modelMat * vec4(aPos, 1.0);
+
+	gl_ClipDistance[0] = 12;
 }

@@ -19,7 +19,6 @@ public:
 	const glm::mat4& GetProjectionMatrix();
 	const glm::mat4& GetInvProjectionMatrix();
 	inline Frustum& GetFrustum() { return frustum; }
-
 	inline bool LastUpdate() { bool tmp = isUpdate; isUpdate = false; return tmp; }
 
 	// CallBack Function from GameObject EventHandler

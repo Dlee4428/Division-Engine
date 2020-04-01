@@ -16,8 +16,6 @@ void Water::OnCreate()
 	transform.SetScale(12.5f, 12.5f, 12.5f, WORLD);
 	transform.SetRotation(0.0f, 90.0f, 0.0f, LOCAL, LOCAL);
 	transform.RotateObj(0.0f, 0.0f, 0.0f, WORLD, WORLD);
-
-
 }
 
 void Water::Render(int objectID_)
@@ -27,7 +25,6 @@ void Water::Render(int objectID_)
 		material->Bind();
 
 		//glDisable(GL_DEPTH_TEST);
-		glEnable(GL_DEPTH_TEST);
 		Camera& camera = coreEngine->GetActiveCamera();
 		glm::mat3 normalMatrix = glm::mat3(transform.GetTransformMatrix());
 
@@ -37,6 +34,7 @@ void Water::Render(int objectID_)
 		glUniformMatrix3fv(13, 1, GL_FALSE, glm::value_ptr(normalMatrix));							// NORMAL MATRIX
 
 		mesh->RenderIndex();
+		//glEnable(GL_DEPTH_TEST);
 	}
 }
 
