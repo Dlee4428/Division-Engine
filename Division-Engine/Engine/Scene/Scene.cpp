@@ -74,7 +74,6 @@ void Scene::OnCreate()
 	sunDirection->SetMaterial(sunMaterial);
 	sunDirectionLoc = AddGameObject(sunDirection);
 	AddEventHandler(sunDirection);
-	
 	///////////////////////////////////////////////////////////////////////
 	// WATER
 	Mesh* waterMesh = new Mesh();
@@ -94,14 +93,27 @@ void Scene::OnCreate()
 	ShaderProgram* waterShaderProgram = new ShaderProgram(waterShaders);
 	entityManager->AddEntity("waterShaderProgram", waterShaderProgram);
 
-	////// WATER TEXTURE 
-	////TexCubemap* waterTexture = new TexCubemap();
-	////waterTexture->InitFromImageFile("Resources/Textures/mars.jpg");
-	////entityManager->AddEntity("waterTextures", waterTexture);
+	// WATER TEXTURE
+
+	// SINGLETON GET INSTANCE OF BOTH REFLECTION AND REFRACTION TEXTURE
+	Tex2D* reflectionTexture = new Tex2D();
+//	reflectionTexture->SetMipmapLevels(1);
+	reflectionTexture->InitFromImageData(GetWindowWidth() / 2, GetWindowHeight() / 2, 0);
+//	reflectionTexture->ModifyTextureParam(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+//	reflectionTexture->ModifyTextureParam(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	entityManager->AddEntity("reflectionTextures", reflectionTexture);
+
+	if (waterFBO == 0) {
+		waterFBO = new WaterFrameBuffer();
+	}
+
+	waterFBO->AttachTextureToColorBuffer(0, *reflectionTexture);
+	waterFBO->Process();
 
 	// WATER MATERIAL HANDLER
 	MaterialHandler* waterMaterial = new MaterialHandler();
-	//waterMaterial->SetTexture(0, waterTexture);
+	waterMaterial->SetTexture(0, reflectionTexture);
+	waterMaterial->SetTexture(1, reflectionTexture);
 	waterMaterial->SetShaderProgram(0, waterShaderProgram);
 	entityManager->AddEntity("waterMaterial", waterMaterial);
 
@@ -241,6 +253,7 @@ void Scene::OnCreate()
 	terrainLoc = AddGameObject(terrain);
 	///////////////////////////////////////////////////////////////////////////
 	// DEPTH FBO
+//	InitWaterFrameBuffer();
 	InitFrameBufferObject();
 	isShadowMapping = true;
 	///////////////////////////////////////////////////////////////////////////
@@ -248,9 +261,9 @@ void Scene::OnCreate()
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
 
-	// glCullFace — specify whether front- or back-facing polygons can be culled
-	//glEnable(GL_CULL_FACE);
-	//glCullFace(GL_BACK); // BY SETTING GL_FRONT OR BACK, this determine where to culled
+	//glCullFace — specify whether front- or back-facing polygons can be culled
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK); // BY SETTING GL_FRONT OR BACK, this determine where to culled
 
 	glPolygonOffset(7.5f, 15.0f);
 
@@ -271,6 +284,7 @@ void Scene::InitFrameBufferObject()
 
 	depthTerrain = new Tex2D();
 	depthTerrain->SetMipmapLevels(1);
+	// DEFAULT IS SRGB8
 	depthTerrain->InitFromImageData(GetWindowWidth() / 2, GetWindowHeight() / 2, 0, ImageFormatType::IMAGE_FORMAT_DEPTH_32F);
 	depthTerrain->ModifyTextureParam(GL_TEXTURE_COMPARE_MODE, GL_COMPARE_REF_TO_TEXTURE);
 	depthTerrain->ModifyTextureParam(GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);
@@ -292,6 +306,42 @@ void Scene::InitFrameBufferObject()
 	depthFBO->Process();
 }
 
+void Scene::InitWaterFrameBuffer()
+{
+	//	Tex2D* refractionTexture = EntityManager::GetInstance()->GetEntity<Tex2D>("refractionTex");
+
+	//if (refractionTexture != 0) {
+	//	delete refractionTexture;
+	//}
+	// SINGLETON GET INSTANCE OF BOTH REFLECTION AND REFRACTION TEXTURE
+	Tex2D* reflectionTexture = EntityManager::GetInstance()->GetEntity<Tex2D>("reflectionTex");
+
+	// FREE MEMORY if Ref and refraction Texture pointer is not equal to 0
+	if (reflectionTexture != 0) {
+		delete reflectionTexture;
+	}
+	
+	reflectionTexture = new Tex2D();
+	reflectionTexture->SetMipmapLevels(1);
+	reflectionTexture->InitFromImageData(1024, 768, 0);
+
+	MaterialHandler* reflectionHandler = EntityManager::GetInstance()->GetEntity<MaterialHandler>("terrainMat1");
+	reflectionHandler->SetTexture(4, reflectionTexture);
+	reflectionHandler = EntityManager::GetInstance()->GetEntity<MaterialHandler>("terrainMat2");
+	reflectionHandler->SetTexture(4, reflectionTexture);
+	reflectionHandler = EntityManager::GetInstance()->GetEntity<MaterialHandler>("terrainMat3");
+	reflectionHandler->SetTexture(4, reflectionTexture);
+
+	EntityManager::GetInstance()->AddEntity("reflectionTex", reflectionTexture);
+
+	if (waterFBO == 0) {
+		waterFBO = new WaterFrameBuffer();
+	}
+
+	waterFBO->AttachTextureToColorBuffer(0, *reflectionTexture);
+	waterFBO->Process();
+}
+
 void Scene::Render()
 {
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f); //Black background
@@ -299,14 +349,16 @@ void Scene::Render()
 
 	static const GLfloat depthOffset = 1.0f;
 
-	if (isShadowMapping) {
-		depthFBO->Bind();
+	// WATER QUADS
+	waterFBO->Bind();
+	waterFBO->UnBindFrameBuffer();
 
+	if (isShadowMapping) {		
+		depthFBO->Bind();  //Frame buffer BIND here MASTER RENDERER
 		glEnable(GL_POLYGON_OFFSET_FILL);
 		glClearBufferfv(GL_DEPTH, 0, &depthOffset);
 		gameObjects[terrainLoc]->Render(1);
 		glDisable(GL_POLYGON_OFFSET_FILL);
-
 		depthFBO->UnBindFrameBuffer();
 	}
 	

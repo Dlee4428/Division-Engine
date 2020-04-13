@@ -18,12 +18,17 @@ public:
 	virtual void OnCreate();
 	virtual void Render(int objectID_);
 	virtual void Update(double deltaTime_);
+	
+	void SkyReflection();
+	void SkyRefraction();
 
 private:
 	std::string texLocation;
 
 	// For Frustum Top view
 	glm::mat4 topViewMatrix;
+
+	int width, height;
 
 };
 

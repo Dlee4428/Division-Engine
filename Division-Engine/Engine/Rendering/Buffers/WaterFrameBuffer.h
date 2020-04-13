@@ -23,9 +23,6 @@ public:
 
 
 private:
-	static const int reflectionWidth, reflectionHeight;
-	static const int refractionWidth, refractionHeight;
-
 	int colorAtachmentCount;
 };
 

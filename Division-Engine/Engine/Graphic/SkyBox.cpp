@@ -89,8 +89,8 @@ void Skybox::OnCreate()
 
 void Skybox::Render(int objectID_)
 {
-	int width = coreEngine->GetWindowWidth();
-	int height = coreEngine->GetWindowHeight();
+	width = coreEngine->GetWindowWidth();
+	height = coreEngine->GetWindowHeight();
 
 	material->Bind();
 
@@ -103,26 +103,26 @@ void Skybox::Render(int objectID_)
 	glEnable(GL_DEPTH_TEST);
 
 	// THIS WILL BE REFLECTION
-	glDisable(GL_DEPTH_TEST);
-	int h = int((float)height / 3.0f);
-	int w = int((float)width / 3.0f);
-	int x = 0;
-	int y = int((float)height - (float)h);
-	glViewport(x, y, w, h);
-	glUniformMatrix4fv(10, 1, GL_FALSE, glm::value_ptr(coreEngine->GetActiveCamera().GetInvProjectionMatrix()));
-	mesh->RenderIndex();
-	glEnable(GL_DEPTH_TEST);
-	glViewport(0, 0, width, height);
+	//glDisable(GL_DEPTH_TEST);
+	//int h = int((float)height / 3.0f);
+	//int w = int((float)width / 3.0f);
+	//int x = 0;
+	//int y = int((float)height - (float)h);
+	//glViewport(x, y, w, h);
+	//glUniformMatrix4fv(10, 1, GL_FALSE, glm::value_ptr(coreEngine->GetActiveCamera().GetInvProjectionMatrix()));
+	//mesh->RenderIndex();
+	//glEnable(GL_DEPTH_TEST);
+	//glViewport(0, 0, width, height);
 
 	// THIS WILL BE REFRACTION
-	glDisable(GL_DEPTH_TEST);
-	x = int((float)width - (float)w - 10.0f);
-	
-	glViewport(x, y, w, h);
-	glUniformMatrix4fv(10, 1, GL_FALSE, glm::value_ptr(coreEngine->GetActiveCamera().GetInvProjectionMatrix()));
-	mesh->RenderIndex();
-	glEnable(GL_DEPTH_TEST);
-	glViewport(0, 0, width, height);
+	//glDisable(GL_DEPTH_TEST);
+	//x = int((float)width - (float)w - 10.0f);
+	//
+	//glViewport(x, y, w, h);
+	//glUniformMatrix4fv(10, 1, GL_FALSE, glm::value_ptr(coreEngine->GetActiveCamera().GetInvProjectionMatrix()));
+	//mesh->RenderIndex();
+	//glEnable(GL_DEPTH_TEST);
+	//glViewport(0, 0, width, height);
 }
 
 void Skybox::Update(double deltaTime_)
@@ -132,4 +132,12 @@ void Skybox::Update(double deltaTime_)
 	if (camera.LastUpdate()) {
 		transform.SetPosition(camera.GetTransform().GetPosition(), WORLD);
 	}
+}
+
+void Skybox::SkyReflection()
+{
+}
+
+void Skybox::SkyRefraction()
+{
 }

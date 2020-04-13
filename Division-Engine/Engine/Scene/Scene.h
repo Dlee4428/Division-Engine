@@ -3,6 +3,7 @@
 
 #include "../Core/CoreEngine.h"
 #include "../Rendering/Buffers/FrameBufferObject.h"
+#include "../Rendering/Buffers//WaterFrameBuffer.h"
 #include "../Camera/TerrainCamera.h"
 
 class Scene : public CoreEngine {
@@ -27,8 +28,10 @@ public:
 private:
 	int terrainLoc, skyboxLoc, sunDirectionLoc, waterLoc;
 	FrameBufferObject* depthFBO;
+	WaterFrameBuffer* waterFBO;
 
 	void InitFrameBufferObject();
+	void InitWaterFrameBuffer();
 };
 
 #endif // !SCENE_H
