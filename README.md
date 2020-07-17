@@ -4,4 +4,4 @@
  C++ 3D Rendering Game Engine
  
 # Link to Demo Video
- [![Watch the video](https://imgur.com/a/QTDOKrk)](https://youtu.be/fRy93nIp7Ms)
+ [![Watch the video](https://i.imgur.com/a/QTDOKrk)](https://youtu.be/fRy93nIp7Ms)
