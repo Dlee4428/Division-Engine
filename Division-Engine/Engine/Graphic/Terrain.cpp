@@ -90,51 +90,46 @@ void Terrain::Render(int objectID_)
 		// GL PATCHES
 		glDrawArraysInstanced(GL_PATCHES, 0, 4, patchCount);
 
-		//// INIT FOR DEPTH TEXTURE OF WIDTH AND HEIGHT AT GL VIEWPORT
-		//const ImageDataType& depthTex = material->GetTextureHandler(3)->GetImageData(0);
-		//glViewport(0, 0, depthTex.width, depthTex.height);
+		//// THIS WILL BE REFLECTION
+		//glDisable(GL_DEPTH_TEST);
+		//int h = int((float)height / 3.0f);
+		//int w = int((float)width / 3.0f);
+		//int x = 0;
+		//int y = int((float)height - (float)h);;
+
+		////glViewport(x, y, w, h);
+
+		//float distance = 2 * (((Scene*)coreEngine)->terrainCamera->GetPosition().y - 30);
+		//((Scene*)coreEngine)->terrainCamera->GetPosition().y - distance;
+		//((Scene*)coreEngine)->terrainCamera->InvertPitch();
+
+		////glUniformMatrix4fv(11, 1, GL_FALSE, glm::value_ptr(topViewMatrix));				// Using View Matrix Location
+		//glUniformMatrix4fv(13, 1, GL_FALSE, glm::value_ptr(camera->GetInvProjectionMatrix()));
+		//glUniform2i(30, w, h);																// Viewport size Location
+		//glUniform4fv(40, 1, glm::value_ptr(reflectionPlane));
+		//
+		//const ImageDataType& reflectionTex = material->GetTextureHandler(0)->GetImageData(0);
+		//glViewport(0, 0, reflectionTex.width, reflectionTex.height);
 		//glDrawArraysInstanced(GL_PATCHES, 0, 4, patchCount);
 
-		// THIS WILL BE REFLECTION
-		glDisable(GL_DEPTH_TEST);
-		int h = int((float)height / 3.0f);
-		int w = int((float)width / 3.0f);
-		int x = 0;
-		int y = int((float)height - (float)h);;
 
+		//glEnable(GL_DEPTH_TEST);
+		//glViewport(0, 0, width, height);
+
+		//// THIS WILL BE REFRACTION
+		//glDisable(GL_DEPTH_TEST);
+		//x = int((float)width - (float)w - 10.0f);
 		//glViewport(x, y, w, h);
 
-		float distance = 2 * (((Scene*)coreEngine)->terrainCamera->GetPosition().y - 30);
-		((Scene*)coreEngine)->terrainCamera->GetPosition().y - distance;
-		((Scene*)coreEngine)->terrainCamera->InvertPitch();
-
-		//glUniformMatrix4fv(11, 1, GL_FALSE, glm::value_ptr(topViewMatrix));				// Using View Matrix Location
-		glUniformMatrix4fv(13, 1, GL_FALSE, glm::value_ptr(camera->GetInvProjectionMatrix()));
-		glUniform2i(30, w, h);																// Viewport size Location
-		glUniform4fv(40, 1, glm::value_ptr(reflectionPlane));
-		
-		const ImageDataType& reflectionTex = material->GetTextureHandler(0)->GetImageData(0);
-		glViewport(0, 0, reflectionTex.width, reflectionTex.height);
-		glDrawArraysInstanced(GL_PATCHES, 0, 4, patchCount);
-
-
-		glEnable(GL_DEPTH_TEST);
-		glViewport(0, 0, width, height);
-
-		// THIS WILL BE REFRACTION
-		glDisable(GL_DEPTH_TEST);
-		x = int((float)width - (float)w - 10.0f);
-		glViewport(x, y, w, h);
-
-		//glUniformMatrix4fv(11, 1, GL_FALSE, glm::value_ptr(topViewMatrix));				// Using View Matrix Location
-		glUniformMatrix4fv(13, 1, GL_FALSE, glm::value_ptr(camera->GetInvProjectionMatrix()));
-		glUniform2i(30, w, h);																// Viewport size Location
-		glUniform4fv(40, 1, glm::value_ptr(refractionPlane));
-		glDrawArraysInstanced(GL_PATCHES, 0, 4, patchCount);
-		glEnable(GL_DEPTH_TEST);
-		glViewport(0, 0, width, height);
-		((Scene*)coreEngine)->terrainCamera->GetPosition().y + distance;
-		((Scene*)coreEngine)->terrainCamera->InvertPitch();
+		////glUniformMatrix4fv(11, 1, GL_FALSE, glm::value_ptr(topViewMatrix));				// Using View Matrix Location
+		//glUniformMatrix4fv(13, 1, GL_FALSE, glm::value_ptr(camera->GetInvProjectionMatrix()));
+		//glUniform2i(30, w, h);																// Viewport size Location
+		//glUniform4fv(40, 1, glm::value_ptr(refractionPlane));
+		//glDrawArraysInstanced(GL_PATCHES, 0, 4, patchCount);
+		//glEnable(GL_DEPTH_TEST);
+		//glViewport(0, 0, width, height);
+		//((Scene*)coreEngine)->terrainCamera->GetPosition().y + distance;
+		//((Scene*)coreEngine)->terrainCamera->InvertPitch();
 
 	}
 	else {

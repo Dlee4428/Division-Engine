@@ -75,54 +75,39 @@ void Scene::OnCreate()
 	sunDirectionLoc = AddGameObject(sunDirection);
 	AddEventHandler(sunDirection);
 	///////////////////////////////////////////////////////////////////////
-	// WATER
-	Mesh* waterMesh = new Mesh();
-	waterMesh->InitFromFile("Resources/Models/plane.obj");
-	entityManager->AddEntity("meshPlane", waterMesh);
+	//// WATER
+	//Mesh* waterMesh = new Mesh();
+	//waterMesh->InitFromFile("Resources/Models/plane.obj");
+	//entityManager->AddEntity("meshPlane", waterMesh);
 
-	// WATER INIT SHADER
-	Shader* vertWater = new Shader("Resources/Shaders/waterShader.vs");
-	Shader* fragWater = new Shader("Resources/Shaders/waterShader.fs");
-	entityManager->AddEntity("waterVertShader", vertWater);
-	entityManager->AddEntity("waterFragShader", fragWater);
+	//// WATER INIT SHADER
+	//Shader* vertWater = new Shader("Resources/Shaders/waterShader.vs");
+	//Shader* fragWater = new Shader("Resources/Shaders/waterShader.fs");
+	//entityManager->AddEntity("waterVertShader", vertWater);
+	//entityManager->AddEntity("waterFragShader", fragWater);
 
-	// WATER SHADER PROGRAM
-	std::vector<Shader*> waterShaders;
-	waterShaders.push_back(vertWater);
-	waterShaders.push_back(fragWater);
-	ShaderProgram* waterShaderProgram = new ShaderProgram(waterShaders);
-	entityManager->AddEntity("waterShaderProgram", waterShaderProgram);
+	//// WATER SHADER PROGRAM
+	//std::vector<Shader*> waterShaders;
+	//waterShaders.push_back(vertWater);
+	//waterShaders.push_back(fragWater);
+	//ShaderProgram* waterShaderProgram = new ShaderProgram(waterShaders);
+	//entityManager->AddEntity("waterShaderProgram", waterShaderProgram);
 
-	// WATER TEXTURE
+	//// WATER TEXTURE
+	//
+	//// WATER MATERIAL HANDLER
+	//MaterialHandler* waterMaterial = new MaterialHandler();
+	////waterMaterial->SetTexture(0, reflectionTexture);
+	////waterMaterial->SetTexture(1, refractionTexture);
+	//waterMaterial->SetShaderProgram(0, waterShaderProgram);
+	//entityManager->AddEntity("waterMaterial", waterMaterial);
 
-	// SINGLETON GET INSTANCE OF BOTH REFLECTION AND REFRACTION TEXTURE
-	Tex2D* reflectionTexture = new Tex2D();
-//	reflectionTexture->SetMipmapLevels(1);
-	reflectionTexture->InitFromImageData(GetWindowWidth() / 2, GetWindowHeight() / 2, 0);
-//	reflectionTexture->ModifyTextureParam(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-//	reflectionTexture->ModifyTextureParam(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	entityManager->AddEntity("reflectionTextures", reflectionTexture);
-
-	if (waterFBO == 0) {
-		waterFBO = new WaterFrameBuffer();
-	}
-
-	waterFBO->AttachTextureToColorBuffer(0, *reflectionTexture);
-	waterFBO->Process();
-
-	// WATER MATERIAL HANDLER
-	MaterialHandler* waterMaterial = new MaterialHandler();
-	waterMaterial->SetTexture(0, reflectionTexture);
-	waterMaterial->SetTexture(1, reflectionTexture);
-	waterMaterial->SetShaderProgram(0, waterShaderProgram);
-	entityManager->AddEntity("waterMaterial", waterMaterial);
-
-	// WATER ADD TO GAMEOBJECT
-	Water* water = new Water(sunDirection);
-	water->SetMesh(waterMesh);
-	water->SetMaterial(waterMaterial);
-	waterLoc = AddGameObject(water);
-	AddEventHandler(water);
+	//// WATER ADD TO GAMEOBJECT
+	//Water* water = new Water(sunDirection);
+	//water->SetMesh(waterMesh);
+	//water->SetMaterial(waterMaterial);
+	//waterLoc = AddGameObject(water);
+	//AddEventHandler(water);
 	////////////////////////////////////////////////////////////////////////
 	// TERRAIN FEATURES
 	// TERRAIN SHADER POINTERS
@@ -350,14 +335,14 @@ void Scene::Render()
 	static const GLfloat depthOffset = 1.0f;
 
 	// WATER QUADS
-	waterFBO->Bind();
-	waterFBO->UnBindFrameBuffer();
+	//waterFBO->Bind();
+	//waterFBO->UnBindFrameBuffer();
 
 	if (isShadowMapping) {		
 		depthFBO->Bind();  //Frame buffer BIND here MASTER RENDERER
 		glEnable(GL_POLYGON_OFFSET_FILL);
 		glClearBufferfv(GL_DEPTH, 0, &depthOffset);
-		gameObjects[terrainLoc]->Render(1);
+		gameObjects[terrainLoc]->Render(1); // int Object ID location at Render() = 0 is default
 		glDisable(GL_POLYGON_OFFSET_FILL);
 		depthFBO->UnBindFrameBuffer();
 	}

@@ -6,8 +6,8 @@ in VertexShaderOut {
 
 out vec4 fragColor;
 
-uniform sampler2D reflectionTexture;
-uniform sampler2D refractionTexture;
+layout(binding = 1) uniform sampler2D reflectionTexture;
+layout(binding = 2) uniform sampler2D refractionTexture;
 
 void main() {
 
